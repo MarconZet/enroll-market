@@ -35,3 +35,8 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+bootJar {
+	destinationDirectory.set(projectDir)
+	archiveFileName.set("bootJar.jar")
+}
