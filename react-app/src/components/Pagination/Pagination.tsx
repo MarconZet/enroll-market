@@ -10,6 +10,21 @@ export interface PaginationProps {
 export const Pagination: React.FC<PaginationProps> = ({ onPageChange, currentPage, totalPages }) => {
     const [input, setInput] = useState<number>();
 
+    const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+        const toNumber = +event.target.value
+        if (isNaN(toNumber) && toNumber > 0) {
+            setInput(toNumber)
+        }
+
+        setInput(undefined);
+    }
+
+    const onBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
+        if (typeof input !== 'undefined') {
+            onPageChange(input);
+        }
+    }
+
     return (
         <P.Wrapper>
             <P.Button isCurrentPage={currentPage === 1} onClick={(e) => onPageChange(1)}>1</P.Button>
@@ -22,7 +37,7 @@ export const Pagination: React.FC<PaginationProps> = ({ onPageChange, currentPag
 
             {(totalPages > 2) && (currentPage < totalPages-1) && (<P.Button onClick={(e) => onPageChange(currentPage+1)}>{currentPage+1}</P.Button>)}
 
-            {(totalPages > 3) && (currentPage < totalPages-1) && (<P.Input value={input} placeholder="..." />)}
+            {(totalPages > 3) && (currentPage < totalPages-1) && (<P.Input onChange={onChange} onBlur={onBlur} value={input} placeholder="..." />)}
 
             {(totalPages > 1) && (<P.Button isCurrentPage={currentPage === totalPages} onClick={(e) => onPageChange(totalPages)}>{totalPages}</P.Button>)}
         </P.Wrapper>
