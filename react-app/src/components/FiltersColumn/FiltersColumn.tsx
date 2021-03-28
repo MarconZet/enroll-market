@@ -21,7 +21,7 @@ export const FiltersColumn: React.FC<FiltersColumnProps> = ({ submitCallback, su
         event.preventDefault();
     }
 
-    const onChange = (event: any, setter: (arg: any) => void) => {
+    const onChange = (event: React.ChangeEvent<HTMLSelectElement>, setter: (arg: string) => void) => {
         setter(event.target.value);
     }
 
