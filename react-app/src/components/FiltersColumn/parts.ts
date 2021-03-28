@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.form`
     border: 1px solid black;
-    width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,9 +14,13 @@ export const Submit = styled.button`
     border: 1px solid black;
 `;
 
-export const Title = styled.span`
+export const Title = styled.div`
     font-size: 32px;
     border-bottom: 1px solid black;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
 `;
 
 export const Select = styled.select`
