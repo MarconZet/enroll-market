@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route  } from "react-router-dom";
 import { Provider } from 'react-redux';
 import makeStore from './store/store';
-import OffersPage from './pages/OffersPage/OffersPage';
+import OffersListingPage from './pages/OffersListingPage/OffersListingPage';
 
 const App: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const App: React.FC = () => {
 			to do
 			<Switch>
 				<Route path="/offers">
-					<OffersPage />
+					<OffersListingPage />
 				</Route>
 				<Route path="/myOffers/fromMe"></Route>
 				<Route path="/myOffers/fromOthers"></Route>

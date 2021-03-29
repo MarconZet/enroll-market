@@ -1,8 +1,15 @@
+import { useSelector, useDispatch } from 'react-redux';
 import { FiltersColumn } from '../../components/FiltersColumn/FiltersColumn';
 import OneForOneTile from '../../components/OneForOneTile/OneForOneTile';
+import { Pagination } from '../../components/Pagination/Pagination';
+import { OffersListingPageSelector } from '../../store/offersListing/selectors';
 import * as P from './parts';
+import * as A from '../../store/offersListing/actions';
 
-export const OffersPage: React.FC = () => {
+export const OffersListingPage: React.FC = () => {
+    const dispatch = useDispatch();
+    const currentPage = useSelector(OffersListingPageSelector);
+
     const mockFiltersProps = {
         submitCallback: (data: any) => {
             console.log(data);
@@ -34,6 +41,10 @@ export const OffersPage: React.FC = () => {
 
     const mockOffers = Array(10).fill(mockOffer);
 
+    const onPageChange = (page: number) => {
+        dispatch(A.changePage(page));
+    }
+
     return (
         <P.Wrapper>
             <P.FiltersContainer>
@@ -41,9 +52,10 @@ export const OffersPage: React.FC = () => {
             </P.FiltersContainer>
             <P.OffersContainer>
                 {mockOffers.map((offer) => <OneForOneTile {...offer} />)}
+                <Pagination currentPage={currentPage} totalPages={10} onPageChange={onPageChange} />
             </P.OffersContainer>
         </P.Wrapper>
     );
 };
 
-export default OffersPage;
+export default OffersListingPage;

@@ -8,20 +8,23 @@ export interface PaginationProps {
 }
 
 export const Pagination: React.FC<PaginationProps> = ({ onPageChange, currentPage, totalPages }) => {
-    const [input, setInput] = useState<number>();
+    const [leftInput, setLeftInput] = useState<number | string>('');
+    const [rightInput, setRightInput] = useState<number | string>('');
 
-    const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const onChange = (setter: (arg: number | string) => void): React.ChangeEventHandler<HTMLInputElement> => (event) => {
         const toNumber = +event.target.value
-        if (isNaN(toNumber) && toNumber > 0) {
-            setInput(toNumber)
+        if (!isNaN(toNumber) && toNumber > 0) {
+            setter(toNumber);
+            return;
         }
 
-        setInput(undefined);
+        setter('');
     }
 
-    const onBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
-        if (typeof input !== 'undefined') {
+    const onBlur = (setter: (arg: number | string) => void, input: number | string): React.FocusEventHandler<HTMLInputElement> => (event) => {
+        if (typeof input === 'number') {
             onPageChange(input);
+            setter('');
         }
     }
 
@@ -29,7 +32,7 @@ export const Pagination: React.FC<PaginationProps> = ({ onPageChange, currentPag
         <P.Wrapper>
             <P.Button isCurrentPage={currentPage === 1} onClick={(e) => onPageChange(1)}>1</P.Button>
 
-            {(totalPages > 3) && (currentPage > 2) && (<P.Input value={input} placeholder="..." />)}
+            {(totalPages > 3) && (currentPage > 2) && (<P.Input onChange={onChange(setLeftInput)} onBlur={onBlur(setLeftInput, leftInput)} value={leftInput} placeholder="..." />)}
 
             {(totalPages > 3) && (currentPage > 2) && (<P.Button onClick={(e) => onPageChange(currentPage-1)}>{currentPage-1}</P.Button>)}
 
@@ -37,7 +40,7 @@ export const Pagination: React.FC<PaginationProps> = ({ onPageChange, currentPag
 
             {(totalPages > 2) && (currentPage < totalPages-1) && (<P.Button onClick={(e) => onPageChange(currentPage+1)}>{currentPage+1}</P.Button>)}
 
-            {(totalPages > 3) && (currentPage < totalPages-1) && (<P.Input onChange={onChange} onBlur={onBlur} value={input} placeholder="..." />)}
+            {(totalPages > 3) && (currentPage < totalPages-1) && (<P.Input onChange={onChange(setRightInput)} onBlur={onBlur(setRightInput, rightInput)} value={rightInput} placeholder="..." />)}
 
             {(totalPages > 1) && (<P.Button isCurrentPage={currentPage === totalPages} onClick={(e) => onPageChange(totalPages)}>{totalPages}</P.Button>)}
         </P.Wrapper>
