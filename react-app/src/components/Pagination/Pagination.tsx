@@ -22,10 +22,11 @@ export const Pagination: React.FC<PaginationProps> = ({ onPageChange, currentPag
     }
 
     const onBlur = (setter: (arg: number | string) => void, input: number | string): React.FocusEventHandler<HTMLInputElement> => (event) => {
-        if (typeof input === 'number') {
+        if (typeof input === 'number' && input <= totalPages && input >= 1) {
             onPageChange(input);
-            setter('');
         }
+
+        setter('');
     }
 
     return (

@@ -9,8 +9,10 @@ export type OffersListingAction = {
 
 export interface OffersListingState {
     page: number;
+    totalPages: number;
 };
 
 export const InitialOffersListingState: OffersListingState = {
     page: 1,
+    totalPages: 10,
 };

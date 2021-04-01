@@ -1,6 +1,7 @@
+import { AnyAction } from '@reduxjs/toolkit';
 import * as C from './constants';
 
-export const offersListingReducer = (state = C.InitialOffersListingState, action: C.OffersListingAction): C.OffersListingState => {
+export const offersListingReducer = (state = C.InitialOffersListingState, action: AnyAction): C.OffersListingState => {
     switch (action.type) {
         case C.OffersListingActionType.ChangePage:
             return {

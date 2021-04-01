@@ -30,22 +30,22 @@ export const FiltersColumn: React.FC<FiltersColumnProps> = ({ submitCallback, su
             <P.Title>Filtruj</P.Title>
             <P.Select name="subject" id="subject" onChange={(e) => onChange(e, setSubject)} value={subject}>
                 {subjectsList.map(
-                    (subject) => (
-                        <option value={subject}>{subject}</option>
+                    (subject, index) => (
+                        <option key={index} value={subject}>{subject}</option>
                     )
                 )}
             </P.Select>
             <P.Select name="offeredSlot" id="offeredSlot" onChange={(e) => onChange(e, setOfferedSlot)} value={offeredSlot}>
                 {timeSlots.map(
-                    (slot) => (
-                        <option value={slot}>{slot}</option>
+                    (slot, index) => (
+                        <option key={index} value={slot}>{slot}</option>
                     )
                 )}
             </P.Select>
             <P.Select name="wantedSlot" id="wantedSlot" onChange={(e) => onChange(e, setWantedSlot)} value={wantedSlot}>
                 {timeSlots.map(
-                    (slot) => (
-                        <option value={slot}>{slot}</option>
+                    (slot, index) => (
+                        <option key={index} value={slot}>{slot}</option>
                     )
                 )}
             </P.Select>
