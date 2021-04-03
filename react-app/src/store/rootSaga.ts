@@ -1,10 +1,10 @@
 import { all, fork } from 'redux-saga/effects';
-import testSaga from './test/sagas';
+import { offersListingWatcher } from './offersListing/sagas';
 
 // TODO: fill sagas array
 function* rootSaga() {
     yield all([
-        fork(testSaga),
+        fork(offersListingWatcher),
     ]);
 }
 
