@@ -28,6 +28,10 @@ export const OffersListingPage: React.FC = () => {
         dispatch(A.getPageRequest(page));
     }
 
+    const acceptCallback = (id: number) => () => {
+        console.log('accept ' + id);
+    }
+
     return (
         <P.Wrapper>
             <P.FiltersContainer>
@@ -39,7 +43,7 @@ export const OffersListingPage: React.FC = () => {
                         ? <></>
                         : (
                             <>
-                                {offers.map((offer, index) => <OneForOneTile key={index} {...offer} />)}
+                                {offers.map((offer, index) => <OneForOneTile key={index} {...offer} acceptCallback={acceptCallback(offer.id)} />)}
                                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
                             </>
                         )

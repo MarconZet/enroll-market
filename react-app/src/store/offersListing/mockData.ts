@@ -1,4 +1,7 @@
-export const mockOffer = {
+import { FiltersData, Offer } from "./constants";
+
+export const mockOffer: Offer = {
+    id: 1,
     subjectName: 'Systemy rozproszone',
     wantedGroup: {
         teacherName: 'Jan Kowalski',
@@ -12,9 +15,9 @@ export const mockOffer = {
     }
 };
 
-export const mockOffers = Array(10).fill(mockOffer);
+export const mockOffers: Offer[] = Array(10).fill(mockOffer);
 
-export const mockFiltersData = {
+export const mockFiltersData: FiltersData = {
     subjectsList: [
         'Systemy rozproszone',
         'Inżynieria oprogramowania',

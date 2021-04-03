@@ -11,10 +11,13 @@ export interface OneForOneTileProps {
         timeSlot: string;
         comment: string;
         whoOffers: string;
-    }
+    };
+    acceptCallback?: () => void;
+    editCallback?: () => void;
+    deleteCallback?: () => void;
 }
 
-export const OneForOneTile: React.FC<OneForOneTileProps> = ({ subjectName, wantedGroup, offeredGroup }) => (
+export const OneForOneTile: React.FC<OneForOneTileProps> = ({ subjectName, wantedGroup, offeredGroup, acceptCallback, editCallback, deleteCallback }) => (
     <P.Container>
         <P.SubjectName>{subjectName}</P.SubjectName>
         <P.OffersBox>
@@ -35,6 +38,11 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ subjectName, wante
                 </P.ClassBox>
             </P.SlotBox>
         </P.OffersBox>
+        <P.ButtonsBox>
+            {acceptCallback && <P.Button onClick={acceptCallback}>Akceptuj</P.Button>}
+            {editCallback && <P.Button onClick={editCallback}>Edytuj</P.Button>}
+            {deleteCallback && <P.Button onClick={deleteCallback}>Usuń</P.Button>}
+        </P.ButtonsBox>
     </P.Container>
 );
 

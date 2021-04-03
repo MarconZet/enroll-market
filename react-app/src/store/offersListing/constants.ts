@@ -21,6 +21,7 @@ export type OffersListingAction = {
 };
 
 export interface Offer {
+    id: number;
     subjectName: string;
     wantedGroup: {
         teacherName: string;

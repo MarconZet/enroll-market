@@ -45,3 +45,18 @@ export const ClassBox = styled.div<{ isOffered?: boolean }>`
         font-size: 16px;
     }
 `;
+
+export const ButtonsBox = styled.div`
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    border-top: 1px solid black;
+`;
+
+export const Button = styled.button`
+    padding: 12px 36px;
+    margin: 0 16px;
+    font-size: 16px;
+`;
