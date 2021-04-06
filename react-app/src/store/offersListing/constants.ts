@@ -3,6 +3,7 @@ export enum OffersListingActionType {
     GetPageSuccess = 'offersListing/GET_PAGE_SUCCESS',
     GetPageFail = 'offersListing/GET_PAGE_FAIL',
     ApplyFilters = 'offersListing/APPLY_FILTERS',
+    SetType = 'offersListing/SET_TYPE',
 };
 
 export type OffersListingAction = {
@@ -18,6 +19,9 @@ export type OffersListingAction = {
 } | {
     type: OffersListingActionType.ApplyFilters,
     filters: Filters,
+} | {
+    type: OffersListingActionType.SetType,
+    listingType: ListingType,
 };
 
 export interface Offer {
@@ -32,7 +36,8 @@ export interface Offer {
         timeSlot: string;
         comment: string;
         whoOffers: string;
-    }
+    },
+    offerentId: string;
 }
 
 export interface FiltersData {
@@ -45,6 +50,8 @@ export interface Filters {
     offeredSlot: string;
     wantedSlot: string;
 }
+
+export type ListingType = 'all' | 'madeByMe' | 'acceptedByMe';
 export interface OffersListingState {
     page: number;
     totalPages: number;
@@ -52,6 +59,7 @@ export interface OffersListingState {
     isLoading: boolean;
     filters?: Filters;
     filtersData: FiltersData;
+    type: ListingType;
 };
 
 export const InitialOffersListingState: OffersListingState = {
@@ -64,4 +72,5 @@ export const InitialOffersListingState: OffersListingState = {
         timeSlots: undefined,
         subjectsList: undefined,
     },
+    type: 'all',
 };

@@ -20,6 +20,6 @@ export function* applyFiltersWorker() {
 export function* offersListingWatcher() {
     yield all([
         takeEvery(C.OffersListingActionType.GetPageRequest, getPageWorker),
-        takeEvery(C.OffersListingActionType.ApplyFilters, applyFiltersWorker),
+        takeEvery([C.OffersListingActionType.ApplyFilters, C.OffersListingActionType.SetType], applyFiltersWorker),
     ]);
 };

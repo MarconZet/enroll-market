@@ -11,3 +11,5 @@ export const offersListingFiltersSelector = (state: ApplicationState) => state.o
 export const offersListingFiltersDataSelector = (state: ApplicationState) => state.offersListing.filtersData;
 
 export const offersListingIsLoadingSelector = (state: ApplicationState) => state.offersListing.isLoading;
+
+export const offersListingTypeSelector = (state: ApplicationState) => state.offersListing.type;

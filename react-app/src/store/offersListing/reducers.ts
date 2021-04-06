@@ -27,6 +27,11 @@ export const offersListingReducer = (state = C.InitialOffersListingState, action
                 ...state,
                 filters: action.filters,
             };
+        case C.OffersListingActionType.SetType:
+            return {
+                ...state,
+                type: action.listingType,
+            };
         default:
             return state;
     }
