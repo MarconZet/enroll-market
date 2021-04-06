@@ -9,7 +9,8 @@ export const Container = styled.form`
 `;
 
 export const Submit = styled.button`
-    padding: 8px;
+    padding: 12px 36px;
+    margin-top: 8px;
     font-size: 16px;
     border: 1px solid black;
 `;

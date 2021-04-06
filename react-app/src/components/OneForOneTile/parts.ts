@@ -14,11 +14,12 @@ export const SubjectName = styled.span`
     font-weight: bold;
 `;
 
-export const OffersBox = styled.div`
+export const OffersBox = styled.div<{ reverseOrder?: boolean }>`
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
     width: 100%;
+
+    ${({ reverseOrder }) => reverseOrder ? 'flex-direction: row-reverse;' : 'flex-direction: row;'}
 `;
 
 export const SlotBox = styled.div`
@@ -39,10 +40,12 @@ export const ClassBox = styled.div<{ isOffered?: boolean }>`
     padding: 8px;
     height: 100px;
     width: 300px;
-    ${({ isOffered }) => isOffered ? 'background-color: green;' : 'background-color: yellow;'}
+    ${({ isOffered }) => isOffered ? 'background-color: aquamarine;' : 'background-color: khaki;'}
 
-    span {
+    span, b {
         font-size: 16px;
+        display: inline-block;
+        margin: 2px 0;
     }
 `;
 
@@ -50,8 +53,8 @@ export const ButtonsBox = styled.div`
     display: flex;
     flex-direction: row-reverse;
     width: 100%;
-    padding: 8px;
-    margin-top: 8px;
+    padding-top: 16px;
+    margin-top: 16px;
     border-top: 1px solid black;
 `;
 
@@ -59,4 +62,10 @@ export const Button = styled.button`
     padding: 12px 36px;
     margin: 0 16px;
     font-size: 16px;
+`;
+
+export const SVGBox = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

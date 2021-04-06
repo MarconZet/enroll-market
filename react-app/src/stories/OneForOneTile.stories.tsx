@@ -21,5 +21,8 @@ ExampleOne.args = {
         timeSlot: 'Śr. 9.35 - 11.05',
         comment: 'Płacę w walucie miasteczkowej',
         whoOffers: 'Marcin Woźniak',
-    }
+    },
+    acceptCallback: () => console.log('accept'),
+    editCallback: () => console.log('edit'),
+    deleteCallback: () => console.log('delete'),
 };

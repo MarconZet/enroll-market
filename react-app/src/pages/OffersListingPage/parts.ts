@@ -10,7 +10,7 @@ export const OffersContainer = styled.div`
     display: flex;
     flex-direction: column;
 
-    width: 700px;
+    width: 900px;
 
     padding: 8px;
 `;

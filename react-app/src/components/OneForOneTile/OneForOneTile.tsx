@@ -1,4 +1,5 @@
 import * as P from './parts';
+import { ReactComponent as Arrow } from '../../assets/arrow_right.svg';
 
 export interface OneForOneTileProps {
     subjectName: string;
@@ -15,26 +16,34 @@ export interface OneForOneTileProps {
     acceptCallback?: () => void;
     editCallback?: () => void;
     deleteCallback?: () => void;
+    reverseOrder?: boolean;
 }
 
-export const OneForOneTile: React.FC<OneForOneTileProps> = ({ subjectName, wantedGroup, offeredGroup, acceptCallback, editCallback, deleteCallback }) => (
+export const OneForOneTile: React.FC<OneForOneTileProps> = ({ subjectName, wantedGroup, offeredGroup, acceptCallback, editCallback, deleteCallback, reverseOrder }) => (
     <P.Container>
         <P.SubjectName>{subjectName}</P.SubjectName>
-        <P.OffersBox>
+        <P.OffersBox reverseOrder={reverseOrder}>
             <P.SlotBox>
                 <P.Subheader>Oferowany termin</P.Subheader>
-                <P.ClassBox>
-                    <span>{wantedGroup.teacherName}</span>
-                    <span>{wantedGroup.timeSlot}</span>
-                </P.ClassBox>
-            </P.SlotBox>
-            <P.SlotBox>
-                <P.Subheader>Oczekiwany termin</P.Subheader>
                 <P.ClassBox isOffered>
-                    <span>{offeredGroup.teacherName}</span>
-                    <span>{offeredGroup.timeSlot}</span>
+                    <b>{offeredGroup.teacherName}</b>
+                    <b>{offeredGroup.timeSlot}</b>
                     <span>{offeredGroup.comment}</span>
                     <span>{offeredGroup.whoOffers}</span>
+                </P.ClassBox>
+            </P.SlotBox>
+            <P.SVGBox>
+                <Arrow
+                    height="100px"
+                    width="100px"
+                    viewBox="0 -5 25 25"
+                />
+            </P.SVGBox>
+            <P.SlotBox>
+                <P.Subheader>Oczekiwany termin</P.Subheader>
+                <P.ClassBox>
+                    <b>{wantedGroup.teacherName}</b>
+                    <b>{wantedGroup.timeSlot}</b>
                 </P.ClassBox>
             </P.SlotBox>
         </P.OffersBox>

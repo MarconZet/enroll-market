@@ -10,11 +10,10 @@ export const Button = styled.button<{ isCurrentPage?: boolean }>`
     height: 50px;
 
     background-color: white;
-    color: blue;
 
     font-size: 24px;
 
-    ${({ isCurrentPage }) => isCurrentPage && 'background-color: gray;'}
+    ${({ isCurrentPage }) => isCurrentPage && 'background-color: royalblue;'}
 
     margin: 0 4px;
 `;
@@ -24,7 +23,6 @@ export const Input = styled.input`
     height: 46px;
 
     background-color: white;
-    color: blue;
 
     font-size: 24px;
 
@@ -33,4 +31,8 @@ export const Input = styled.input`
     text-align: center;
 
     margin: 0 4px;
+
+    &:focus {
+        background-color: lightskyblue;
+    }
 `;
