@@ -12,6 +12,6 @@ public class ApiBasePathConfiguration implements WebMvcConfigurer {
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer.addPathPrefix("/api", (clazz)->true);
+        configurer.addPathPrefix("/api", (clazz)->clazz.getPackageName().contains("pl.edu.agh.springapp"));
     }
 }
