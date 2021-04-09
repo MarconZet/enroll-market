@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,6 @@ public class Teacher {
     private String surname;
     private String emailAddress;
 
-
     @OneToMany(mappedBy = "teacher")
-    private List<SubjectGroup> subjectGroups;
+    private List<SubjectGroup> subjectGroups = new ArrayList<>();
 }
