@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import pl.edu.agh.springapp.data.dto.SubjectGroupDto;
 import pl.edu.agh.springapp.data.model.SubjectGroup;
 
-@Mapper(uses = {TeacherMapper.class})
+@Mapper(uses = {TeacherMapper.class, SubjectMapper.class})
 public interface SubjectGroupMapper {
     @Mapping(source = "type", target = "subjectType")
     @Mapping(source = "day", target = "dayOfWeek")

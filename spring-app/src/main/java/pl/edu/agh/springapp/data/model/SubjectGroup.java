@@ -23,6 +23,20 @@ public class SubjectGroup {
     private DayOfWeek day;
 
     @ManyToOne
+    @JoinColumn(name="subject_id")
+    private Subject subject;
+
+    @ManyToOne
     @JoinColumn(name="teacher_id")
     private Teacher teacher;
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+        teacher.getSubjectGroups().add(this);
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+        subject.getSubjectGroups().add(this);
+    }
 }

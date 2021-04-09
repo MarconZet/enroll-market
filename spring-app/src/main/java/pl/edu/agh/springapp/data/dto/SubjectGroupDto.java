@@ -9,6 +9,7 @@ import java.time.LocalTime;
 public class SubjectGroupDto {
     private Long id;
     private String name;
+    private SubjectShortDto subject;
     private String subjectType;
     private LocalTime startTime;
     private String dayOfWeek;
