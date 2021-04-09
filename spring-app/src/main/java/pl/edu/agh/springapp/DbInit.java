@@ -5,13 +5,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
+import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.data.mapper.CourseMapper;
+import pl.edu.agh.springapp.data.mapper.StudentMapper;
 import pl.edu.agh.springapp.data.mapper.SubjectMapper;
 import pl.edu.agh.springapp.data.mapper.TeacherMapper;
 import pl.edu.agh.springapp.data.model.*;
 import pl.edu.agh.springapp.repository.CourseRepository;
+import pl.edu.agh.springapp.repository.StudentRepository;
 import pl.edu.agh.springapp.repository.SubjectRepository;
 import pl.edu.agh.springapp.repository.TeacherRepository;
 
@@ -27,10 +30,12 @@ public class DbInit implements CommandLineRunner {
     private final TeacherRepository teacherRepository;
     private final CourseRepository courseRepository;
     private final SubjectRepository subjectRepository;
+    private final StudentRepository studentRepository;
 
     private final TeacherMapper teacherMapper;
     private final CourseMapper courseMapper;
     private final SubjectMapper subjectMapper;
+    private final StudentMapper studentMapper;
 
     @Override
     public void run(String... args) throws Exception {
@@ -99,5 +104,17 @@ public class DbInit implements CommandLineRunner {
         List<Course> courses = courseMapper.coursePostDtosToCourses(coursePostDtos);
         List<Course> savedCourses = new ArrayList<>();
         courseRepository.saveAll(courses).forEach(savedCourses::add);
+
+        List<StudentPostDto> studentPostDtos = Arrays.asList(
+                new StudentPostDto("Grzegorz", "Janosz", false),
+                new StudentPostDto("Adam", "Bera", false),
+                new StudentPostDto("Magdalena", "Pastuła", false),
+                new StudentPostDto("Janusz", "Kowal", false),
+                new StudentPostDto("Grażyna", "Gwóźdź", false),
+                new StudentPostDto("Marcin", "Zielonka", true)
+        );
+        List<Student> students = studentMapper.studentPostDtosToStudents(studentPostDtos);
+        List<Student> savedStudents = new ArrayList<>();
+        studentRepository.saveAll(students).forEach(savedStudents::add);
     }
 }
