@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,12 +22,12 @@ public class OfferConditions {
             joinColumns = @JoinColumn(name = "teacher_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "offerConditions_id",
                     referencedColumnName = "id"))
-    private List<Teacher> teachers;
+    private List<Teacher> teachers = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name="offer_id")
     private Offer offer;
 
     @OneToMany(mappedBy = "offerConditions")
-    private List<TimeBlock> timeBlocks;
+    private List<TimeBlock> timeBlocks = new ArrayList<>();
 }

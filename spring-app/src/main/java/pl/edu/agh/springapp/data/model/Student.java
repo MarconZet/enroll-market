@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,5 +23,5 @@ public class Student {
     private boolean isAdmin;
 
     @OneToMany(mappedBy = "student")
-    private List<Offer> offers;
+    private List<Offer> offers = new ArrayList<>();
 }
