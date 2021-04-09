@@ -1,4 +1,4 @@
-package pl.edu.agh.springapp.domein;
+package pl.edu.agh.springapp.domein.offer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
