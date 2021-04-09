@@ -1,9 +1,9 @@
 package pl.edu.agh.springapp.data.mapper;
 
 import org.mapstruct.Mapper;
-import pl.edu.agh.springapp.data.dto.SubjectAllDto;
-import pl.edu.agh.springapp.data.dto.SubjectPostDto;
-import pl.edu.agh.springapp.data.dto.SubjectShortDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectShortDto;
 import pl.edu.agh.springapp.data.model.Subject;
 
 import java.util.List;

@@ -1,7 +1,8 @@
-package pl.edu.agh.springapp.data.dto;
+package pl.edu.agh.springapp.data.dto.course;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import pl.edu.agh.springapp.data.dto.subject.SubjectShortDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
 
 import java.time.LocalTime;
 

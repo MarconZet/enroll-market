@@ -2,8 +2,8 @@ package pl.edu.agh.springapp.data.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import pl.edu.agh.springapp.data.dto.CourseDto;
-import pl.edu.agh.springapp.data.dto.CourseWithoutSubjectDto;
+import pl.edu.agh.springapp.data.dto.course.CourseDto;
+import pl.edu.agh.springapp.data.dto.course.CourseWithoutSubjectDto;
 import pl.edu.agh.springapp.data.model.Course;
 
 @Mapper(

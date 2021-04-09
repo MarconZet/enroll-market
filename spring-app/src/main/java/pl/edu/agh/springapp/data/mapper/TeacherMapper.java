@@ -1,8 +1,8 @@
 package pl.edu.agh.springapp.data.mapper;
 
 import org.mapstruct.Mapper;
-import pl.edu.agh.springapp.data.dto.TeacherDto;
-import pl.edu.agh.springapp.data.dto.TeacherPostDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.data.model.Teacher;
 
 import java.util.List;

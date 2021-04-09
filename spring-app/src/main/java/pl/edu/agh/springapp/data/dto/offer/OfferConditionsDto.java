@@ -1,6 +1,8 @@
-package pl.edu.agh.springapp.data.dto;
+package pl.edu.agh.springapp.data.dto.offer;
 
 import lombok.Data;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
+import pl.edu.agh.springapp.data.dto.timeBlock.TimeBlockDto;
 
 import java.util.List;
 

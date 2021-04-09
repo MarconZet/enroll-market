@@ -2,13 +2,12 @@ package pl.edu.agh.springapp.domein.subject;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.springapp.data.dto.*;
+import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectShortDto;
 import pl.edu.agh.springapp.data.mapper.SubjectMapper;
-import pl.edu.agh.springapp.data.mapper.TeacherMapper;
 import pl.edu.agh.springapp.data.model.Subject;
-import pl.edu.agh.springapp.data.model.Teacher;
 import pl.edu.agh.springapp.repository.SubjectRepository;
-import pl.edu.agh.springapp.repository.TeacherRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

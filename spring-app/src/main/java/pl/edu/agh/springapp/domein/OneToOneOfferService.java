@@ -2,8 +2,8 @@ package pl.edu.agh.springapp.domein;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferDto;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferPostDto;
+import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
+import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
 import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
 import pl.edu.agh.springapp.data.model.Offer;
 import pl.edu.agh.springapp.repository.OfferRepository;

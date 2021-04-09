@@ -2,12 +2,8 @@ package pl.edu.agh.springapp.domein.teacher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferDto;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferPostDto;
-import pl.edu.agh.springapp.data.dto.TeacherDto;
-import pl.edu.agh.springapp.data.dto.TeacherPostDto;
-import pl.edu.agh.springapp.data.model.Teacher;
-import pl.edu.agh.springapp.domein.OneToOneOfferService;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 
 import java.util.List;
 

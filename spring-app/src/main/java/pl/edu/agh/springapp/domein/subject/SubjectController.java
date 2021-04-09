@@ -2,7 +2,9 @@ package pl.edu.agh.springapp.domein.subject;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.springapp.data.dto.*;
+import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectShortDto;
 
 import java.util.List;
 

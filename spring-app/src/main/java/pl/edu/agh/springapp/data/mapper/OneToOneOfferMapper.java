@@ -1,10 +1,10 @@
 package pl.edu.agh.springapp.data.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferDto;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferPostDto;
-import pl.edu.agh.springapp.data.dto.CourseDto;
-import pl.edu.agh.springapp.data.dto.TeacherDto;
+import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
+import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
+import pl.edu.agh.springapp.data.dto.course.CourseDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
 import pl.edu.agh.springapp.data.model.*;
 import pl.edu.agh.springapp.repository.CourseRepository;
 

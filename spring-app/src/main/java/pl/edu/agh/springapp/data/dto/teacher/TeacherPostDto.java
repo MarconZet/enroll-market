@@ -1,4 +1,4 @@
-package pl.edu.agh.springapp.data.dto;
+package pl.edu.agh.springapp.data.dto.teacher;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

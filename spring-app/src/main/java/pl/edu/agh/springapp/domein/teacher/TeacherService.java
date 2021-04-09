@@ -2,8 +2,8 @@ package pl.edu.agh.springapp.domein.teacher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.springapp.data.dto.TeacherDto;
-import pl.edu.agh.springapp.data.dto.TeacherPostDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.data.mapper.TeacherMapper;
 import pl.edu.agh.springapp.data.model.Teacher;
 import pl.edu.agh.springapp.repository.TeacherRepository;

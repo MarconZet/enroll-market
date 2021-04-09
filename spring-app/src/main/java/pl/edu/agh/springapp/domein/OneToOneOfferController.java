@@ -1,12 +1,9 @@
 package pl.edu.agh.springapp.domein;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferDto;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferPostDto;
+import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
+import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
 
 import java.util.List;
 

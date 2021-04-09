@@ -1,7 +1,7 @@
 package pl.edu.agh.springapp.data.mapper;
 
 import org.mapstruct.Mapper;
-import pl.edu.agh.springapp.data.dto.StudentDto;
+import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.model.Student;
 
 @Mapper
