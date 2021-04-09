@@ -1,17 +1,19 @@
 package pl.edu.agh.springapp.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 
 @Data
-public class SubjectGroupDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class CourseWithoutSubjectDto {
     private Long id;
     private String name;
-    private SubjectShortDto subject;
-    private String subjectType;
+    private String courseType;
     private LocalTime startTime;
     private String dayOfWeek;
-    private TeacherDto teacher;
+    private Long teacherId;
 }

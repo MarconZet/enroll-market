@@ -11,14 +11,14 @@ import java.time.LocalTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubjectGroup {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
-    private SubjectType type;
+    private CourseType type;
     private LocalTime startTime;
     private DayOfWeek day;
 
@@ -32,11 +32,11 @@ public class SubjectGroup {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
-        teacher.getSubjectGroups().add(this);
+        teacher.getCourses().add(this);
     }
 
     public void setSubject(Subject subject) {
         this.subject = subject;
-        subject.getSubjectGroups().add(this);
+        subject.getCourses().add(this);
     }
 }

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,5 +20,5 @@ public class Subject {
     private String name;
 
     @OneToMany(mappedBy = "subject")
-    List<SubjectGroup> subjectGroups = new ArrayList<>();
+    List<Course> courses = new ArrayList<>();
 }

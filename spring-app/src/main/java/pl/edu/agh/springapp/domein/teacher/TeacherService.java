@@ -2,20 +2,12 @@ package pl.edu.agh.springapp.domein.teacher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferDto;
-import pl.edu.agh.springapp.data.dto.OneToOneOfferPostDto;
 import pl.edu.agh.springapp.data.dto.TeacherDto;
 import pl.edu.agh.springapp.data.dto.TeacherPostDto;
-import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
 import pl.edu.agh.springapp.data.mapper.TeacherMapper;
-import pl.edu.agh.springapp.data.model.Offer;
-import pl.edu.agh.springapp.data.model.SubjectGroup;
 import pl.edu.agh.springapp.data.model.Teacher;
-import pl.edu.agh.springapp.repository.OfferRepository;
-import pl.edu.agh.springapp.repository.SubjectGroupRepository;
 import pl.edu.agh.springapp.repository.TeacherRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;

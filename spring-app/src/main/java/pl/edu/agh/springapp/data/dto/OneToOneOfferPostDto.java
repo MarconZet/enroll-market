@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OneToOneOfferPostDto {
     private StudentDto student;
-    private SubjectGroupDto givenSubjectGroup;
-    private SubjectGroupDto takenSubjectGroup;
+    private CourseDto givenCourse;
+    private CourseDto takenCourse;
 }

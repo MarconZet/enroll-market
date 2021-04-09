@@ -23,5 +23,5 @@ public class Teacher {
     private String emailAddress;
 
     @OneToMany(mappedBy = "teacher")
-    private List<SubjectGroup> subjectGroups = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
 }

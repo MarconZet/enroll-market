@@ -16,7 +16,7 @@ public class OneToOneOfferController {
     private final OneToOneOfferService service;
 
     @PostMapping("/one-to-one-offers")
-    public OneToOneOfferDto newOneToOneOffer(OneToOneOfferPostDto oneToOneOfferPostDto) {
+    public OneToOneOfferDto newOneToOneOffer(@RequestBody OneToOneOfferPostDto oneToOneOfferPostDto) {
         return service.newOneToOneOffer(oneToOneOfferPostDto);
     }
 

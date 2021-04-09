@@ -6,6 +6,6 @@ import lombok.Data;
 public class OneToOneOfferDto {
     private Long id;
     private StudentDto student;
-    private SubjectGroupDto givenSubjectGroup;
-    private SubjectGroupDto takenSubjectGroup;
+    private CourseDto givenCourse;
+    private CourseDto takenCourse;
 }

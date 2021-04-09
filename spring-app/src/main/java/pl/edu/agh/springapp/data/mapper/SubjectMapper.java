@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper(
         componentModel = "spring",
-        uses = {SubjectGroupMapper.class}
+        uses = {CourseMapper.class}
 )
 public interface SubjectMapper {
     Subject subjectShortDtoToSubject(SubjectShortDto subjectShortDto);

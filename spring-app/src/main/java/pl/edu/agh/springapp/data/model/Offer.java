@@ -20,8 +20,8 @@ public class Offer {
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name="subjectGroup_id")
-    private SubjectGroup givenSubjectGroup;
+    @JoinColumn(name="course_id")
+    private Course givenCourse;
 
     @OneToOne(mappedBy = "offer")
     private OfferConditions offerConditions;

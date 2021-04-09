@@ -2,16 +2,13 @@ package pl.edu.agh.springapp.domein;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.springapp.data.dto.DbObjectDto;
 import pl.edu.agh.springapp.data.dto.OneToOneOfferDto;
 import pl.edu.agh.springapp.data.dto.OneToOneOfferPostDto;
 import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
-import pl.edu.agh.springapp.data.model.DbObject;
 import pl.edu.agh.springapp.data.model.Offer;
 import pl.edu.agh.springapp.repository.OfferRepository;
-import pl.edu.agh.springapp.repository.SubjectGroupRepository;
+import pl.edu.agh.springapp.repository.CourseRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -21,14 +18,14 @@ import java.util.stream.StreamSupport;
 public class OneToOneOfferService {
 
     private final OfferRepository offerRepository;
-    private final SubjectGroupRepository subjectGroupRepository;
+    private final CourseRepository courseRepository;
     private final OneToOneOfferMapper oneToOneOfferMapper;
 
     public OneToOneOfferDto newOneToOneOffer(OneToOneOfferPostDto oneToOneOfferPostDto) {
         Offer offer = oneToOneOfferMapper.oneToOneOfferDtoToOffer(oneToOneOfferPostDto);
         Offer savedOffer = offerRepository.save(offer);
         OneToOneOfferDto result = oneToOneOfferMapper.offerToOneToOneOfferDto(savedOffer);
-        result.setTakenSubjectGroup(oneToOneOfferPostDto.getTakenSubjectGroup());
+        result.setTakenCourse(oneToOneOfferPostDto.getTakenCourse());
         return result;
     }
 
