@@ -10,12 +10,14 @@ import java.util.List;
 
 @Mapper(
         componentModel = "spring",
-        uses = {CourseMapper.class}
+        uses = {CourseMapper.class, SubjectMapperResolver.class}
 )
 public interface SubjectMapper {
     Subject subjectShortDtoToSubject(SubjectShortDto subjectShortDto);
     Subject subjectPostDtoToSubject(SubjectPostDto subjectPostDto);
+    List<Subject> subjectPostDtosToSubjects(List<SubjectPostDto> subjectPostDtos);
     SubjectShortDto subjectToSubjectShortDto(Subject subject);
     SubjectAllDto subjectToSubjectAllDto(Subject subject);
     List<SubjectAllDto> subjectsToSubjectAllDtos(List<Subject> subjects);
+    Subject map(Long id);
 }

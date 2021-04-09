@@ -25,7 +25,7 @@ public class OneToOneOfferMapper {
     public Offer oneToOneOfferDtoToOffer(OneToOneOfferPostDto oneToOneOfferPostDto) {
         Offer offer = new Offer();
         offer.setStudent(studentMapper.studentDtoToStudent(oneToOneOfferPostDto.getStudent()));
-        offer.setGivenCourse(courseMapper.subjectGroupDtoToSubjectGroup(oneToOneOfferPostDto
+        offer.setGivenCourse(courseMapper.courseDtoToCourse(oneToOneOfferPostDto
                 .getGivenCourse()));
         OfferConditions offerConditions = new OfferConditions();
         List<Teacher> teachers = new ArrayList<>();
@@ -56,7 +56,7 @@ public class OneToOneOfferMapper {
         OneToOneOfferDto oneToOneOfferDto = new OneToOneOfferDto();
         oneToOneOfferDto.setId(offer.getId());
         oneToOneOfferDto.setStudent(studentMapper.studentToStudentDto(offer.getStudent()));
-        oneToOneOfferDto.setGivenCourse(courseMapper.subjectGroupToSubjectGroupDto(
+        oneToOneOfferDto.setGivenCourse(courseMapper.courseToCourseDto(
                 offer.getGivenCourse()));
         oneToOneOfferDto.setTakenCourse(findSubjectGroupWithOffer(offer));
         return oneToOneOfferDto;
@@ -66,7 +66,7 @@ public class OneToOneOfferMapper {
         LocalTime searchedStartTime = offer.getOfferConditions().getTimeBlocks().get(0).getStartTime();
         Teacher searchedTeacher = offer.getOfferConditions().getTeachers().get(0);
         Course searchedGroup = courseRepository.findByStartTimeAndTeacher(searchedStartTime, searchedTeacher).get(0);
-        return courseMapper.subjectGroupToSubjectGroupDto(searchedGroup);
+        return courseMapper.courseToCourseDto(searchedGroup);
     }
 
     public List<OneToOneOfferDto> offersToOneToOneOfferDtos(List<Offer> offers) {

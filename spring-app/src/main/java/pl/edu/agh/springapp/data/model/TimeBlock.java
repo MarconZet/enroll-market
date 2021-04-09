@@ -1,5 +1,6 @@
 package pl.edu.agh.springapp.data.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,9 @@ public class TimeBlock {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
     private DayOfWeek day;
 

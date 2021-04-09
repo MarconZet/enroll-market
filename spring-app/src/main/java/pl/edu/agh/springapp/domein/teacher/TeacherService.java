@@ -2,6 +2,7 @@ package pl.edu.agh.springapp.domein.teacher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherAllDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.data.mapper.TeacherMapper;
@@ -26,10 +27,10 @@ public class TeacherService {
         return result;
     }
 
-    public List<TeacherDto> getAllTeachers() {
+    public List<TeacherAllDto> getAllTeachers() {
         List<Teacher> teachers = StreamSupport.stream(teacherRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
-        return teacherMapper.teachersToTeacherDtos(teachers);
+        return teacherMapper.teachersToTeacherAllDtos(teachers);
     }
 
     public void deleteTeacherWithId(Long id) {

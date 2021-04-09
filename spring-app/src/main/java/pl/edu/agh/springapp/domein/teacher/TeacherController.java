@@ -2,6 +2,7 @@ package pl.edu.agh.springapp.domein.teacher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherAllDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 
@@ -18,7 +19,7 @@ public class TeacherController {
     }
 
     @GetMapping("/teachers")
-    public List<TeacherDto> getAllTeachers() {
+    public List<TeacherAllDto> getAllTeachers() {
         return service.getAllTeachers();
     }
 

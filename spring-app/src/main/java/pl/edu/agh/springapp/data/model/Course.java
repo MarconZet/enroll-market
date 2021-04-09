@@ -1,5 +1,6 @@
 package pl.edu.agh.springapp.data.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +17,8 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private String name;
     private CourseType type;
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
     private DayOfWeek day;
 
@@ -29,14 +29,4 @@ public class Course {
     @ManyToOne
     @JoinColumn(name="teacher_id")
     private Teacher teacher;
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-        teacher.getCourses().add(this);
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-        subject.getCourses().add(this);
-    }
 }
