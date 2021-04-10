@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "offerConditions")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,17 +17,15 @@ public class OfferConditions {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "teacher_offerConditions",
-            joinColumns = @JoinColumn(name = "teacher_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "offerConditions_id",
-                    referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "offerConditions_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> teachers = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name="offer_id")
+    @OneToOne(mappedBy = "offerConditions")
     private Offer offer;
 
-    @OneToMany(mappedBy = "offerConditions")
+    @OneToMany(mappedBy = "offerConditions", cascade = {CascadeType.MERGE, CascadeType.PERSIST }, orphanRemoval = true)
     private List<TimeBlock> timeBlocks = new ArrayList<>();
 }

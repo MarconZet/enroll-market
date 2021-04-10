@@ -10,7 +10,7 @@ import pl.edu.agh.springapp.data.dto.course.CourseDto;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OneToOneOfferPostDto {
-    private StudentDto student;
-    private CourseDto givenCourse;
-    private CourseDto takenCourse;
+    private Long studentId;
+    private Long givenCourseId;
+    private Long takenCourseId;
 }

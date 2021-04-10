@@ -25,6 +25,6 @@ public class TimeBlock {
     private DayOfWeek day;
 
     @ManyToOne
-    @JoinColumn(name="offerConditions_id")
+    @JoinColumn(name="OfferConditions_id", nullable = false)
     private OfferConditions offerConditions;
 }

@@ -5,18 +5,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
+import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
 import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
-import pl.edu.agh.springapp.data.mapper.CourseMapper;
-import pl.edu.agh.springapp.data.mapper.StudentMapper;
-import pl.edu.agh.springapp.data.mapper.SubjectMapper;
-import pl.edu.agh.springapp.data.mapper.TeacherMapper;
+import pl.edu.agh.springapp.data.mapper.*;
 import pl.edu.agh.springapp.data.model.*;
-import pl.edu.agh.springapp.repository.CourseRepository;
-import pl.edu.agh.springapp.repository.StudentRepository;
-import pl.edu.agh.springapp.repository.SubjectRepository;
-import pl.edu.agh.springapp.repository.TeacherRepository;
+import pl.edu.agh.springapp.repository.*;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -31,14 +26,16 @@ public class DbInit implements CommandLineRunner {
     private final CourseRepository courseRepository;
     private final SubjectRepository subjectRepository;
     private final StudentRepository studentRepository;
+    private final OfferRepository offerRepository;
 
     private final TeacherMapper teacherMapper;
     private final CourseMapper courseMapper;
     private final SubjectMapper subjectMapper;
     private final StudentMapper studentMapper;
+    private final OneToOneOfferMapper oneToOneOfferMapper;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         // subjects
         List<SubjectPostDto> subjectPostDtos = Arrays.asList(
                 new SubjectPostDto("Analiza matematyczna"),
@@ -116,5 +113,12 @@ public class DbInit implements CommandLineRunner {
         List<Student> students = studentMapper.studentPostDtosToStudents(studentPostDtos);
         List<Student> savedStudents = new ArrayList<>();
         studentRepository.saveAll(students).forEach(savedStudents::add);
+
+        List<OneToOneOfferPostDto> oneToOneOfferPostDtos = Arrays.asList(
+                new OneToOneOfferPostDto(28L, 15L, 16L),
+                new OneToOneOfferPostDto(29L, 18L, 19L)
+        );
+        List<Offer> offers = oneToOneOfferMapper.oneToOneOfferPostDtosToOffers(oneToOneOfferPostDtos);
+        offerRepository.saveAll(offers);
     }
 }

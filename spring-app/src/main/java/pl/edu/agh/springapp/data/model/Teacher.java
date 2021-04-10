@@ -24,4 +24,7 @@ public class Teacher {
 
     @OneToMany(mappedBy = "teacher")
     private List<Course> courses = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "teachers")
+    private List<OfferConditions> offerConditions = new ArrayList<>();
 }

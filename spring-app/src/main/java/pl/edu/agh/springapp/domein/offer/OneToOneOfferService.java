@@ -22,11 +22,9 @@ public class OneToOneOfferService {
     private final OneToOneOfferMapper oneToOneOfferMapper;
 
     public OneToOneOfferDto newOneToOneOffer(OneToOneOfferPostDto oneToOneOfferPostDto) {
-        Offer offer = oneToOneOfferMapper.oneToOneOfferDtoToOffer(oneToOneOfferPostDto);
+        Offer offer = oneToOneOfferMapper.oneToOneOfferPostDtoToOffer(oneToOneOfferPostDto);
         Offer savedOffer = offerRepository.save(offer);
-        OneToOneOfferDto result = oneToOneOfferMapper.offerToOneToOneOfferDto(savedOffer);
-        result.setTakenCourse(oneToOneOfferPostDto.getTakenCourse());
-        return result;
+        return oneToOneOfferMapper.offerToOneToOneOfferDto(savedOffer);
     }
 
     public List<OneToOneOfferDto> getAll() {

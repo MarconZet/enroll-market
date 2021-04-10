@@ -23,6 +23,10 @@ public class Offer {
     @JoinColumn(name="course_id")
     private Course givenCourse;
 
-    @OneToOne(mappedBy = "offer")
+    @OneToOne(
+            orphanRemoval = true,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST }
+            )
+    @JoinColumn(name = "offerConditions_id", referencedColumnName = "id")
     private OfferConditions offerConditions;
 }
