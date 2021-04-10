@@ -1,5 +1,6 @@
 package pl.edu.agh.springapp.data.dto.subject;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 public class SubjectAllDto {
     private Long id;
+
+    @ApiModelProperty(
+            value = "Name of subject" ,
+            name = "name",
+            example= "Analiza matematyczna",
+            dataType = "String"
+    )
     private String name;
     List<CourseWithoutSubjectDto> courses;
 }
