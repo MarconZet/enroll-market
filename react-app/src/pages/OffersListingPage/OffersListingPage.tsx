@@ -85,9 +85,9 @@ export const OffersListingPage: React.FC = () => {
                                 {offers.map((offer, index) => (
                                     <OneForOneTile
                                         key={index}
-                                        {...offer}
+                                        offer={offer}
                                         {...(
-                                            offer.offerentId === userId
+                                            offer.student.id === userId
                                                 ? myOfferProps(offer.id)
                                                 : othersOfferProps(offer.id)
                                         )}

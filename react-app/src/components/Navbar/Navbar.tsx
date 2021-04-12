@@ -36,9 +36,9 @@ export const Navbar: React.FC = () => {
 
     return (
         <P.Navbar>
-            <P.SelectSemester>
+            {/* <P.SelectSemester>
                 <option>Wybór semestru zrobi się w swoim czasie</option>
-            </P.SelectSemester>
+            </P.SelectSemester> */}
             <div>
                 {links.map(
                     (link) => (

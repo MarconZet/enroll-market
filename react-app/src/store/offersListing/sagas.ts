@@ -1,13 +1,15 @@
-import { put, takeEvery, all } from 'redux-saga/effects';
+import { put, takeEvery, all, call } from 'redux-saga/effects';
+import { getOneForOneOffers } from '../../api/requests';
 import * as A from './actions';
 import * as C from './constants'
-import { mockOffers, mockFiltersData } from './mockData';
+import { mockFiltersData } from './mockData';
 
 // TODO: this workers are temporarily mocks; update when api will be available
 
 export function* getPageWorker(action: C.OffersListingAction) {
     try {
-        yield put(A.getPageSuccess(mockOffers, 10, mockFiltersData))
+        const { data } = yield call(getOneForOneOffers);
+        yield put(A.getPageSuccess(data, 1, mockFiltersData))
     } catch (error) {
         yield put(A.getPageFail());
     }
