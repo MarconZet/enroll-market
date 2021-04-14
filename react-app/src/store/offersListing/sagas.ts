@@ -1,13 +1,13 @@
+import { AnyAction } from 'redux';
 import { put, takeEvery, all, call } from 'redux-saga/effects';
 import { getOneForOneOffers } from '../../api/requests';
 import * as A from './actions';
 import * as C from './constants'
 import { mockFiltersData } from './mockData';
 import notitier from '../../utils/notifications';
+import { OffersManagementActionType } from '../offersManagement/constants';
 
-// TODO: this workers are temporarily mocks; update when api will be available
-
-export function* getPageWorker(action: C.OffersListingAction) {
+export function* getPageWorker(action: AnyAction) {
     try {
         const { data } = yield call(getOneForOneOffers);
         yield put(A.getPageSuccess(data, 1, mockFiltersData))
@@ -23,7 +23,7 @@ export function* applyFiltersWorker() {
 
 export function* offersListingWatcher() {
     yield all([
-        takeEvery(C.OffersListingActionType.GetPageRequest, getPageWorker),
+        takeEvery([C.OffersListingActionType.GetPageRequest, OffersManagementActionType.DeleteOfferSuccess], getPageWorker),
         takeEvery([C.OffersListingActionType.ApplyFilters, C.OffersListingActionType.SetType], applyFiltersWorker),
     ]);
 };

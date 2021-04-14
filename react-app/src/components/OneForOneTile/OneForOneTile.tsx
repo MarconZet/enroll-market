@@ -22,7 +22,7 @@ const translations = {
     'LABORATORY': 'Laboratorium',
     'LECTURE': 'Wykład',
     'LESSON': 'Ćwiczenia',
-}
+};
 
 export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallback, editCallback, deleteCallback, reverseOrder }) => (
     <P.Container>
