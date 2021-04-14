@@ -3,13 +3,16 @@ import { put, takeEvery, all, call } from 'redux-saga/effects';
 import { deleteOneForOneOffer } from '../../api/requests';
 import * as A from './actions';
 import * as C from './constants';
+import notitier from '../../utils/notifications';
 
 export function* deleteOfferWorker(action: AnyAction) {
     try {
         yield call(deleteOneForOneOffer, action.id);
         yield put(A.deleteOfferSuccess());
+        notitier.success('Usunięcie oferty powiodło się.');
     } catch (error) {
-        yield put(A.deleteOfferFail())
+        yield put(A.deleteOfferFail());
+        notitier.alert('Usunięcie oferty nie powiodło się.');
     }
 }
 

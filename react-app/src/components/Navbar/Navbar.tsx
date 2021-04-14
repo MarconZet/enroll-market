@@ -41,8 +41,8 @@ export const Navbar: React.FC = () => {
             </P.SelectSemester> */}
             <div>
                 {links.map(
-                    (link) => (
-                        <Link to={link.path}>
+                    (link, index) => (
+                        <Link key={index} to={link.path}>
                             <P.Link isCurrent={(link.path === location.pathname) || link.otherPathsToHighlight?.includes(location.pathname)}>{link.title}</P.Link>
                         </Link>
                     )

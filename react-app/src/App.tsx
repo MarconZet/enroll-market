@@ -8,8 +8,11 @@ const App: React.FC = () => {
 	<BrowserRouter>
 		<Navbar />
 		<Switch>
-			<Route path={["/offers", "/myOffers/madeByMe", "/myOffers/acceptedByMe"]}>
+			<Route path={["/offers"]}>
 				<OffersListingPage />
+			</Route>
+			<Route path={["/myOffers/madeByMe", "/myOffers/acceptedByMe"]}>
+				<h1>Ten listing czeka na implementację odpowiedniego filtru. Wróć później.</h1>
 			</Route>
 			<Route path="*">
 				<h1>Tej strony nie ma i możliwe, że nie będzie. Amen.</h1>

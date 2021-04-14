@@ -13,7 +13,13 @@ export const Button = styled.button<{ isCurrentPage?: boolean }>`
 
     font-size: 24px;
 
-    ${({ isCurrentPage }) => isCurrentPage && 'background-color: royalblue;'}
+    ${({ isCurrentPage }) => isCurrentPage && `
+        background-color: royalblue;
+
+        :disabled {
+            color: unset;
+        }
+    `}
 
     margin: 0 4px;
 `;
