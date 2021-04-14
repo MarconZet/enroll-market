@@ -63,3 +63,9 @@ export interface OneForOneOffer {
     student: Student;
     takenCourse: Course;
 }
+
+export interface OneForOneOfferParams {
+    givenCourseId: number;
+    studentId: number;
+    takenCourseId: number;
+}

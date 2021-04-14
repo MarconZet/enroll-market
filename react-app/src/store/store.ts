@@ -3,6 +3,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import rootSaga from './rootSaga';
 import offersListingReducer from './offersListing/reducers';
 import userAuthReducer from './userAuth/reducers';
+import { DataUploadAndDownloadActionType } from './dataUploadAndDownload/constants';
 
 const makeStore = () => {
     const saga: SagaMiddleware = createSagaMiddleware();
@@ -11,7 +12,12 @@ const makeStore = () => {
             offersListing: offersListingReducer,
             userAuth: userAuthReducer,
         },
-        middleware: [...getDefaultMiddleware({ thunk: false }), saga],
+        middleware: [...getDefaultMiddleware({
+            thunk: false,
+            serializableCheck: {
+                ignoredActions: [DataUploadAndDownloadActionType.UploadDataRequest],
+              },
+        }), saga],
     });
 
     (store as any).sagaTask = saga.run(rootSaga);

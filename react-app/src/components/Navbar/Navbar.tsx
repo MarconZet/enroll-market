@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
         },
         {
             title: 'Import/export',
-            path: '/files',
+            path: '/dataUploadAndDownload',
         },
         {
             title: 'Moje oferty',
