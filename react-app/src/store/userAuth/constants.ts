@@ -9,7 +9,7 @@ export interface UserAuthState {
 
 export const InitialUserAuthState: UserAuthState = {
     isAdmin: true,
-    id: 0,
+    id: 29,
     name: 'Adam',
     surname: 'Kowalski',
 }

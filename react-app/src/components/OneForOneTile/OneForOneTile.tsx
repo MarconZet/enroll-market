@@ -10,6 +10,20 @@ export interface OneForOneTileProps {
     reverseOrder?: boolean;
 }
 
+const translations = {
+    'MONDAY': 'Poniedziałek',
+    'TUESDAY': 'Wtorek',
+    'WEDNESDAY': 'Środa',
+    'THURSDAY': 'Czwartek',
+    'FRIDAY': 'Piątek',
+    'SATURDAY': 'Sobota',
+    'SUNDAY': 'Niedziela',
+    'PROJECT': 'Projekt',
+    'LABORATORY': 'Laboratorium',
+    'LECTURE': 'Wykład',
+    'LESSON': 'Ćwiczenia',
+}
+
 export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallback, editCallback, deleteCallback, reverseOrder }) => (
     <P.Container>
         <P.SubjectName>{offer.givenCourse.subject.name}</P.SubjectName>
@@ -18,7 +32,8 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
                 <P.Subheader>Oferowany termin</P.Subheader>
                 <P.ClassBox isOffered>
                     <b>{offer.givenCourse.teacher.name} {offer.givenCourse.teacher.surname}</b>
-                    <b>{offer.givenCourse.dayOfWeek}, {offer.givenCourse.startTime.hour}:{offer.givenCourse.startTime.minute}</b>
+                    <b>{translations[offer.givenCourse.dayOfWeek]}, {offer.givenCourse.startTime.hour}:{offer.givenCourse.startTime.minute}</b>
+                    <b>{translations[offer.givenCourse.courseType]}</b>
                     {/* <span>{offeredGroup.comment}</span> */}
                     <span>{offer.student.name} {offer.student.surname}</span>
                 </P.ClassBox>
@@ -34,7 +49,8 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
                 <P.Subheader>Oczekiwany termin</P.Subheader>
                 <P.ClassBox>
                     <b>{offer.takenCourse.teacher.name} {offer.takenCourse.teacher.surname}</b>
-                    <b>{offer.takenCourse.dayOfWeek}, {offer.takenCourse.startTime.hour}:{offer.takenCourse.startTime.minute}</b>
+                    <b>{translations[offer.takenCourse.dayOfWeek]}, {offer.takenCourse.startTime.hour}:{offer.takenCourse.startTime.minute}</b>
+                    <b>{translations[offer.takenCourse.courseType]}</b>
                 </P.ClassBox>
             </P.SlotBox>
         </P.OffersBox>

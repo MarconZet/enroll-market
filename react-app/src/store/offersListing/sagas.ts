@@ -3,6 +3,7 @@ import { getOneForOneOffers } from '../../api/requests';
 import * as A from './actions';
 import * as C from './constants'
 import { mockFiltersData } from './mockData';
+import notitier from '../../utils/notifications';
 
 // TODO: this workers are temporarily mocks; update when api will be available
 
@@ -12,6 +13,7 @@ export function* getPageWorker(action: C.OffersListingAction) {
         yield put(A.getPageSuccess(data, 1, mockFiltersData))
     } catch (error) {
         yield put(A.getPageFail());
+        notitier.alert('Ładowanie strony nie powiodło się. Spróbuj jeszcze raz.');
     }
 }
 

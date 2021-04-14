@@ -34,13 +34,20 @@ export interface Time {
     nano: number;
 }
 
-export interface Course {
+export interface CourseWithoutSubject {
     courseType: CourseType;
     dayOfWeek: DayOfWeek;
     id: number;
     startTime: Time;
-    subject: SubjectShort;
     teacher: Teacher;
+}
+
+export interface Course extends CourseWithoutSubject {
+    subject: SubjectShort;
+}
+
+export interface Subject extends SubjectShort {
+    courses: CourseWithoutSubject[];
 }
 
 export interface Student {
