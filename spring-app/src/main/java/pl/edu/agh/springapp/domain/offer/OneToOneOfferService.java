@@ -1,4 +1,4 @@
-package pl.edu.agh.springapp.domein.offer;
+package pl.edu.agh.springapp.domain.offer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,13 +1,9 @@
-package pl.edu.agh.springapp.domein.student;
+package pl.edu.agh.springapp.domain.student;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
-import pl.edu.agh.springapp.data.dto.teacher.TeacherAllDto;
-import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
-import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
-import pl.edu.agh.springapp.domein.teacher.TeacherService;
 
 import java.util.List;
 

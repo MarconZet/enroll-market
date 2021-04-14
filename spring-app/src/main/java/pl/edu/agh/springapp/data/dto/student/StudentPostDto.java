@@ -19,7 +19,7 @@ public class StudentPostDto {
     private String name;
 
     @ApiModelProperty(
-            value = "Surame of student" ,
+            value = "Surname of student" ,
             name = "surname",
             example= "Janosz",
             dataType = "String"
