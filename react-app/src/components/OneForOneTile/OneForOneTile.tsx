@@ -18,22 +18,21 @@ const translations = {
     'FRIDAY': 'Piątek',
     'SATURDAY': 'Sobota',
     'SUNDAY': 'Niedziela',
-    'PROJECT': 'Projekt',
-    'LABORATORY': 'Laboratorium',
-    'LECTURE': 'Wykład',
-    'LESSON': 'Ćwiczenia',
+    'PROJECT': 'projekt',
+    'LABORATORY': 'laboratorium',
+    'LECTURE': 'wykład',
+    'LESSON': 'ćwiczenia',
 };
 
 export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallback, editCallback, deleteCallback, reverseOrder }) => (
     <P.Container>
-        <P.SubjectName>{offer.givenCourse.subject.name}</P.SubjectName>
+        <P.SubjectName>{offer.givenCourse.subject.name} - {translations[offer.givenCourse.courseType]}</P.SubjectName>
         <P.OffersBox reverseOrder={reverseOrder}>
             <P.SlotBox>
                 <P.Subheader isOffered>Oferowany termin</P.Subheader>
                 <P.ClassBox isOffered>
                     <b>{offer.givenCourse.teacher.name} {offer.givenCourse.teacher.surname}</b>
                     <b>{translations[offer.givenCourse.dayOfWeek]}, {offer.givenCourse.startTime.hour}:{offer.givenCourse.startTime.minute}</b>
-                    <b>{translations[offer.givenCourse.courseType]}</b>
                     {/* <span>{offeredGroup.comment}</span> */}
                     <span>{offer.student.name} {offer.student.surname}</span>
                 </P.ClassBox>
@@ -50,7 +49,6 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
                 <P.ClassBox>
                     <b>{offer.takenCourse.teacher.name} {offer.takenCourse.teacher.surname}</b>
                     <b>{translations[offer.takenCourse.dayOfWeek]}, {offer.takenCourse.startTime.hour}:{offer.takenCourse.startTime.minute}</b>
-                    <b>{translations[offer.takenCourse.courseType]}</b>
                 </P.ClassBox>
             </P.SlotBox>
         </P.OffersBox>
