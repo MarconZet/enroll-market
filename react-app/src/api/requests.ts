@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { OneForOneOffer, OneForOneOfferParams, Subject } from './models';
+import { OneForOneOffer, OneForOneOfferParams, Subject, Teacher } from './models';
 
 export const getOneForOneOffers = () => axios.get<OneForOneOffer[]>(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers');
 
@@ -7,7 +7,10 @@ export const createOneForOneOffer = (params: OneForOneOfferParams) => axios.post
 
 export const deleteOneForOneOffer = (id: number) => axios.delete(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers/' + id);
 
-export const getSubjects = () => axios.get<Subject[]>(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers');
+export const getSubjects = () => axios.get<Subject[]>(process.env.REACT_APP_API_PATH + '/api/subjects');
+
+export const getTeachers = () => axios.get<Teacher[]>(process.env.REACT_APP_API_PATH + '/api/teachers');
+
 
 export const uploadEnrollData = (file: File, filename: string) => axios.post(process.env.REACT_APP_API_PATH + '/api/enroll/upload', file, {
     headers: {

@@ -1,9 +1,10 @@
 import { AnyAction } from 'redux';
-import { put, takeEvery, all, call } from 'redux-saga/effects';
+import { put, takeEvery, all, call, select } from 'redux-saga/effects';
 import { createOneForOneOffer, deleteOneForOneOffer } from '../../api/requests';
 import * as A from './actions';
 import * as C from './constants';
 import notitier from '../../utils/notifications';
+import { userAuthIdSelector } from '../userAuth/selectors';
 
 export function* deleteOfferWorker(action: AnyAction) {
     try {
@@ -18,7 +19,12 @@ export function* deleteOfferWorker(action: AnyAction) {
 
 export function* createOfferWorker(action: AnyAction) {
     try {
-        yield call(createOneForOneOffer, action.params);
+        const studentId: number = yield select(userAuthIdSelector);
+        yield call(createOneForOneOffer, {
+            studentId,
+            givenCourseId: action.givenCourseId,
+            takenCourseId: action.takenCourseId,
+        });
         yield put(A.createOfferSuccess());
         notitier.success('Dodanie oferty powiodło się.');
     } catch (error) {

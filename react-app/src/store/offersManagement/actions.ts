@@ -1,4 +1,3 @@
-import { OneForOneOfferParams } from "../../api/models";
 import { OffersManagementAction, OffersManagementActionType } from "./constants";
 
 export const deleteOfferRequest = (id: number): OffersManagementAction => ({
@@ -14,9 +13,10 @@ export const deleteOfferFail = (): OffersManagementAction => ({
     type: OffersManagementActionType.DeleteOfferFail,
 });
 
-export const createOfferRequest = (params: OneForOneOfferParams): OffersManagementAction => ({
+export const createOfferRequest = (givenCourseId: number, takenCourseId: number): OffersManagementAction => ({
     type: OffersManagementActionType.CreateOfferRequest,
-    params,
+    givenCourseId,
+    takenCourseId,
 });
 
 export const createOfferSuccess = (): OffersManagementAction => ({

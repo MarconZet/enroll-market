@@ -39,11 +39,16 @@ export interface CourseWithoutSubject {
     dayOfWeek: DayOfWeek;
     id: number;
     startTime: Time;
-    teacher: Teacher;
+    teacherId: number
 }
 
-export interface Course extends CourseWithoutSubject {
+export interface Course {
     subject: SubjectShort;
+    courseType: CourseType;
+    dayOfWeek: DayOfWeek;
+    id: number;
+    startTime: Time;
+    teacher: Teacher;
 }
 
 export interface Subject extends SubjectShort {

@@ -1,5 +1,3 @@
-import { OneForOneOfferParams } from "../../api/models";
-
 export enum OffersManagementActionType {
     CreateOfferRequest = 'offersManagement/CREATE_OFFER_REQUEST',
     CreateOfferSuccess = 'offersManagement/CREATE_OFFER_SUCCESS',
@@ -11,7 +9,8 @@ export enum OffersManagementActionType {
 
 export type OffersManagementAction = {
     type: OffersManagementActionType.CreateOfferRequest,
-    params: OneForOneOfferParams;
+    givenCourseId: number;
+    takenCourseId: number;
 } | {
     type: OffersManagementActionType.CreateOfferSuccess,
 } | {
