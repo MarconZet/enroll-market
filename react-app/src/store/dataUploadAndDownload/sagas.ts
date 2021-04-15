@@ -12,7 +12,7 @@ export function* uploadDataWorker(action: AnyAction) {
         notitier.success('Wysłanie pliku powiodło się.');
     } catch (error) {
         yield put(A.uploadDataFail());
-        notitier.alert('Wysłanie pliku nie powiodło się.' + error);
+        notitier.alert('Wysłanie pliku nie powiodło się.');
     }
 }
 

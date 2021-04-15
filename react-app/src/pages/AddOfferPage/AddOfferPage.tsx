@@ -1,4 +1,4 @@
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as P from './parts';
 import * as A from '../../store/offersManagement/actions';
@@ -15,6 +15,11 @@ export const AddOfferPage: React.FC = () => {
     let subjects = useSelector(subjectsNamesAndIdsSelector);
     let courses = useSelector(coursesForSubjectAndTypeSelector(subject, type));
     let isLoadingSubjects = useSelector(isLoadingGlobalDataSelector);
+
+    useEffect(() => {
+        setGivenCourseId(-1);
+        setTakenCourseId(-1);
+    }, [subject, type]);
 
     const onSubmit: FormEventHandler<Element> = (event) => {
         dispatch(A.createOfferRequest(givenCourseId, takenCourseId));
@@ -49,26 +54,30 @@ export const AddOfferPage: React.FC = () => {
                     <option value={CourseType.LABORATORY}>Laboratorium</option>
                     <option value={CourseType.PROJECT}>Projekt</option>
                 </P.Select>
-                {(subject !== -1) && (type !== "none") && (
-                    <P.Select name="givenCourseId" id="givenCourseId" onChange={(e) => setGivenCourseId(+e.target.value)} value={givenCourseId}>
-                        <option key={-1} value={-1}>Wybierz zajęcia, które chcesz wymienić</option>
-                        {
-                            courses.map((e, index) => (
-                                <option key={index} value={e.id}>{translations[e.dayOfWeek]}, {e.startTime.hour}:{e.startTime.minute}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
-                            ))
-                        }
-                    </P.Select>
-                )}
-                {(subject !== -1) && (type !== "none") && (
-                    <P.Select name="takenCourseId" id="takenCourseId" onChange={(e) => setTakenCourseId(+e.target.value)} value={takenCourseId}>
-                        <option key={-1} value={-1}>Wybierz zajęcia, na które chcesz się wymienić</option>
-                        {
-                            courses.map((e, index) => (
-                                <option key={index} value={e.id}>{translations[e.dayOfWeek]}, {e.startTime.hour}:{e.startTime.minute}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
-                            ))
-                        }
-                    </P.Select>
-                )}
+                {courses.length > 0
+                    ? (
+                        <>
+                            <P.Select name="givenCourseId" id="givenCourseId" onChange={(e) => setGivenCourseId(+e.target.value)} value={givenCourseId}>
+                                <option key={-1} value={-1}>Wybierz zajęcia, które chcesz wymienić</option>
+                                {
+                                    courses.map((e, index) => (
+                                        <option key={index} value={e.id}>{translations[e.dayOfWeek]}, {e.startTime.hour}:{e.startTime.minute}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
+                                    ))
+                                }
+                            </P.Select>
+                            <P.Select name="takenCourseId" id="takenCourseId" onChange={(e) => setTakenCourseId(+e.target.value)} value={takenCourseId}>
+                                <option key={-1} value={-1}>Wybierz zajęcia, na które chcesz się wymienić</option>
+                                {
+                                    courses.map((e, index) => (
+                                        <option key={index} value={e.id}>{translations[e.dayOfWeek]}, {e.startTime.hour}:{e.startTime.minute}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
+                                    ))
+                                }
+                            </P.Select>
+                        </>
+                    ) : (
+                        <P.Title>Brak terminów. Ustaw inny przedmiot lub typ zajęć.</P.Title>
+                    )
+                }
                 <P.Submit disabled={(subject === -1) || (type === "none") || (givenCourseId === -1) || (takenCourseId === -1)}>Dodaj</P.Submit>
             </P.Form>
         </P.Wrapper>
