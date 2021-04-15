@@ -1,5 +1,5 @@
 import * as P from './parts';
-import { ReactComponent as Arrow } from '../../assets/arrow_right.svg';
+import { ReactComponent as Arrow } from '../../assets/arrow-point-to-right.svg';
 import { OneForOneOffer } from '../../api/models';
 
 export interface OneForOneTileProps {
@@ -29,7 +29,7 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
         <P.SubjectName>{offer.givenCourse.subject.name}</P.SubjectName>
         <P.OffersBox reverseOrder={reverseOrder}>
             <P.SlotBox>
-                <P.Subheader>Oferowany termin</P.Subheader>
+                <P.Subheader isOffered>Oferowany termin</P.Subheader>
                 <P.ClassBox isOffered>
                     <b>{offer.givenCourse.teacher.name} {offer.givenCourse.teacher.surname}</b>
                     <b>{translations[offer.givenCourse.dayOfWeek]}, {offer.givenCourse.startTime.hour}:{offer.givenCourse.startTime.minute}</b>
@@ -40,9 +40,9 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
             </P.SlotBox>
             <P.SVGBox>
                 <Arrow
-                    height="100px"
-                    width="100px"
-                    viewBox="0 -5 25 25"
+                    height="60px"
+                    width="60px"
+                    // viewBox="0 -5 25 25"
                 />
             </P.SVGBox>
             <P.SlotBox>

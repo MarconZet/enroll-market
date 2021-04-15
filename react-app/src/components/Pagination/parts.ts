@@ -10,14 +10,16 @@ export const Button = styled.button<{ isCurrentPage?: boolean }>`
     height: 50px;
 
     background-color: white;
-
+    color: black;
+  
     font-size: 24px;
 
     ${({ isCurrentPage }) => isCurrentPage && `
-        background-color: royalblue;
+        background-color: #1D7991;
+        color: white;
 
         :disabled {
-            color: unset;
+            opacity: 80%;
         }
     `}
 

@@ -16,12 +16,12 @@ export const DataUploadAndDownloadPage: React.FC = () => {
     return (
         <P.Wrapper>
             <P.PagePartContainer>
-                <h1>Import danych</h1>
+                <P.ContainerTitle>Import danych</P.ContainerTitle>
                 <P.Input type="file" ref={input} />
                 <P.Submit onClick={onClick}>Wyślij</P.Submit>
             </P.PagePartContainer>
             <P.PagePartContainer>
-                <h1>Eksport wyników</h1>
+                <P.ContainerTitle>Eksport wyników</P.ContainerTitle>
                 <P.Download href={process.env.REACT_APP_API_PATH + '/api/enroll/download'}>Pobierz</P.Download>
             </P.PagePartContainer>
         </P.Wrapper>
