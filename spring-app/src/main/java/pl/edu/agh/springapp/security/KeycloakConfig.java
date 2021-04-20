@@ -47,7 +47,8 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
         if (security) {
             super.configure(http);
             http.authorizeRequests()
-                    .antMatchers("/api/**").hasRole("user")
+                    .antMatchers("/api/enroll/**").hasRole("admin")
+                    .antMatchers("/api/**").hasRole("student")
                     .anyRequest().permitAll();
         } else {
             http.authorizeRequests().anyRequest().permitAll();
