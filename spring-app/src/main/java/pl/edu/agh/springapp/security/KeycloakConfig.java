@@ -1,4 +1,4 @@
-package pl.edu.agh.springapp.config;
+package pl.edu.agh.springapp.security;
 
 import lombok.RequiredArgsConstructor;
 import org.keycloak.adapters.KeycloakConfigResolver;
@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
     private final Environment environment;
 
     @Autowired
