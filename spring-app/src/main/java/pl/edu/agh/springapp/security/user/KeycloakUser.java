@@ -1,27 +1,33 @@
-package pl.edu.agh.springapp.security;
+package pl.edu.agh.springapp.security.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.IDToken;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.security.Principal;
 import java.util.Map;
 
-@SessionScope
-@RestController
 @Slf4j
-public class CurrentUserService {
+@Primary
+@Profile("security")
+@SessionScope
+@Component
+public class KeycloakUser implements CurrentUser {
+    private final String firstname;
+    private final String surname;
+    private final String index;
 
-    @GetMapping("/")
-    public String studentIndex() {
+    public KeycloakUser() {
+        String firstname, surname, index;
+        firstname = surname = index = "";
+
         KeycloakAuthenticationToken authentication = (KeycloakAuthenticationToken) SecurityContextHolder.getContext()
                 .getAuthentication();
 
@@ -31,11 +37,34 @@ public class CurrentUserService {
             KeycloakPrincipal<KeycloakSecurityContext> keycloakPrincipal = (KeycloakPrincipal) principal;
             IDToken token = keycloakPrincipal.getKeycloakSecurityContext().getIdToken();
 
+            firstname = token.getName();
+            surname = token.getFamilyName();
+
             Map<String, Object> customClaims = token.getOtherClaims();
             if (customClaims.containsKey("index")) {
-                return String.valueOf(customClaims.get("index"));
+                index = String.valueOf(customClaims.get("index"));
             }
+        } else {
+            log.error("Unexpected principal type");
         }
-        throw new RuntimeException();
+        this.firstname = firstname;
+        this.surname = surname;
+        this.index = index;
+    }
+
+    @Override
+    public String getFirstname() {
+        return firstname;
+    }
+
+    @Override
+    public String getSurname() {
+        return surname;
+    }
+
+    @Override
+    public String getIndex() {
+        return index;
     }
 }
+
