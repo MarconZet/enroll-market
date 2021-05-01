@@ -1,9 +1,13 @@
 package pl.edu.agh.springapp.domain.student;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
 import pl.edu.agh.springapp.data.mapper.StudentMapper;
 import pl.edu.agh.springapp.data.model.Student;
 import pl.edu.agh.springapp.repository.StudentRepository;
@@ -26,10 +30,10 @@ public class StudentService {
         return result;
     }
 
-    public List<StudentDto> getAllStudents() {
-        List<Student> students = StreamSupport.stream(studentRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-        return studentMapper.studentToStudentsDtos(students);
+    public Page<StudentDto> getAllStudents(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+        return studentRepository.findAll(paging).map(studentMapper::studentToStudentDto);
     }
 
     public void deleteStudentWithId(Long id) {

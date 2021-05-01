@@ -1,6 +1,6 @@
 package pl.edu.agh.springapp.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import pl.edu.agh.springapp.data.model.Course;
 import pl.edu.agh.springapp.data.model.DayOfWeek;
@@ -10,6 +10,6 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Repository
-public interface CourseRepository extends CrudRepository<Course, Long> {
+public interface CourseRepository extends PagingAndSortingRepository<Course, Long> {
     List<Course> findByStartTimeAndTeacherAndDay(LocalTime startTime, Teacher teacher, DayOfWeek day);
 }

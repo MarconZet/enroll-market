@@ -1,9 +1,13 @@
 package pl.edu.agh.springapp.domain.course;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
+import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.mapper.CourseMapper;
 import pl.edu.agh.springapp.data.model.Course;
 import pl.edu.agh.springapp.repository.CourseRepository;
@@ -26,10 +30,10 @@ public class CourseService {
         return result;
     }
 
-    public List<CourseDto> getAllCourses() {
-        List<Course> courses = StreamSupport.stream(courseRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-        return courseMapper.coursesToCoursesDtos(courses);
+    public Page<CourseDto> getAllCourses(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+        return courseRepository.findAll(paging).map(courseMapper::courseToCourseDto);
     }
 
     public void deleteCourseWithId(Long id) {

@@ -1,7 +1,11 @@
 package pl.edu.agh.springapp.domain.offer;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
@@ -21,7 +25,6 @@ import java.util.stream.StreamSupport;
 public class OfferService {
 
     private final OfferRepository offerRepository;
-    private final CourseRepository courseRepository;
     private final OfferMapper offerMapper;
 
     public OfferDto newOffer(OfferPostDto offerPostDto) {
@@ -30,10 +33,10 @@ public class OfferService {
         return offerMapper.offerToOfferDto(offer);
     }
 
-    public List<OfferDto> getAll() {
-        List<Offer> offers = StreamSupport.stream(offerRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-        return offerMapper.offersToOfferDtos(offers);
+    public Page<OfferDto> getAllOffers(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+        return offerRepository.findAll(paging).map(offerMapper::offerToOfferDto);
     }
 
     public void deleteWithId(Long id) {
