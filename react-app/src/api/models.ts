@@ -74,3 +74,16 @@ export interface OneForOneOfferParams {
     studentId: number;
     takenCourseId: number;
 }
+
+export interface PaginatedResponse<T> {
+    content: T;
+    totalPages: number;
+    pageable: {
+        pageNumber: number;
+    }
+}
+
+export interface BasicQueryParams {
+    pageNo?: number;
+    pageSize?: number;
+}
