@@ -14,11 +14,14 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 
@@ -62,7 +65,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                     .anyRequest().permitAll();
             if(backendDeveloper.equals("off"))
                 http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            http.cors().and().csrf().disable();
+            http.csrf().disable();
         } else {
             http.authorizeRequests().anyRequest().permitAll();
         }
@@ -75,14 +78,14 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         return new HttpSessionManager();
     }
 
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**")
-//                        .allowedMethods("*");
-//            }
-//        };
-//    }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedMethods("*");
+            }
+        };
+    }
 }
