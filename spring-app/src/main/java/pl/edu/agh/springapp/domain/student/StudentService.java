@@ -11,6 +11,7 @@ import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
 import pl.edu.agh.springapp.data.mapper.StudentMapper;
 import pl.edu.agh.springapp.data.model.Student;
 import pl.edu.agh.springapp.repository.StudentRepository;
+import pl.edu.agh.springapp.security.user.CurrentUser;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final CurrentUser currentUser;
 
     public StudentDto newStudent(StudentPostDto studentPostDto) {
         Student student = studentMapper.studentPostDtoToStudent(studentPostDto);
@@ -34,6 +36,15 @@ public class StudentService {
         Pageable paging = PageRequest.of(pageNo, pageSize);
 
         return studentRepository.findAll(paging).map(studentMapper::studentToStudentDto);
+    }
+
+    public StudentDto getMe(){
+        var student = new StudentDto();
+        student.setId(-1L);
+        student.setName(currentUser.getFirstname());
+        student.setSurname(currentUser.getSurname());
+        student.setAdmin(false);
+        return student;
     }
 
     public void deleteStudentWithId(Long id) {

@@ -6,16 +6,16 @@ import org.springframework.stereotype.Component;
 public class DummyUser implements CurrentUser {
     @Override
     public String getFirstname() {
-        return "Gal";
+        return "Galus";
     }
 
     @Override
     public String getSurname() {
-        return "Anonim";
+        return "Anonimus";
     }
 
     @Override
     public String getIndex() {
-        return "666";
+        return "123456";
     }
 }
