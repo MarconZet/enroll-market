@@ -23,6 +23,8 @@ public class Offer {
     @JoinColumn(name="course_id")
     private Course givenCourse;
 
+    private boolean isOneToOne = false;
+
     @OneToOne(
             orphanRemoval = true,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST }
