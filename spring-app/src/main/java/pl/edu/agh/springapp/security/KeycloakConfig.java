@@ -50,8 +50,12 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                     .antMatchers("/api/enroll/**").hasRole("admin")
                     .antMatchers("/api/**").hasRole("student")
                     .anyRequest().permitAll();
+            http.csrf().disable();
+            http.headers().frameOptions().disable();
         } else {
             http.authorizeRequests().anyRequest().permitAll();
+            http.csrf().disable();
+            http.headers().frameOptions().disable();
         }
     }
 }
