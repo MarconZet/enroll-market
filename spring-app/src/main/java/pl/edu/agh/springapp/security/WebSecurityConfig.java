@@ -66,6 +66,8 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
             if(backendDeveloper.equals("off"))
                 http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             // http.headers().frameOptions().disable();
+            if(backendDeveloper.equals("on"))
+                http.headers().frameOptions().disable();
             http.csrf().disable();
         } else {
             http.authorizeRequests().anyRequest().permitAll();
