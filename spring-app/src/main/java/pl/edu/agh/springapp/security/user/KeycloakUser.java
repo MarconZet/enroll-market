@@ -43,6 +43,8 @@ public class KeycloakUser implements CurrentUser {
             Map<String, Object> customClaims = token.getOtherClaims();
             if (customClaims.containsKey("index")) {
                 index = String.valueOf(customClaims.get("index"));
+            } else {
+                log.error("Did not find index of user {}", token.getPreferredUsername());
             }
         } else {
             log.error("Unexpected principal type");

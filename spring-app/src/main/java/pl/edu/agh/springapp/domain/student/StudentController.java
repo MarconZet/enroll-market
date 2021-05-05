@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
+import pl.edu.agh.springapp.security.user.CurrentUser;
 
 import java.util.List;
 
@@ -29,6 +30,11 @@ public class StudentController {
     ) {
         Page<StudentDto> list = service.getAllStudents(pageNo, pageSize);
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping("/students/me")
+    public StudentDto getMe(){
+        return service.getMe();
     }
 
     @DeleteMapping("/students/{id}")

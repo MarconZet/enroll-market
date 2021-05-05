@@ -8,6 +8,8 @@ group = 'edu.agh'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+def keycloakVersion = '12.0.4'
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -36,7 +38,10 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '12.0.4'
+    implementation group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: keycloakVersion
+	implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: keycloakVersion
+
+
 }
 
 test {
