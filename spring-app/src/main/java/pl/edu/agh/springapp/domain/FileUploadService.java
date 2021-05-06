@@ -68,39 +68,53 @@ public class FileUploadService {
 
         for (ParsingContainerDTO line : records) {
 
+            String classType = "LECTURE";
+            switch (line.getCourseType()) {
+                case "P":
+                    classType = "PROJECT";
+                    break;
+                case "L":
+                    classType = "LABORATORY";
+                    break;
+                case "C":
+                    classType = "LESSON";
+                    break;
+            }
+
             SubjectPostDto subjectPostDto = new SubjectPostDto(line.getSubjectName());
             Subject subject = subjectMapper.subjectPostDtoToSubject(subjectPostDto);
             subjects.add(subject);
             subjectRepository.save(subject);
 
             String[] teacherData = line.getTeacher().split(" ");
-            TeacherPostDto teacherPostDto = new TeacherPostDto(teacherData[0], teacherData[1], line.getTeacherMailAddress());
+            TeacherPostDto teacherPostDto = new TeacherPostDto(teacherData[1], teacherData[0], line.getTeacherMailAddress());
             Teacher teacher = teacherMapper.teacherPostDtoToTeacher(teacherPostDto);
             teachers.add(teacher);
             teacherRepository.save(teacher);
-
-            String[] studentData = line.getStudent().split(" ");
-            StudentPostDto studentPostDto = new StudentPostDto(studentData[0], studentData[1], false);
-            Student student = studentMapper.studentPostDtoToStudent(studentPostDto);
-            students.add(student);
-            studentRepository.save(student);
 
             String[] startTimeSplitted = line.getStartTime().split(":");
             int hour = Integer.parseInt(startTimeSplitted[0]);
             int min = Integer.parseInt(startTimeSplitted[1]);
 
-            CoursePostDto coursePostDto = new CoursePostDto(subject.getId(), line.getCourseType(), LocalTime.of(hour, min),
-                                                            line.getDayOfWeek(), teacher.getId());
+            CoursePostDto coursePostDto = new CoursePostDto(subject.getId(), classType, LocalTime.of(hour, min),
+                    DayOfWeek.convertDayOfWeekName(line.getDayOfWeek()), teacher.getId());
             Course course = courseMapper.coursePostDtoToCourse(coursePostDto);
             courses.add(course);
             courseRepository.save(course);
 
-            StudentsCoursesPostDto studentsCoursesPostDto = new StudentsCoursesPostDto(studentMapper.studentToStudentDto(student),
-                    courseMapper.courseToCourseDto(course));
-            StudentsCourses studentsCourses = studentsCoursesMapper.subjectPostDtoToSubject(studentsCoursesPostDto);
-            studentsCoursess.add(studentsCourses);
-            studentsCoursesRepository.save(studentsCoursesMapper.subjectPostDtoToSubject(studentsCoursesPostDto));
+            if (!classType.equals("LECTURE")) {
+                String[] studentData = line.getStudentName().split(" ");
+                StudentPostDto studentPostDto = new StudentPostDto(studentData[1], studentData[0], false);
+                Student student = studentMapper.studentPostDtoToStudent(studentPostDto);
+                students.add(student);
+                studentRepository.save(student);
 
+                StudentsCoursesPostDto studentsCoursesPostDto = new StudentsCoursesPostDto(studentMapper.studentToStudentDto(student),
+                        courseMapper.courseToCourseDto(course));
+                StudentsCourses studentsCourses = studentsCoursesMapper.subjectPostDtoToSubject(studentsCoursesPostDto);
+                studentsCoursess.add(studentsCourses);
+                studentsCoursesRepository.save(studentsCoursesMapper.subjectPostDtoToSubject(studentsCoursesPostDto));
+            }
         }
 
     }
