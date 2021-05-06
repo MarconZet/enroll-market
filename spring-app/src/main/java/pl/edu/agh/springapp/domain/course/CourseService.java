@@ -32,7 +32,6 @@ public class CourseService {
 
     public Page<CourseDto> getAllCourses(Integer pageNo, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
-
         return courseRepository.findAll(paging).map(courseMapper::courseToCourseDto);
     }
 

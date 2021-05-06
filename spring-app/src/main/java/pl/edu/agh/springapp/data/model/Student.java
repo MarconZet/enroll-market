@@ -24,4 +24,10 @@ public class Student {
 
     @OneToMany(mappedBy = "student")
     private List<Offer> offers = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "student_course",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<Course> courses = new ArrayList<>();
 }
