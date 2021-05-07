@@ -1,6 +1,10 @@
 package pl.edu.agh.springapp.data.dto.course;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import pl.edu.agh.springapp.data.dto.subject.SubjectShortDto;
@@ -28,6 +32,8 @@ public class CourseDto {
             dataType = "String"
     )
     @JsonFormat(pattern = "HH:mm")
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
+    @JsonSerialize(using = LocalTimeSerializer.class)
     private LocalTime startTime;
 
     @ApiModelProperty(

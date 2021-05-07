@@ -35,7 +35,6 @@ public class OfferService {
 
     public Page<OfferDto> getAllOffers(Integer pageNo, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
-
         return offerRepository.findAll(paging).map(offerMapper::offerToOfferDto);
     }
 

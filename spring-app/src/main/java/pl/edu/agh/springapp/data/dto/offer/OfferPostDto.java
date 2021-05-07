@@ -8,5 +8,5 @@ import pl.edu.agh.springapp.data.dto.student.StudentDto;
 public class OfferPostDto {
     private StudentDto student;
     private CourseDto givenCourse;
-    private OfferConditionsPostDto dealConditions;
+    private OfferConditionsPostDto offerConditions;
 }

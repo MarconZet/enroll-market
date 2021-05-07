@@ -8,5 +8,5 @@ public class OfferDto {
     private Long id;
     private StudentDto student;
     private CourseDto givenCourse;
-    private OfferConditionsDto dealConditions;
+    private OfferConditionsDto offerConditions;
 }
