@@ -1,7 +1,11 @@
 package pl.edu.agh.springapp.domain.teacher;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherAllDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
@@ -27,10 +31,10 @@ public class TeacherService {
         return result;
     }
 
-    public List<TeacherAllDto> getAllTeachers() {
-        List<Teacher> teachers = StreamSupport.stream(teacherRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-        return teacherMapper.teachersToTeacherAllDtos(teachers);
+    public Page<TeacherAllDto> getAllTeachers(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+        return teacherRepository.findAll(paging).map(teacherMapper::teacherToTeacherAllDto);
     }
 
     public void deleteTeacherWithId(Long id) {

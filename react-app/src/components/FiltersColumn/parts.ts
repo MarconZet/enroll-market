@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.form`
-    border: 1px solid black;
+    box-shadow: 0 0 5px 1px #B2B3B2;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,7 +13,15 @@ export const Submit = styled.button`
     padding: 12px 36px;
     margin-top: 8px;
     font-size: 16px;
-    border: 1px solid black;
+    border-radius: 5px;
+    border: none;
+    background: #de3770;
+    color: white;
+    font-weight: bold;
+
+    :hover{
+      cursor: pointer;
+    }
 `;
 
 export const Title = styled.div`

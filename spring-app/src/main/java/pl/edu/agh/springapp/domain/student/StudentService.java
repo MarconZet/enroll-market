@@ -1,12 +1,17 @@
 package pl.edu.agh.springapp.domain.student;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
 import pl.edu.agh.springapp.data.mapper.StudentMapper;
 import pl.edu.agh.springapp.data.model.Student;
 import pl.edu.agh.springapp.repository.StudentRepository;
+import pl.edu.agh.springapp.security.user.CurrentUser;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +23,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final CurrentUser currentUser;
 
     public StudentDto newStudent(StudentPostDto studentPostDto) {
         Student student = studentMapper.studentPostDtoToStudent(studentPostDto);
@@ -26,10 +32,19 @@ public class StudentService {
         return result;
     }
 
-    public List<StudentDto> getAllStudents() {
-        List<Student> students = StreamSupport.stream(studentRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-        return studentMapper.studentToStudentsDtos(students);
+    public Page<StudentDto> getAllStudents(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+        return studentRepository.findAll(paging).map(studentMapper::studentToStudentDto);
+    }
+
+    public StudentDto getMe(){
+        var student = new StudentDto();
+        student.setId(-1L);
+        student.setName(currentUser.getFirstname());
+        student.setSurname(currentUser.getSurname());
+        student.setAdmin(false);
+        return student;
     }
 
     public void deleteStudentWithId(Long id) {

@@ -1,49 +1,54 @@
 import * as P from './parts';
-import { ReactComponent as Arrow } from '../../assets/arrow_right.svg';
+import { ReactComponent as Arrow } from '../../assets/arrow-point-to-right.svg';
+import { OneForOneOffer } from '../../api/models';
 
 export interface OneForOneTileProps {
-    subjectName: string;
-    wantedGroup: {
-        teacherName: string;
-        timeSlot: string;
-    };
-    offeredGroup: {
-        teacherName: string;
-        timeSlot: string;
-        comment: string;
-        whoOffers: string;
-    };
+    offer: OneForOneOffer;
     acceptCallback?: () => void;
     editCallback?: () => void;
     deleteCallback?: () => void;
     reverseOrder?: boolean;
 }
 
-export const OneForOneTile: React.FC<OneForOneTileProps> = ({ subjectName, wantedGroup, offeredGroup, acceptCallback, editCallback, deleteCallback, reverseOrder }) => (
+const translations = {
+    'MONDAY': 'Poniedziałek',
+    'TUESDAY': 'Wtorek',
+    'WEDNESDAY': 'Środa',
+    'THURSDAY': 'Czwartek',
+    'FRIDAY': 'Piątek',
+    'SATURDAY': 'Sobota',
+    'SUNDAY': 'Niedziela',
+    'PROJECT': 'projekt',
+    'LABORATORY': 'laboratorium',
+    'LECTURE': 'wykład',
+    'LESSON': 'ćwiczenia',
+};
+
+export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallback, editCallback, deleteCallback, reverseOrder }) => (
     <P.Container>
-        <P.SubjectName>{subjectName}</P.SubjectName>
+        <P.SubjectName>{offer.givenCourse.subject.name} - {translations[offer.givenCourse.courseType]}</P.SubjectName>
         <P.OffersBox reverseOrder={reverseOrder}>
             <P.SlotBox>
-                <P.Subheader>Oferowany termin</P.Subheader>
+                <P.Subheader isOffered>Oferowany termin</P.Subheader>
                 <P.ClassBox isOffered>
-                    <b>{offeredGroup.teacherName}</b>
-                    <b>{offeredGroup.timeSlot}</b>
-                    <span>{offeredGroup.comment}</span>
-                    <span>{offeredGroup.whoOffers}</span>
+                    <b>{offer.givenCourse.teacher.name} {offer.givenCourse.teacher.surname}</b>
+                    <b>{translations[offer.givenCourse.dayOfWeek]}, {offer.givenCourse.startTime.hour}:{offer.givenCourse.startTime.minute}</b>
+                    {/* <span>{offeredGroup.comment}</span> */}
+                    <span>{offer.student.name} {offer.student.surname}</span>
                 </P.ClassBox>
             </P.SlotBox>
             <P.SVGBox>
                 <Arrow
-                    height="100px"
-                    width="100px"
-                    viewBox="0 -5 25 25"
+                    height="60px"
+                    width="60px"
+                    // viewBox="0 -5 25 25"
                 />
             </P.SVGBox>
             <P.SlotBox>
                 <P.Subheader>Oczekiwany termin</P.Subheader>
                 <P.ClassBox>
-                    <b>{wantedGroup.teacherName}</b>
-                    <b>{wantedGroup.timeSlot}</b>
+                    <b>{offer.takenCourse.teacher.name} {offer.takenCourse.teacher.surname}</b>
+                    <b>{translations[offer.takenCourse.dayOfWeek]}, {offer.takenCourse.startTime.hour}:{offer.takenCourse.startTime.minute}</b>
                 </P.ClassBox>
             </P.SlotBox>
         </P.OffersBox>

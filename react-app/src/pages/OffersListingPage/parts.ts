@@ -4,15 +4,17 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+  
+    padding: 40px 100px 0 100px;
 `;
 
 export const OffersContainer = styled.div`
     display: flex;
     flex-direction: column;
 
-    width: 900px;
+    width: 100%;
 
-    padding: 8px;
+    padding: 0 20px;
 `;
 
 export const FiltersContainer = styled.div`
@@ -21,7 +23,7 @@ export const FiltersContainer = styled.div`
 
     width: 300px;
 
-    padding: 8px;
+    padding: 0 10px;
 `;
 
 export const TypeContainer = styled.div`

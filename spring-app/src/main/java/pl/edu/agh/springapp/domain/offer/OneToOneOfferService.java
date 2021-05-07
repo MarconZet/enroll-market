@@ -1,6 +1,9 @@
 package pl.edu.agh.springapp.domain.offer;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
@@ -8,10 +11,6 @@ import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
 import pl.edu.agh.springapp.data.model.Offer;
 import pl.edu.agh.springapp.repository.OfferRepository;
 import pl.edu.agh.springapp.repository.CourseRepository;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -27,12 +26,11 @@ public class OneToOneOfferService {
         return oneToOneOfferMapper.offerToOneToOneOfferDto(savedOffer);
     }
 
-    public List<OneToOneOfferDto> getAll() {
-        List<Offer> offers = StreamSupport.stream(offerRepository.findAll().spliterator(), false)
-                .filter(offer -> offer.getOfferConditions().getTeachers().size() == 1
-                        && offer.getOfferConditions().getTimeBlocks().size() == 1)
-                .collect(Collectors.toList());
-        return oneToOneOfferMapper.offersToOneToOneOfferDtos(offers);
+
+    public Page<OneToOneOfferDto> getAllOneToOneOffers(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+        return offerRepository.findAllByIsOneToOne(true, paging).map(oneToOneOfferMapper::offerToOneToOneOfferDto);
     }
 
     public void deleteWithId(Long id) {

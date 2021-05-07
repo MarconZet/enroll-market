@@ -2,9 +2,18 @@ package pl.edu.agh.springapp.data.mapper;
 
 import org.mapstruct.Mapper;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
+import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
 import pl.edu.agh.springapp.data.model.Offer;
 
-@Mapper(uses = {CourseMapper.class, OfferConditionsMapper.class})
+import java.util.List;
+
+@Mapper(
+        uses = {CourseMapper.class, OfferConditionsMapper.class},
+        componentModel = "spring"
+)
 public interface OfferMapper {
     Offer offerDtoToOffer(OfferDto offerDto);
+    Offer offerPostDtoToOffer(OfferPostDto offerPostDto);
+    OfferDto offerToOfferDto(Offer offer);
+    List<OfferDto> offersToOfferDtos(List<Offer> offers);
 }

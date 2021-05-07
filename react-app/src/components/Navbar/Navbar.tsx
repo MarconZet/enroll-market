@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
         },
         {
             title: 'Import/export',
-            path: '/files',
+            path: '/dataUploadAndDownload',
         },
         {
             title: 'Moje oferty',
@@ -36,13 +36,13 @@ export const Navbar: React.FC = () => {
 
     return (
         <P.Navbar>
-            <P.SelectSemester>
+            {/* <P.SelectSemester>
                 <option>Wybór semestru zrobi się w swoim czasie</option>
-            </P.SelectSemester>
+            </P.SelectSemester> */}
             <div>
                 {links.map(
-                    (link) => (
-                        <Link to={link.path}>
+                    (link, index) => (
+                        <Link key={index} to={link.path} style={{ textDecoration: 'none' }}>
                             <P.Link isCurrent={(link.path === location.pathname) || link.otherPathsToHighlight?.includes(location.pathname)}>{link.title}</P.Link>
                         </Link>
                     )

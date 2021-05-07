@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const Navbar = styled.nav`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
 
-    padding: 4px;
-    border-bottom: 1px solid black;
+    padding: 20px 0;
+    box-shadow: 0 0 8px 1px #B2B3B2;
 `;
 
 export const SelectSemester = styled.select`
@@ -18,9 +18,12 @@ export const SelectSemester = styled.select`
     text-align: center;
 `;
 
-export const Link = styled.button<{ isCurrent?: boolean }>`
-    font-size: 20px;
-    padding: 20px 30px;
+export const Link = styled.span<{ isCurrent?: boolean }>`
+    font-size: 1.2em;
+    padding: 0;
+    margin: 10px;
+    color: black;
+    font-weight: bold;
 
-    ${({ isCurrent }) => isCurrent && 'background-color: royalblue'}
+    ${({ isCurrent }) => isCurrent && 'color: #de3770'}
 `;

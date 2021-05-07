@@ -9,6 +9,7 @@ import * as P from './parts';
 import * as A from '../../store/offersListing/actions';
 import { Filters, ListingType } from '../../store/offersListing/constants';
 import { userAuthIdSelector } from '../../store/userAuth/selectors';
+import { deleteOfferRequest } from '../../store/offersManagement/actions';
 
 export const OffersListingPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -49,7 +50,7 @@ export const OffersListingPage: React.FC = () => {
     }
 
     const deleteCallback = (id: number) => () => {
-        console.log('delete ' + id);
+        dispatch(deleteOfferRequest(id));
     }
 
     const othersOfferProps = (id: number) => ({
@@ -85,9 +86,9 @@ export const OffersListingPage: React.FC = () => {
                                 {offers.map((offer, index) => (
                                     <OneForOneTile
                                         key={index}
-                                        {...offer}
+                                        offer={offer}
                                         {...(
-                                            offer.offerentId === userId
+                                            offer.student.id === userId
                                                 ? myOfferProps(offer.id)
                                                 : othersOfferProps(offer.id)
                                         )}

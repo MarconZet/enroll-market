@@ -1,3 +1,5 @@
+import { OneForOneOffer } from "../../api/models";
+
 export enum OffersListingActionType {
     GetPageRequest = 'offersListing/GET_PAGE_REQUEST',
     GetPageSuccess = 'offersListing/GET_PAGE_SUCCESS',
@@ -24,21 +26,23 @@ export type OffersListingAction = {
     listingType: ListingType,
 };
 
-export interface Offer {
-    id: number;
-    subjectName: string;
-    wantedGroup: {
-        teacherName: string;
-        timeSlot: string;
-    };
-    offeredGroup: {
-        teacherName: string;
-        timeSlot: string;
-        comment: string;
-        whoOffers: string;
-    },
-    offerentId: string;
-}
+// export interface Offer {
+//     id: number;
+//     subjectName: string;
+//     wantedGroup: {
+//         teacherName: string;
+//         timeSlot: string;
+//     };
+//     offeredGroup: {
+//         teacherName: string;
+//         timeSlot: string;
+//         comment: string;
+//         whoOffers: string;
+//     },
+//     offerentId: string;
+// }
+
+export type Offer = OneForOneOffer;
 
 export interface FiltersData {
     timeSlots?: string[],
