@@ -105,12 +105,13 @@ public class DbInit implements CommandLineRunner {
         courseRepository.saveAll(courses).forEach(savedCourses::add);
 
         List<StudentPostDto> studentPostDtos = Arrays.asList(
-                new StudentPostDto("Grzegorz", "Janosz", false),
-                new StudentPostDto("Adam", "Bera", false),
-                new StudentPostDto("Magdalena", "Pastuła", false),
-                new StudentPostDto("Janusz", "Kowal", false),
-                new StudentPostDto("Grażyna", "Gwóźdź", false),
-                new StudentPostDto("Marcin", "Zielonka", true)
+                new StudentPostDto("Grzegorz", "Janosz", "123001"),
+                new StudentPostDto("Adam", "Bera", "123002"),
+                new StudentPostDto("Magdalena", "Pastuła", "123003"),
+                new StudentPostDto("Janusz", "Kowal", "123004"),
+                new StudentPostDto("Grażyna", "Gwóźdź", "123005"),
+                new StudentPostDto("Marcin", "Zielonka", "123006"),
+                new StudentPostDto("Galus", "Anonimus", "123456")
         );
         List<Student> students = studentMapper.studentPostDtosToStudents(studentPostDtos);
         List<Student> savedStudents = new ArrayList<>();

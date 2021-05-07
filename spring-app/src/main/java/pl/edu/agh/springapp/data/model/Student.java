@@ -20,7 +20,7 @@ public class Student {
 
     private String name;
     private String surname;
-    private boolean isAdmin;
+    private String indexNumber;
 
     @OneToMany(mappedBy = "student")
     private List<Offer> offers = new ArrayList<>();

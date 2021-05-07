@@ -80,7 +80,7 @@ public class FileUploadService {
             teacherRepository.save(teacher);
 
             String[] studentData = line.getStudent().split(" ");
-            StudentPostDto studentPostDto = new StudentPostDto(studentData[0], studentData[1], false);
+            StudentPostDto studentPostDto = new StudentPostDto(studentData[0], studentData[1], "123001");
             Student student = studentMapper.studentPostDtoToStudent(studentPostDto);
             students.add(student);
             studentRepository.save(student);

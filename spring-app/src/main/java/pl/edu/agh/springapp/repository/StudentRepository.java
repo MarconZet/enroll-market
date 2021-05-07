@@ -6,4 +6,5 @@ import pl.edu.agh.springapp.data.model.Student;
 
 @Repository
 public interface StudentRepository extends PagingAndSortingRepository<Student, Long> {
+    Student findFirstByIndexNumber(String indexNumber);
 }

@@ -25,6 +25,5 @@ public class StudentPostDto {
             dataType = "String"
     )
     private String surname;
-
-    private boolean isAdmin;
+    private String indexNumber;
 }

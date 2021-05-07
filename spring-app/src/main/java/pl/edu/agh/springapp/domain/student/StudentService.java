@@ -28,8 +28,7 @@ public class StudentService {
     public StudentDto newStudent(StudentPostDto studentPostDto) {
         Student student = studentMapper.studentPostDtoToStudent(studentPostDto);
         Student savedStudent = studentRepository.save(student);
-        StudentDto result = studentMapper.studentToStudentDto(savedStudent);
-        return result;
+        return studentMapper.studentToStudentDto(savedStudent);
     }
 
     public Page<StudentDto> getAllStudents(Integer pageNo, Integer pageSize) {
@@ -39,12 +38,8 @@ public class StudentService {
     }
 
     public StudentDto getMe(){
-        var student = new StudentDto();
-        student.setId(-1L);
-        student.setName(currentUser.getFirstname());
-        student.setSurname(currentUser.getSurname());
-        student.setAdmin(false);
-        return student;
+        var student = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
+        return studentMapper.studentToStudentDto(student);
     }
 
     public void deleteStudentWithId(Long id) {
