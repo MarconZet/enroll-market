@@ -32,11 +32,19 @@ public class CourseDto {
 
     @ApiModelProperty(
             value = "Day enum, one of: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY" ,
-            name = "startTime",
+            name = "dayOfWeek",
             example= "MONDAY",
             dataType = "String"
     )
     private String dayOfWeek;
+
+    @ApiModelProperty(
+            value = "Course Type enum, one of: A, B" ,
+            name = "weekType",
+            example= "A",
+            dataType = "String"
+    )
+    private String weekType;
 
     private TeacherDto teacher;
 }

@@ -11,6 +11,8 @@ import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
+import pl.edu.agh.springapp.security.user.CurrentUser;
+import pl.edu.agh.springapp.security.user.KeycloakUser;
 
 import java.util.List;
 

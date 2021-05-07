@@ -90,7 +90,7 @@ public class FileUploadService {
             int min = Integer.parseInt(startTimeSplitted[1]);
 
             CoursePostDto coursePostDto = new CoursePostDto(subject.getId(), line.getCourseType(), LocalTime.of(hour, min),
-                                                            line.getDayOfWeek(), teacher.getId());
+                                                            line.getDayOfWeek(), WeekType.A.name(), teacher.getId());
             Course course = courseMapper.coursePostDtoToCourse(coursePostDto);
             courses.add(course);
             courseRepository.save(course);

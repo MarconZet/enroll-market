@@ -41,5 +41,13 @@ public class CoursePostDto {
     )
     private String dayOfWeek;
 
+    @ApiModelProperty(
+            value = "Course Type enum, one of: A, B" ,
+            name = "weekType",
+            example= "A",
+            dataType = "String"
+    )
+    private String weekType;
+
     private Long teacherId;
 }
