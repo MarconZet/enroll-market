@@ -9,8 +9,8 @@ import { OffersManagementActionType } from '../offersManagement/constants';
 
 export function* getPageWorker(action: AnyAction) {
     try {
-        const { data } = yield call(getOneForOneOffers);
-        yield put(A.getPageSuccess(data, 1, mockFiltersData))
+        const { data: { content } } = yield call(getOneForOneOffers);
+        yield put(A.getPageSuccess(content, 1, mockFiltersData))
     } catch (error) {
         yield put(A.getPageFail());
         notitier.alert('Ładowanie strony nie powiodło się. Spróbuj jeszcze raz.');

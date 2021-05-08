@@ -2,7 +2,7 @@ import axios from 'axios';
 import queryBuilder from '../utils/queryBuilder';
 import { OneForOneOffer, OneForOneOfferParams, Subject, Teacher, PaginatedResponse, BasicQueryParams } from './models';
 
-export const getOneForOneOffers = () => axios.get<OneForOneOffer[]>(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers');
+export const getOneForOneOffers = (params?: BasicQueryParams) => axios.get<PaginatedResponse<OneForOneOffer[]>>(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers');
 
 export const createOneForOneOffer = (params: OneForOneOfferParams) => axios.post(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers', params);
 
