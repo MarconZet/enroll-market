@@ -20,10 +20,14 @@ import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -57,21 +61,19 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         boolean security = Arrays.asList(environment.getActiveProfiles()).contains("security");
+        http.cors().and().csrf().disable();
         if (security) {
             super.configure(http);
             http.authorizeRequests()
                     .antMatchers("/api/enroll/**").hasRole(ADMIN_ROLE)
                     .antMatchers("/api/**").hasRole(STUDENT_ROLE)
                     .anyRequest().permitAll();
-            if(backendDeveloper.equals("off"))
+            if (backendDeveloper.equals("off"))
                 http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            // http.headers().frameOptions().disable();
-            if(backendDeveloper.equals("on"))
+            if (backendDeveloper.equals("on"))
                 http.headers().frameOptions().disable();
-            http.csrf().disable();
         } else {
             http.authorizeRequests().anyRequest().permitAll();
-            http.csrf().disable();
             http.headers().frameOptions().disable();
         }
     }
@@ -84,13 +86,12 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedMethods("*");
-            }
-        };
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:9000"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", configuration);
+        return source;
     }
 }
