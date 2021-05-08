@@ -23,6 +23,7 @@ public class Course {
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
     private DayOfWeek day;
+    private String week;
 
     @ManyToOne
     @JoinColumn(name="subject_id")

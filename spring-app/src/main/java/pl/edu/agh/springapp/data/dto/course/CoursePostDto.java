@@ -40,6 +40,7 @@ public class CoursePostDto {
             dataType = "String"
     )
     private String dayOfWeek;
+    private String weekAB;
 
     private Long teacherId;
 }
