@@ -1,2 +1,160 @@
-subjectName,teacher,teacherMailAddress,student,dayOfWeek,startTime,courseType
-Analiza matematyczna,Wacław Frydrych,frydrych@agh.edu.pl,Jan Kowalski,MONDAY,16:10,LESSON
+subjectName,courseType,maxCount,groupNumber,teacher,teacherMailAddress,isOnline,weekAB,dayOfWeek,startTime,studentName
+Architektura komputerów,W,1440,,Kitowski Jacek,kito@agh.edu.pl,Zdalnie,,Wt,08:00,
+Inżynieria oprogramowania,W,1440,,Dajda Jacek,dajda@agh.edu.pl,Zdalnie,,Cz,08:00,
+Inżynieria oprogramowania,P,15,2,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Sr,16:15,Żeberko Gerwazy
+Inżynieria oprogramowania,P,15,2,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Sr,16:15,Grosik Orlando
+Inżynieria oprogramowania,P,15,2,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Sr,16:15,Lotnik Marcelina
+Inżynieria oprogramowania,P,15,2,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Sr,16:15,Probówka Maurycy
+Inżynieria oprogramowania,P,15,2,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Sr,16:15,Elegant Rupert
+Inżynieria oprogramowania,P,15,3,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Sr,17:50,Dalej Tekla
+Inżynieria oprogramowania,P,15,3,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Sr,17:50,Miguel Zosia
+Inżynieria oprogramowania,P,15,4,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Pn,16:15,Brutal Monika
+Inżynieria oprogramowania,P,15,4,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Pn,16:15,Śmieszek Melisa
+Inżynieria oprogramowania,P,15,4,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Pn,16:15,Siodełko Kazimierz
+Inżynieria oprogramowania,P,15,4,Idzik Michał,miidzik@agh.edu.pl,Zdalnie,,Pn,16:15,Kwiatek Brandon
+Inżynieria oprogramowania,P,15,6,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Sr,14:40,Wystrzał Beniamin
+Inżynieria oprogramowania,P,15,6,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Sr,14:40,Miastowiec Bronisław
+Inżynieria oprogramowania,P,15,6,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Sr,14:40,Kostur Jolanta
+Inżynieria oprogramowania,P,15,6,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Sr,14:40,Gonzaga Celina
+Inżynieria oprogramowania,P,15,6,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Sr,14:40,Panicz Marlena
+Inżynieria oprogramowania,P,15,6,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Sr,14:40,Siodełko Janina
+Inżynieria oprogramowania,P,15,7,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Czw,14:40,Słomka Marta
+Inżynieria oprogramowania,P,15,7,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Czw,14:40,Bertino Orlando
+Inżynieria oprogramowania,P,15,7,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Czw,14:40,Melodyjka Arnold
+Inżynieria oprogramowania,P,15,7,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Czw,14:40,Samochodzik Joe
+Inżynieria oprogramowania,P,15,7,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Czw,14:40,Mieszkaniec Balbina
+Inżynieria oprogramowania,P,15,8,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Wt,09:35,Płanetnik Berta
+Inżynieria oprogramowania,P,15,8,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Wt,09:35,Kulig Amanda
+Inżynieria oprogramowania,P,15,8,Pełech-Pilichowski Tomasz,tomek@agh.edu.pl,Zdalnie,,Wt,09:35,Sim August
+Inżynieria oprogramowania,P,15,9,Łazarz Radosław,lazarz@agh.edu.pl,Zdalnie,,Sr,11:15,Dzwonko Adam
+Inżynieria oprogramowania,P,15,9,Łazarz Radosław,lazarz@agh.edu.pl,Zdalnie,,Sr,11:15,Koks Kazik
+Inżynieria oprogramowania,P,15,10,Żabińska-Rakoczy Małgorzata,zabinska@agh.edu.pl,Zdalnie,,Wt,11:15,Nietoperz Magdalena
+Inżynieria oprogramowania,P,15,10,Żabińska-Rakoczy Małgorzata,zabinska@agh.edu.pl,Zdalnie,,Wt,11:15,Miś Barbara
+Systemy rozproszone,W,1440,,Zieliński Krzysztof,kzielins@agh.edu.pl,Zdalnie,,Pn,08:00,
+Systemy rozproszone,L,15,1,Czekierda Łukasz,luke@agh.edu.pl,Zdalnie,,Wt,09:35,Dalej Tekla
+Systemy rozproszone,L,15,1,Czekierda Łukasz,luke@agh.edu.pl,Zdalnie,,Wt,09:35,Samochodzik Joe
+Systemy rozproszone,L,15,2,Nawrocki Piotr,piotr.nawrocki@agh.edu.pl,Zdalnie,,Sr,09:35,Probówka Maurycy
+Systemy rozproszone,L,15,2,Nawrocki Piotr,piotr.nawrocki@agh.edu.pl,Zdalnie,,Sr,09:35,Miguel Zosia
+Systemy rozproszone,L,15,2,Nawrocki Piotr,piotr.nawrocki@agh.edu.pl,Zdalnie,,Sr,09:35,Wystrzał Beniamin
+Systemy rozproszone,L,15,4,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,,Pn,14:40,Sim August
+Systemy rozproszone,L,15,4,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,,Pn,14:40,Lotnik Marcelina
+Systemy rozproszone,L,15,4,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,,Pn,14:40,Siodełko Kazimierz
+Systemy rozproszone,L,15,4,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,,Pn,14:40,Brutal Monika
+Systemy rozproszone,L,15,5,Czekierda Łukasz,luke@agh.edu.pl,Zdalnie,,Wt,11:15,Płanetnik Berta
+Systemy rozproszone,L,15,6,Czekierda Łukasz,luke@agh.edu.pl,Zdalnie,,Wt,12:50,Panicz Marlena
+Systemy rozproszone,L,15,7,Nawrocki Piotr,piotr.nawrocki@agh.edu.pl,Zdalnie,,Sr,11:15,Siodełko Janina
+Systemy rozproszone,L,15,7,Nawrocki Piotr,piotr.nawrocki@agh.edu.pl,Zdalnie,,Sr,11:15,Żeberko Gerwazy
+Systemy rozproszone,L,15,8,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pt,11:15,Śmieszek Melisa
+Systemy rozproszone,L,15,8,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pt,11:15,Grosik Orlando
+Systemy rozproszone,L,15,9,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pt,12:50,Elegant Rupert
+Systemy rozproszone,L,15,10,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pt,14:40,Gonzaga Celina
+Systemy rozproszone,L,15,10,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pt,14:40,Słomka Marta
+Systemy rozproszone,L,15,10,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pt,14:40,Miastowiec Bronisław
+Systemy rozproszone,L,15,10,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pt,14:40,Bertino Orlando
+Systemy rozproszone,L,15,11,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pt,16:15,Mieszkaniec Balbina
+Systemy rozproszone,L,15,12,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Wt,14:40,Kulig Amanda
+Systemy rozproszone,L,15,12,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Wt,14:40,Koks Kazik
+Systemy rozproszone,L,15,13,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pn,11:15,Kostur Jolanta
+Systemy rozproszone,L,15,14,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pn,09:35,Kwiatek Brandon
+Systemy rozproszone,L,15,14,Malawski Filip,fmal@agh.edu.pl,Zdalnie,,Pn,09:35,Nietoperz Magdalena
+Algorytmy dla problemów trudnych obliczeniowo,W,1440,,Faliszewski Piotr,faliszew@agh.edu.pl,Zdalnie,,Cz,11:15,
+Algorytmy dla problemów trudnych obliczeniowo,L,15,1,Faliszewski Piotr,faliszew@agh.edu.pl,Zdalnie,,Sr,09:35,Panicz Marlena
+Algorytmy dla problemów trudnych obliczeniowo,L,15,1,Faliszewski Piotr,faliszew@agh.edu.pl,Zdalnie,,Sr,09:35,Siodełko Kazimierz
+Algorytmy dla problemów trudnych obliczeniowo,L,15,2,Faliszewski Piotr,faliszew@agh.edu.pl,Zdalnie,,Sr,11:15,Nietoperz Magdalena
+Algorytmy dla problemów trudnych obliczeniowo,L,15,2,Faliszewski Piotr,faliszew@agh.edu.pl,Zdalnie,,Sr,11:15,Miastowiec Bronisław
+Algorytmy dla problemów trudnych obliczeniowo,L,15,3,Gajęcki Marek,mag@agh.edu.pl,Zdalnie,,Wt,09:35,Słomka Marta
+Algorytmy dla problemów trudnych obliczeniowo,L,15,3,Gajęcki Marek,mag@agh.edu.pl,Zdalnie,,Wt,09:35,Wystrzał Beniamin
+Algorytmy dla problemów trudnych obliczeniowo,L,15,3,Gajęcki Marek,mag@agh.edu.pl,Zdalnie,,Wt,09:35,Lotnik Marcelina
+Algorytmy dla problemów trudnych obliczeniowo,L,15,4,Gajęcki Marek,mag@agh.edu.pl,Zdalnie,,Wt,11:15,Bertino Orlando
+Algorytmy dla problemów trudnych obliczeniowo,L,15,4,Gajęcki Marek,mag@agh.edu.pl,Zdalnie,,Wt,11:15,Sim August
+Wprowadzenie do inżynierii bezpieczeństwa,W,1440,,Faber Łukasz,faber@agh.edu.pl,Zdalnie,,Pn,14:40,
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,1,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Pn,11:15,Melodyjka Arnold
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,2,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Pn,12:50,Kwiatek Brandon
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,2,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Pn,12:50,Grosik Orlando
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,3,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,09:35,Mieszkaniec Balbina
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,3,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,09:35,Samochodzik Joe
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,4,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Wt,11:15,Koks Kazik
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,5,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Wt,12:50,Kostur Jolanta
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,5,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Wt,12:50,Żeberko Gerwazy
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,6,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Wt,14:40,Słomka Marta
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,6,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Wt,14:40,Dalej Tekla
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,8,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,11:15,Elegant Rupert
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,8,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,11:15,Kulig Amanda
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,9,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,12:50,Miś Barbara
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,9,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,12:50,Gonzaga Celina
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,9,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,12:50,Płanetnik Berta
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,9,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,12:50,Śmieszek Melisa
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,9,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,12:50,Siodełko Janina
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,9,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,12:50,Brutal Monika
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,9,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,12:50,Miguel Zosia
+Wprowadzenie do inżynierii bezpieczeństwa,L,15,10,Suder Dawid,dsuder@agh.edu.pl,Zdalnie,,Sr,14:40,Probówka Maurycy
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,2,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Wt,11:15,Dalej Tekla
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,3,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Wt,12:50,Kulig Amanda
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,3,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Wt,12:50,Koks Kazik
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,3,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Wt,12:50,Siodełko Janina
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,4,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,09:35,Gonzaga Celina
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,4,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,09:35,Melodyjka Arnold
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,5,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,11:15,Miś Barbara
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,5,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,11:15,Płanetnik Berta
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,5,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,11:15,Samochodzik Joe
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,5,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,11:15,Kwiatek Brandon
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,6,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,12:50,Kostur Jolanta
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,6,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,12:50,Probówka Maurycy
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,6,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,12:50,Żeberko Gerwazy
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,7,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,16:15,Mieszkaniec Balbina
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,7,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,16:15,Śmieszek Melisa
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,8,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Sr,17:50,Brutal Monika
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,9,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Cz,16:15,Elegant Rupert
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,9,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Cz,16:15,Słomka Marta
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,10,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Cz,17:50,Miguel Zosia
+Wprowadzenie do inżynierii bezpieczeństwa - projekt,P,15,10,Król Magdalena,mkrol@agh.edu.pl,Zdalnie,,Cz,17:50,Grosik Orlando
+UX aplikacji internetowych,W,1440,,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,,Sr,08:00,
+UX aplikacji internetowych,L,15,1,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,A,Sr,09:35,Dzwonko Adam
+UX aplikacji internetowych,L,15,1,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,A,Sr,09:35,Koks Kazik
+UX aplikacji internetowych,L,15,1,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,A,Sr,09:35,Żeberko Gerwazy
+UX aplikacji internetowych,L,15,2,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,B,Sr,09:35,Kwiatek Brandon
+UX aplikacji internetowych,L,15,2,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,B,Sr,09:35,Płanetnik Berta
+UX aplikacji internetowych,L,15,2,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,B,Sr,09:35,Siodełko Janina
+UX aplikacji internetowych,L,15,3,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,A,Sr,11:15,Gonzaga Celina
+UX aplikacji internetowych,L,15,3,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,A,Sr,11:15,Śmieszek Melisa
+UX aplikacji internetowych,L,15,4,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,B,Sr,11:15,Probówka Maurycy
+UX aplikacji internetowych,L,15,4,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,B,Sr,11:15,Miguel Zosia
+UX aplikacji internetowych,L,15,5,Kwolek Bartosz,bkwolek@agh.edu.pl,Zdalnie,A,Sr,12:50,Dalej Tekla
+UX aplikacji internetowych,L,15,7,Orzeł Joanna,orzel@agh.edu.pl,Zdalnie,A,Pt,08:00,Grosik Orlando
+UX aplikacji internetowych,L,15,8,Orzeł Joanna,orzel@agh.edu.pl,Zdalnie,B,Pt,08:00,Melodyjka Arnold
+UX aplikacji internetowych,L,15,9,Orzeł Joanna,orzel@agh.edu.pl,Zdalnie,A,Pt,09:35,Mieszkaniec Balbina
+UX aplikacji internetowych,L,15,9,Orzeł Joanna,orzel@agh.edu.pl,Zdalnie,A,Pt,09:35,Elegant Rupert
+UX aplikacji internetowych,L,15,10,Orzeł Joanna,orzel@agh.edu.pl,Zdalnie,B,Pt,09:35,Kostur Jolanta
+Systemy wbudowane,L,15,1,Brzoza-Woch Robert,rabw@agh.edu.pl,Zdalnie,,Pt,12:50,Mieszkaniec Balbina
+Systemy wbudowane,L,15,1,Brzoza-Woch Robert,rabw@agh.edu.pl,Zdalnie,,Pt,12:50,Nietoperz Magdalena
+Systemy wbudowane,L,15,1,Brzoza-Woch Robert,rabw@agh.edu.pl,Zdalnie,,Pt,12:50,Śmieszek Melisa
+Systemy wbudowane,L,15,1,Brzoza-Woch Robert,rabw@agh.edu.pl,Zdalnie,,Pt,12:50,Żeberko Gerwazy
+Systemy wbudowane,L,15,1,Brzoza-Woch Robert,rabw@agh.edu.pl,Zdalnie,,Pt,12:50,Grosik Orlando
+Systemy wbudowane,L,15,2,Brzoza-Woch Robert,rabw@agh.edu.pl,Zdalnie,,Pt,14:40,Elegant Rupert
+Systemy wbudowane,L,15,3,Brzoza-Woch Robert,rabw@agh.edu.pl,Zdalnie,,Pt,09:35,Gonzaga Celina
+Systemy wbudowane,L,15,3,Brzoza-Woch Robert,rabw@agh.edu.pl,Zdalnie,,Pt,09:35,Dalej Tekla
+Systemy wbudowane,L,15,4,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,12:50,Sim August
+Systemy wbudowane,L,15,4,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,12:50,Płanetnik Berta
+Systemy wbudowane,L,15,4,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,12:50,Melodyjka Arnold
+Systemy wbudowane,L,15,6,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,16:15,Kulig Amanda
+Systemy wbudowane,L,15,6,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,16:15,Kwiatek Brandon
+Systemy wbudowane,L,15,6,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,16:15,Probówka Maurycy
+Systemy wbudowane,L,15,6,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,16:15,Miguel Zosia
+Systemy wbudowane,L,15,6,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,16:15,Siodełko Kazimierz
+Systemy wbudowane,L,15,7,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,17:50,Panicz Marlena
+Systemy wbudowane,L,15,7,Zaborowski Wojciech,zab@agh.edu.pl,Zdalnie,,Cz,17:50,Lotnik Marcelina
+Bezpieczeństwo sieci komputerowych,W,1440,,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,A,Cz,14:40,
+Bezpieczeństwo sieci komputerowych,L,15,1,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,A,Cz,11:15,Kulig Amanda
+Bezpieczeństwo sieci komputerowych,L,15,2,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,A,Cz,12:50,Gonzaga Celina
+Bezpieczeństwo sieci komputerowych,L,15,2,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,A,Cz,12:50,Dalej Tekla
+Bezpieczeństwo sieci komputerowych,L,15,2,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,A,Cz,12:50,Miguel Zosia
+Bezpieczeństwo sieci komputerowych,L,15,3,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,B,Cz,14:40,Nietoperz Magdalena
+Bezpieczeństwo sieci komputerowych,L,15,4,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,B,Cz,11:15,Sim August
+Bezpieczeństwo sieci komputerowych,L,15,4,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,B,Cz,11:15,Kostur Jolanta
+Bezpieczeństwo sieci komputerowych,L,15,5,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,B,Cz,12:50,Elegant Rupert
+Bezpieczeństwo sieci komputerowych,L,15,5,Zieliński Sławomir,slawek@agh.edu.pl,Zdalnie,B,Cz,12:50,Grosik Orlando
+Wprowadzenie do cyfrowego przetwarzania sygnałów,W,1440,,Zieliński Tomasz,tzielin@agh.edu.pl,Zdalnie,,Cz,12:50,
+Wprowadzenie do cyfrowego przetwarzania sygnałów,L,15,1,Zieliński Tomasz,tzielin@agh.edu.pl,Zdalnie,A,Cz,14:40,Koks Kazik
+Wprowadzenie do cyfrowego przetwarzania sygnałów,L,15,1,Zieliński Tomasz,tzielin@agh.edu.pl,Zdalnie,A,Cz,14:40,Miastowiec Bronisław
+Wprowadzenie do cyfrowego przetwarzania sygnałów,L,15,1,Zieliński Tomasz,tzielin@agh.edu.pl,Zdalnie,A,Cz,14:40,Wystrzał Beniamin
+Wprowadzenie do cyfrowego przetwarzania sygnałów,L,15,2,Zieliński Tomasz,tzielin@agh.edu.pl,Zdalnie,B,Cz,14:40,Kostur Jolanta

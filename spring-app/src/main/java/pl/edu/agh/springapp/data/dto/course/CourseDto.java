@@ -37,6 +37,7 @@ public class CourseDto {
             dataType = "String"
     )
     private String dayOfWeek;
+    private String weekAB;
 
     private TeacherDto teacher;
 }
