@@ -7,9 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
+import pl.edu.agh.springapp.data.dto.subject.SubjectShortDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherAllDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
+import pl.edu.agh.springapp.data.model.Teacher;
 
 import java.util.List;
 
@@ -19,8 +22,9 @@ public class TeacherController {
     private final TeacherService service;
 
     @PostMapping("/teachers")
-    public TeacherDto newTeacher(@RequestBody TeacherPostDto teacherPostDto) {
-        return service.newTeacher(teacherPostDto);
+    public ResponseEntity<TeacherAllDto> newSubject(@RequestBody TeacherPostDto teacherPostDto) {
+        TeacherAllDto teacher = service.newTeacher(teacherPostDto);
+        return new ResponseEntity<>(teacher, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @GetMapping("/teachers")
@@ -32,9 +36,8 @@ public class TeacherController {
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/teachers/{id}")
-    void deleteTeacher(@PathVariable Long id) {
-        service.deleteTeacherWithId(id);
+    @GetMapping("/teachers/{id}")
+    public ResponseEntity<TeacherAllDto> getTeacher(@PathVariable Long id) {
+        return new ResponseEntity<>(service.getTeacherWithId(id), new HttpHeaders(), HttpStatus.OK);
     }
-
 }
