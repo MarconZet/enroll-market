@@ -1,20 +1,14 @@
 package pl.edu.agh.springapp.domain.offer;
 
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
-import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
-import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
-import pl.edu.agh.springapp.security.user.CurrentUser;
-import pl.edu.agh.springapp.security.user.KeycloakUser;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,8 +16,12 @@ public class OfferController {
     private final OfferService service;
 
     @PostMapping("/offers")
-    public OfferDto newOffer(@RequestBody OfferPostDto offerPostDto) {
-        return service.newOffer(offerPostDto);
+    public ResponseEntity<OfferDto> newOffer(
+            @ApiParam("You can post time block with field startTime and endTime setting as null. \n" +
+                    "That would mean that whole day is good for you")
+            @RequestBody OfferPostDto offerPostDto) {
+        OfferDto createdOffer = service.createOffer(offerPostDto);
+        return new ResponseEntity<>(createdOffer, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @GetMapping("/offers")
@@ -40,4 +38,8 @@ public class OfferController {
         service.deleteWithId(id);
     }
 
+    @GetMapping("/offers/{id}")
+    public OfferDto getOffer(@PathVariable Long id) {
+        return service.findWithId(id);
+    }
 }

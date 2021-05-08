@@ -115,6 +115,8 @@ public class DbInit implements CommandLineRunner {
         );
         List<Student> students = studentMapper.studentPostDtosToStudents(studentPostDtos);
         List<Student> savedStudents = new ArrayList<>();
+        Student student = students.get(6);
+        student.getCourses().add(savedCourses.get(0));
         studentRepository.saveAll(students).forEach(savedStudents::add);
 
         List<OneToOneOfferPostDto> oneToOneOfferPostDtos = Arrays.asList(

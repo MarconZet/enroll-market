@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface OfferRepository extends PagingAndSortingRepository<Offer, Long> {
     Page<Offer> findAllByIsOneToOne(boolean isOneToOne, Pageable pageable);
+    List<Offer> findAllByOfferConditions_TeachersId(Long id);
 }

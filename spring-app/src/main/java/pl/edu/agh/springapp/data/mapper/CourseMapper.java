@@ -7,13 +7,12 @@ import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
 import pl.edu.agh.springapp.data.dto.course.CourseWithoutSubjectDto;
 import pl.edu.agh.springapp.data.dto.course.CourseWithoutTeacherDto;
 import pl.edu.agh.springapp.data.model.*;
-import pl.edu.agh.springapp.repository.TeacherRepository;
 
 import java.util.List;
 
 @Mapper(
         componentModel = "spring",
-        uses = {TeacherMapper.class, SubjectMapper.class}
+        uses = {TeacherMapper.class, SubjectMapper.class, CourseMapperResolver.class}
 )
 public interface CourseMapper {
     @Mapping(source = "type", target = "courseType")
@@ -46,4 +45,5 @@ public interface CourseMapper {
 
     List<Course> coursePostDtosToCourses(List<CoursePostDto> coursePostDtoList);
     List<CourseDto> coursesToCoursesDtos(List<Course> courses);
+    Course map(Long id);
 }

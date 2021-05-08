@@ -26,13 +26,19 @@ public class TimeBlock {
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     @JsonSerialize(using = LocalTimeSerializer.class)
     private LocalTime startTime;
+
     @JsonFormat(pattern = "HH:mm")
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     @JsonSerialize(using = LocalTimeSerializer.class)
     private LocalTime endTime;
+
     private DayOfWeek day;
 
     @ManyToOne
-    @JoinColumn(name="OfferConditions_id", nullable = false)
+    @JoinColumn(name="OfferConditions_id", nullable = true)
     private OfferConditions offerConditions;
+
+    public boolean isSetWholeDay() {
+        return this.startTime == null && this.endTime == null;
+    }
 }
