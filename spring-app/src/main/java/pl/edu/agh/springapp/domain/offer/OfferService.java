@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
 import pl.edu.agh.springapp.data.mapper.OfferMapper;
+import pl.edu.agh.springapp.data.model.CourseType;
 import pl.edu.agh.springapp.data.model.Offer;
 import pl.edu.agh.springapp.data.model.Student;
 import pl.edu.agh.springapp.data.model.TimeBlock;
@@ -45,6 +46,9 @@ public class OfferService {
         }
         if (!loggedStudent.getCourses().contains(offer.getGivenCourse())) {
             throw new WrongFieldsException("Given course doesn't belong to logged student!");
+        }
+        if (offer.getGivenCourse().getType() == CourseType.LECTURE) {
+            throw new WrongFieldsException("You cannot give lecture!");
         }
         Offer savedOffer = offerRepository.save(offer);
         return offerMapper.offerToOfferDto(savedOffer);
