@@ -4,9 +4,9 @@ ENV HOME /usr/src/app
 WORKDIR $HOME
 COPY . .
 
+RUN chmod +x gradlew
 RUN ./gradlew bootJar
 
-ENV SS_PORT 8080
-EXPOSE $SS_PORT
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "bootJar.jar"]
