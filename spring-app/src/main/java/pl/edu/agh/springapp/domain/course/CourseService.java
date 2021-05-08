@@ -9,6 +9,8 @@ import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
 import pl.edu.agh.springapp.data.mapper.CourseMapper;
 import pl.edu.agh.springapp.data.model.Course;
+import pl.edu.agh.springapp.data.model.Teacher;
+import pl.edu.agh.springapp.error.EntityNotFoundException;
 import pl.edu.agh.springapp.repository.CourseRepository;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
 
-    public CourseDto newTeacher(CoursePostDto coursePostDto) {
+    public CourseDto newCourse(CoursePostDto coursePostDto) {
         Course course = courseMapper.coursePostDtoToCourse(coursePostDto);
         Course savedCourse = courseRepository.save(course);
         CourseDto result = courseMapper.courseToCourseDto(savedCourse);
@@ -35,6 +37,14 @@ public class CourseService {
     }
 
     public void deleteCourseWithId(Long id) {
+        if (!courseRepository.existsById(id)) {
+            throw new EntityNotFoundException(Course.class, id);
+        }
         courseRepository.deleteById(id);
+    }
+
+    public CourseDto getCourseWithId(Long id) {
+         Course course = courseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Course.class, id));
+        return courseMapper.courseToCourseDto(course);
     }
 }
