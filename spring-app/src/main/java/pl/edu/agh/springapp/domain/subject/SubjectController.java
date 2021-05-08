@@ -6,9 +6,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.springapp.data.dto.IdListDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectShortDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherDto;
 
 import java.util.List;
 
@@ -18,8 +20,9 @@ public class SubjectController {
     private final SubjectService service;
 
     @PostMapping("/subjects")
-    public SubjectShortDto newSubject(@RequestBody SubjectPostDto subjectPostDto) {
-        return service.newSubject(subjectPostDto);
+    public ResponseEntity<SubjectShortDto> newSubject(@RequestBody SubjectPostDto subjectPostDto) {
+        SubjectShortDto subject = service.newSubject(subjectPostDto);
+        return new ResponseEntity<>(subject, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @GetMapping("/subjects")
@@ -31,9 +34,14 @@ public class SubjectController {
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/subjects/{id}")
-    void deleteSubject(@PathVariable Long id) {
-        service.deleteSubjectWithId(id);
+    @GetMapping("/subjects/{id}")
+    public ResponseEntity<SubjectAllDto> getSubject(@PathVariable Long id) {
+        return new ResponseEntity<>(service.getSubjectWithId(id), new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping("/subjects/{id}/teachers")
+    public ResponseEntity<IdListDto> getTeachersOfSubject(@PathVariable Long id) {
+        IdListDto teachersIds = service.getTeachersOfSubject(id);
+        return new ResponseEntity<>(teachersIds, new HttpHeaders(), HttpStatus.OK);
+    }
 }

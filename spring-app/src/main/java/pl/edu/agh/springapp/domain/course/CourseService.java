@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
-import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.mapper.CourseMapper;
 import pl.edu.agh.springapp.data.model.Course;
 import pl.edu.agh.springapp.repository.CourseRepository;
