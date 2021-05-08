@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,8 +19,12 @@ import org.springframework.security.config.annotation.web.configurers.CorsConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -67,7 +72,10 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
             http.authorizeRequests()
                     .antMatchers("/api/enroll/**").hasRole(ADMIN_ROLE)
                     .antMatchers("/api/**").hasRole(STUDENT_ROLE)
-                    .anyRequest().permitAll();
+                    .anyRequest().permitAll()
+                    .and()
+                    .exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
+
             if (backendDeveloper.equals("off"))
                 http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             if (backendDeveloper.equals("on"))
