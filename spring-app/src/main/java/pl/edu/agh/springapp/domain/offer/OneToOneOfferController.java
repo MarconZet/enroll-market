@@ -1,5 +1,6 @@
 package pl.edu.agh.springapp.domain.offer;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -18,8 +19,8 @@ public class OneToOneOfferController {
     private final OneToOneOfferService service;
 
     @PostMapping("/one-to-one-offers")
-    public OneToOneOfferDto newOneToOneOffer(@RequestBody OneToOneOfferPostDto oneToOneOfferPostDto) {
-        return service.newOneToOneOffer(oneToOneOfferPostDto);
+    public ResponseEntity<OneToOneOfferDto> newOneToOneOffer(@RequestBody OneToOneOfferPostDto oneToOneOfferPostDto) {
+        return new ResponseEntity<>(service.newOneToOneOffer(oneToOneOfferPostDto), new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @GetMapping("/one-to-one-offers")
@@ -32,8 +33,15 @@ public class OneToOneOfferController {
     }
 
     @DeleteMapping("/one-to-one-offers/{id}")
-    void deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<Boolean> deleteEmployee(@PathVariable Long id) {
         service.deleteWithId(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/one-to-one-offers/{id}")
+    @ApiOperation(value = "Get offer with id - without logic")
+    public ResponseEntity<OneToOneOfferDto> getOneToOneOffer(@PathVariable Long id) {
+        return ResponseEntity.ok(new OneToOneOfferDto());
     }
 
 }

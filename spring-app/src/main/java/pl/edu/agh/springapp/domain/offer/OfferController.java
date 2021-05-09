@@ -1,5 +1,7 @@
 package pl.edu.agh.springapp.domain.offer;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -7,8 +9,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,7 +46,26 @@ public class OfferController {
     }
 
     @GetMapping("/offers/{id}")
-    public OfferDto getOffer(@PathVariable Long id) {
-        return service.findWithId(id);
+    public ResponseEntity<OfferDto> getOffer(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findWithId(id));
+    }
+
+    @GetMapping("offers/{id}/can-accept")
+    @ApiOperation(value = "Check if you can accept offer - without logic")
+    public ResponseEntity<Boolean> canAcceptOffer(@PathVariable Long id) {
+        return ResponseEntity.ok(false);
+    }
+
+    @GetMapping("offers/{id}/courses")
+    @ApiOperation(value = "Get list of matching offers - without logic")
+    public ResponseEntity<List<CourseDto>> getCoursesMatchingOffer(@PathVariable Long id) {
+        return ResponseEntity.ok(new ArrayList<>());
+    }
+
+    @PostMapping("offers/{id}/accept")
+    @ApiOperation(value = "Accept offer - without logic")
+    public ResponseEntity<Boolean> acceptOffer(@PathVariable Long offerId,
+                                               @RequestParam(required = true) Long courseId) {
+        return ResponseEntity.ok(true);
     }
 }
