@@ -1,8 +1,12 @@
+import { useLocation, Link, useHistory } from 'react-router-dom';
+import { useKeycloak } from '@react-keycloak/web';
 import * as P from './parts';
-import { useLocation, Link } from 'react-router-dom';
 
 export const Navbar: React.FC = () => {
     const location = useLocation();
+    const history = useHistory();
+
+    const { keycloak } = useKeycloak();
 
     const links = [
         {
@@ -12,6 +16,7 @@ export const Navbar: React.FC = () => {
         {
             title: 'Import/export',
             path: '/dataUploadAndDownload',
+            checkAuth: true,
         },
         {
             title: 'Moje oferty',
@@ -19,20 +24,45 @@ export const Navbar: React.FC = () => {
             otherPathsToHighlight: [
                 '/myOffers/acceptedByMe',
             ],
+            checkAuth: true,
         },
         {
             title: 'Dodaj ofertę',
             path: '/addOffer',
+            checkAuth: true,
         },
         {
             title: 'Lista ofert',
             path: '/offers',
+            checkAuth: true,
         },
         {
             title: 'Panel użytkownika',
             path: '/userPanel',
+            checkAuth: true,
         },
     ];
+
+    const handleLogInOut = () => {
+        if (keycloak.authenticated) {
+            history.push('/');
+            keycloak.logout();
+        } else {
+            keycloak.login();
+        }
+    };
+
+    const checkAuthenticated = () => {
+        if (!keycloak.authenticated) {
+            handleLogInOut();
+        }
+    };
+
+    const getLogInOutText = () => {
+        return keycloak.authenticated ? "Logout" : "Login"
+    };
+
+    console.log(keycloak.token);
 
     return (
         <P.Navbar>
@@ -42,11 +72,16 @@ export const Navbar: React.FC = () => {
             <div>
                 {links.map(
                     (link, index) => (
-                        <Link key={index} to={link.path} style={{ textDecoration: 'none' }}>
-                            <P.Link isCurrent={(link.path === location.pathname) || link.otherPathsToHighlight?.includes(location.pathname)}>{link.title}</P.Link>
+                        <Link key={index} to={link.path} style={{ textDecoration: 'none' }} onClick={link?.checkAuth ? checkAuthenticated : () => console.log("nope")}>
+                            <P.Link
+                                isCurrent={(link.path === location.pathname) || link.otherPathsToHighlight?.includes(location.pathname)}
+                            >{link.title}</P.Link>
                         </Link>
                     )
                 )}
+                <Link key={-1} to={'/login'} style={{ textDecoration: 'none' }} onClick={handleLogInOut}>
+                    <P.Link>{getLogInOutText()}</P.Link>
+                </Link>
             </div>
         </P.Navbar>
     );
