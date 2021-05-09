@@ -125,6 +125,7 @@ public class DbInit implements CommandLineRunner {
                 new OneToOneOfferPostDto(17L, 16L)
         );
         List<Offer> offers = oneToOneOfferMapper.oneToOneOfferPostDtosToOffers(oneToOneOfferPostDtos);
+        offers.get(0).setStudent(savedStudents.get(0));
         offerRepository.saveAll(offers);
     }
 }

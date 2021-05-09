@@ -23,7 +23,7 @@ public class Offer {
     @JoinColumn(name="course_id")
     private Course givenCourse;
 
-    private boolean isOneToOne = false;
+    private Boolean isOneToOne = false;
 
     @OneToOne(
             orphanRemoval = true,

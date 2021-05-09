@@ -55,7 +55,7 @@ public class OneToOneOfferMapper {
         offerConditions.getTimeBlocks().add(timeBlock);
 
         offer.setOfferConditions(offerConditions);
-        offer.setOneToOne(true);
+        offer.setIsOneToOne(true);
         return offer;
     }
 
