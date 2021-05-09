@@ -6,10 +6,12 @@ import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
 import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.model.*;
+import pl.edu.agh.springapp.error.WrongFieldsException;
 import pl.edu.agh.springapp.repository.CourseRepository;
 import pl.edu.agh.springapp.repository.OfferConditionsRepository;
 import pl.edu.agh.springapp.repository.StudentRepository;
 import pl.edu.agh.springapp.repository.TimeBlockRepository;
+import pl.edu.agh.springapp.security.user.CurrentUser;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -23,30 +25,25 @@ public class OneToOneOfferMapper {
     private final CourseMapper courseMapper;
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
-    private final TimeBlockRepository timeBlockRepository;
-    private final OfferConditionsRepository offerConditionsRepository;
+    private final CurrentUser currentUser;
 
     private static int courseTime = 90;
 
     public Offer oneToOneOfferPostDtoToOffer(OneToOneOfferPostDto oneToOneOfferPostDto) {
         Offer offer = new Offer();
-        Student student = studentRepository.findById(oneToOneOfferPostDto.getStudentId()).orElse(null);
+        Student student = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
         if (student == null) {
-            return null;
+            throw new WrongFieldsException("Logged student doesn't exist in database");
         }
         offer.setStudent(student);
 
-        Course givenCourse = courseRepository.findById(oneToOneOfferPostDto.getGivenCourseId()).orElse(null);
-        if (givenCourse == null) {
-            return null;
-        }
+        Course givenCourse = courseRepository.findById(oneToOneOfferPostDto.getGivenCourseId())
+                .orElseThrow(() -> new WrongFieldsException("No given course with id: " + oneToOneOfferPostDto.getGivenCourseId()));
         offer.setGivenCourse(givenCourse);
 
         OfferConditions offerConditions = new OfferConditions();
-        Course takenCourse = courseRepository.findById(oneToOneOfferPostDto.getTakenCourseId()).orElse(null);
-        if (takenCourse == null) {
-            return null;
-        }
+        Course takenCourse = courseRepository.findById(oneToOneOfferPostDto.getTakenCourseId())
+                .orElseThrow(() -> new WrongFieldsException("No taken course with id: " + oneToOneOfferPostDto.getTakenCourseId()));
         offerConditions.getTeachers().add(takenCourse.getTeacher());
 
         TimeBlock timeBlock = new TimeBlock();
@@ -58,15 +55,7 @@ public class OneToOneOfferMapper {
         offerConditions.getTimeBlocks().add(timeBlock);
 
         offer.setOfferConditions(offerConditions);
-        offer.setOneToOne(true);
-        return offer;
-    }
-
-    public Offer oneToOneOfferDtoToOffer(OneToOneOfferDto oneToOneOfferDto) {
-        OneToOneOfferPostDto oneToOneOfferPostDto = new OneToOneOfferPostDto(oneToOneOfferDto.getStudent().getId(),
-                oneToOneOfferDto.getGivenCourse().getId(), oneToOneOfferDto.getTakenCourse().getId());
-        Offer offer = oneToOneOfferPostDtoToOffer(oneToOneOfferPostDto);
-        offer.setId(oneToOneOfferDto.getId());
+        offer.setIsOneToOne(true);
         return offer;
     }
 

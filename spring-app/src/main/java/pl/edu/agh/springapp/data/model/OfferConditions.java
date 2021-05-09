@@ -28,4 +28,16 @@ public class OfferConditions {
 
     @OneToMany(mappedBy = "offerConditions", cascade = {CascadeType.MERGE, CascadeType.PERSIST }, orphanRemoval = true)
     private List<TimeBlock> timeBlocks = new ArrayList<>();
+
+    public void setTimeBlocks(List<TimeBlock> timeBlocks) {
+        this.timeBlocks = timeBlocks;
+        for (TimeBlock timeBlock: timeBlocks) {
+            timeBlock.setOfferConditions(this);
+        }
+    }
+
+    public void addTimeBlock(TimeBlock timeBlock) {
+        this.timeBlocks.add(timeBlock);
+        timeBlock.setOfferConditions(this);
+    }
 }

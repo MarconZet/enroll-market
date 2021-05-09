@@ -1,14 +1,13 @@
 package pl.edu.agh.springapp.data.dto.student;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class StudentPostDto {
+public class StudentWithCoursesDto {
+    private Long id;
 
     @ApiModelProperty(
             value = "Name of student" ,
@@ -25,5 +24,7 @@ public class StudentPostDto {
             dataType = "String"
     )
     private String surname;
+
     private String indexNumber;
+    List<Long> coursesIds;
 }

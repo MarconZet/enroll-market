@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class Teacher {
 
     private String name;
     private String surname;
+    @Email
     private String emailAddress;
 
     @OneToMany(mappedBy = "teacher")

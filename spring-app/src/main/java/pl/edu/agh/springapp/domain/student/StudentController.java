@@ -6,9 +6,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
+import pl.edu.agh.springapp.data.dto.student.StudentWithCoursesDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherAllDto;
+import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.security.user.CurrentUser;
 
 import java.util.List;
@@ -19,8 +23,8 @@ public class StudentController {
     private final StudentService service;
 
     @PostMapping("/students")
-    public StudentDto newStudent(@RequestBody StudentPostDto studentPostDto) {
-        return service.newStudent(studentPostDto);
+    public ResponseEntity<StudentDto> newStudent(@RequestBody StudentPostDto studentPostDto) {
+        return new ResponseEntity<>(service.newStudent(studentPostDto), new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @GetMapping("/students")
@@ -33,12 +37,12 @@ public class StudentController {
     }
 
     @GetMapping("/students/me")
-    public StudentDto getMe(){
-        return service.getMe();
+    public ResponseEntity<StudentWithCoursesDto> getMe(){
+        return ResponseEntity.ok(service.getMe());
     }
 
-    @DeleteMapping("/students/{id}")
-    void deleteStudent(@PathVariable Long id) {
-        service.deleteStudentWithId(id);
+    @GetMapping("/students/me/courses")
+    public ResponseEntity<List<CourseDto>> getMyCourses() {
+        return ResponseEntity.ok(service.getMyCourses());
     }
 }

@@ -5,11 +5,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
+import pl.edu.agh.springapp.data.dto.student.StudentWithCoursesDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
+import pl.edu.agh.springapp.data.mapper.CourseMapper;
 import pl.edu.agh.springapp.data.mapper.StudentMapper;
+import pl.edu.agh.springapp.data.mapper.TeacherMapper;
 import pl.edu.agh.springapp.data.model.Student;
+import pl.edu.agh.springapp.error.WrongFieldsException;
 import pl.edu.agh.springapp.repository.StudentRepository;
 import pl.edu.agh.springapp.security.user.CurrentUser;
 
@@ -23,13 +28,17 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final CourseMapper courseMapper;
     private final CurrentUser currentUser;
 
     public StudentDto newStudent(StudentPostDto studentPostDto) {
         Student student = studentMapper.studentPostDtoToStudent(studentPostDto);
+        if (studentRepository.existsByIndexNumber(studentPostDto.getIndexNumber())) {
+            throw new WrongFieldsException("Student with such index exist!",
+                    "indexNumber", studentPostDto.getIndexNumber());
+        }
         Student savedStudent = studentRepository.save(student);
-        StudentDto result = studentMapper.studentToStudentDto(savedStudent);
-        return result;
+        return studentMapper.studentToStudentDto(savedStudent);
     }
 
     public Page<StudentDto> getAllStudents(Integer pageNo, Integer pageSize) {
@@ -38,13 +47,14 @@ public class StudentService {
         return studentRepository.findAll(paging).map(studentMapper::studentToStudentDto);
     }
 
-    public StudentDto getMe(){
-        var student = new StudentDto();
-        student.setId(-1L);
-        student.setName(currentUser.getFirstname());
-        student.setSurname(currentUser.getSurname());
-        student.setAdmin(false);
-        return student;
+    public StudentWithCoursesDto getMe(){
+        var student = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
+        return studentMapper.studentToStudentWithCoursesDto(student);
+    }
+
+    public List<CourseDto> getMyCourses(){
+        var student = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
+        return courseMapper.coursesToCoursesDtos(student.getCourses());
     }
 
     public void deleteStudentWithId(Long id) {

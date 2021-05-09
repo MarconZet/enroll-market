@@ -11,7 +11,7 @@ import java.util.List;
 public interface CourseRepository extends PagingAndSortingRepository<Course, Long> {
     List<Course> findByStartTimeAndTeacherAndDay(LocalTime startTime, Teacher teacher, DayOfWeek day);
 
-    List<Course> findByStartTimeAndTeacherAndDayAndWeek(LocalTime startTime, Teacher teacher, DayOfWeek day, String week);
+    List<Course> findByStartTimeAndTeacherAndDayAndWeekType(LocalTime startTime, Teacher teacher, DayOfWeek day, WeekType weekType);
 
     List<Course> findBySubjectAndType(Subject subject, CourseType type);
 }

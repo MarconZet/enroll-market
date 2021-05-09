@@ -23,5 +23,5 @@ public class StudentDto {
     )
     private String surname;
 
-    private boolean isAdmin;
+    private String indexNumber;
 }

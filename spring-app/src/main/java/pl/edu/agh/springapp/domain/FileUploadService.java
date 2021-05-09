@@ -112,8 +112,8 @@ public class FileUploadService {
             Course course;
             List<Course> courseList;
             if (line.getWeekAB().equals("A") || line.getWeekAB().equals("B")) {
-                courseList = courseRepository.findByStartTimeAndTeacherAndDayAndWeek(LocalTime.of(hour, min), teacher,
-                        DayOfWeek.getDayOfWeek(line.getDayOfWeek()), line.getWeekAB());
+                courseList = courseRepository.findByStartTimeAndTeacherAndDayAndWeekType(LocalTime.of(hour, min), teacher,
+                        DayOfWeek.getDayOfWeek(line.getDayOfWeek()), WeekType.valueOf(line.getWeekAB()));
             } else {
                 courseList = courseRepository.findByStartTimeAndTeacherAndDay(LocalTime.of(hour, min), teacher,
                         DayOfWeek.getDayOfWeek(line.getDayOfWeek()));
@@ -143,7 +143,7 @@ public class FileUploadService {
                 if (!studentList.isEmpty()) {
                     student = studentList.get(0);
                 } else {
-                    StudentPostDto studentPostDto = new StudentPostDto(studentData[1], studentData[0], false);
+                    StudentPostDto studentPostDto = new StudentPostDto(studentData[1], studentData[0], "123456"); // TODO: add parsing index number
                     student = studentMapper.studentPostDtoToStudent(studentPostDto);
                     students.add(student);
                     studentRepository.save(student);
