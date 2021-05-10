@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
 import pl.edu.agh.springapp.data.dto.parsingContainer.ParsingContainerDTO;
 import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
-import pl.edu.agh.springapp.data.dto.studentsCourses.StudentsCoursesPostDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.data.mapper.*;
@@ -29,13 +28,11 @@ public class FileUploadService {
     private final CourseRepository courseRepository;
     private final SubjectRepository subjectRepository;
     private final StudentRepository studentRepository;
-    private final StudentsCoursesRepository studentsCoursesRepository;
 
     private final TeacherMapper teacherMapper;
     private final CourseMapper courseMapper;
     private final SubjectMapper subjectMapper;
     private final StudentMapper studentMapper;
-    private final StudentsCoursesMapper studentsCoursesMapper;
 
     public String getFile() {
         String fileContent = "";
@@ -64,7 +61,6 @@ public class FileUploadService {
         List<Teacher> teachers = new LinkedList<>();
         List<Course> courses = new LinkedList<>();
         List<Student> students = new LinkedList<>();
-        List<StudentsCourses> studentsCoursess = new LinkedList<>();
 
         for (ParsingContainerDTO line : records) {
 
@@ -115,8 +111,8 @@ public class FileUploadService {
                 courseList = courseRepository.findByStartTimeAndTeacherAndDayAndWeekType(LocalTime.of(hour, min), teacher,
                         DayOfWeek.getDayOfWeek(line.getDayOfWeek()), WeekType.valueOf(line.getWeekAB()));
             } else {
-                courseList = courseRepository.findByStartTimeAndTeacherAndDay(LocalTime.of(hour, min), teacher,
-                        DayOfWeek.getDayOfWeek(line.getDayOfWeek()));
+                courseList = courseRepository.findByStartTimeAndTeacherAndDayAndWeekType(LocalTime.of(hour, min), teacher,
+                        DayOfWeek.getDayOfWeek(line.getDayOfWeek()), WeekType.valueOf("AB"));
             }
 
             if (!courseList.isEmpty()) {
@@ -125,7 +121,7 @@ public class FileUploadService {
                 String weekAB = line.getWeekAB();
 
                 if (!weekAB.equals("A") && !weekAB.equals("B")) {
-                    weekAB = null;
+                    weekAB = "AB";
                 }
 
                 CoursePostDto coursePostDto = new CoursePostDto(subject.getId(), classType, LocalTime.of(hour, min),
@@ -137,34 +133,24 @@ public class FileUploadService {
 
             if (!classType.equals("LECTURE")) {
                 String[] studentData = line.getStudentName().split(" ");
-                Student student;
-                List<Student> studentList = studentRepository.findByNameAndSurname(studentData[1], studentData[0]);
+                Student student = studentRepository.findFirstByIndexNumber(line.getStudentIndex());
 
-                if (!studentList.isEmpty()) {
-                    student = studentList.get(0);
-                } else {
-                    StudentPostDto studentPostDto = new StudentPostDto(studentData[1], studentData[0], "123456"); // TODO: add parsing index number
+                if (student == null) {
+                    StudentPostDto studentPostDto = new StudentPostDto(studentData[1], studentData[0], line.getStudentIndex());
                     student = studentMapper.studentPostDtoToStudent(studentPostDto);
-                    students.add(student);
                     studentRepository.save(student);
                 }
 
-                StudentsCoursesPostDto studentsCoursesPostDto = new StudentsCoursesPostDto(studentMapper.studentToStudentDto(student),
-                        courseMapper.courseToCourseDto(course));
-                StudentsCourses studentsCourses = studentsCoursesMapper.subjectPostDtoToSubject(studentsCoursesPostDto);
-                studentsCoursess.add(studentsCourses);
-                studentsCoursesRepository.save(studentsCoursesMapper.subjectPostDtoToSubject(studentsCoursesPostDto));
+                List<Course> student_courses = student.getCourses();
+                student_courses.add(course);
 
                 // add student to lecture of that subject
-                List<Course> courseLectureList = courseRepository.findBySubjectAndType(subject, CourseType.getCourseTypeFromString(classType));
+                List<Course> courseLectureList = courseRepository.findBySubjectAndType(subject, CourseType.valueOf("LECTURE"));
 
                 if (!courseLectureList.isEmpty()) {
                     Course lecture = courseLectureList.get(0);
-                    StudentsCoursesPostDto studentLecturePostDto = new StudentsCoursesPostDto(studentMapper.studentToStudentDto(student),
-                            courseMapper.courseToCourseDto(lecture));
-                    StudentsCourses studentLecture = studentsCoursesMapper.subjectPostDtoToSubject(studentLecturePostDto);
-                    studentsCoursess.add(studentLecture);
-                    studentsCoursesRepository.save(studentsCoursesMapper.subjectPostDtoToSubject(studentLecturePostDto));
+                    List<Course> student_courses2 = student.getCourses();
+                    student_courses2.add(lecture);
                 }
             }
         }
