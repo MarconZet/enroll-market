@@ -6,10 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
 import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
 import pl.edu.agh.springapp.data.model.*;
+import pl.edu.agh.springapp.error.EntityNotFoundException;
 import pl.edu.agh.springapp.error.WrongFieldsException;
 import pl.edu.agh.springapp.repository.OfferRepository;
 import pl.edu.agh.springapp.repository.CourseRepository;
@@ -72,5 +74,13 @@ public class OneToOneOfferService {
 
     public void deleteWithId(Long id) {
         offerRepository.deleteById(id);
+    }
+
+    public OneToOneOfferDto findWithId(Long id) {
+        Offer offer = offerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("One to one offer was not found for id: " + id));
+        if (!offer.getIsOneToOne()) {
+            throw new EntityNotFoundException("One to one offer was not found for id: " + id);
+        }
+        return oneToOneOfferMapper.offerToOneToOneOfferDto(offer);
     }
 }

@@ -39,9 +39,9 @@ public class OneToOneOfferController {
     }
 
     @GetMapping("/one-to-one-offers/{id}")
-    @ApiOperation(value = "Get offer with id - without logic")
+    @ApiOperation(value = "Get offer with id")
     public ResponseEntity<OneToOneOfferDto> getOneToOneOffer(@PathVariable Long id) {
-        return ResponseEntity.ok(new OneToOneOfferDto());
+        return ResponseEntity.ok(service.findWithId(id));
     }
 
 }
