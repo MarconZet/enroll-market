@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { BrowserRouter, Switch, Route  } from "react-router-dom";
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import keycloak from './keycloak';
@@ -7,7 +6,6 @@ import Navbar from './components/Navbar/Navbar';
 import AddOfferPage from './pages/AddOfferPage/AddOfferPage';
 import DataUploadAndDownloadPage from './pages/DataUploadAndDownloadPage/DataUploadAndDownloadPage';
 import OffersListingPage from './pages/OffersListingPage/OffersListingPage';
-import { getGlobalDataRequest } from './store/globalData/actions';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 const IndexFiller: React.FC = () => (
@@ -22,14 +20,6 @@ const NoFoundPageFiller: React.FC = () => (<h1>Tej strony jeszcze nie ma i możl
 const LoadingFiller: React.FC = () => (<h1>Poczekaj...</h1>);
 
 const App: React.FC = () => {
-	const dispatch =  useDispatch();
-
-	useEffect(() => {
-		if (keycloak.authenticated) {
-			dispatch(getGlobalDataRequest());
-		}
-	}, [dispatch]);
-
 	const initOptions = { pkceMethod: 'S256' };
 
 	const handleOnEvent = async (event: any, error: any) => {
