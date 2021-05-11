@@ -38,8 +38,9 @@ export interface CourseWithoutSubject {
     courseType: CourseType;
     dayOfWeek: DayOfWeek;
     id: number;
-    startTime: Time;
-    teacherId: number
+    startTime: string;
+    teacherId: number;
+    weekType: string;
 }
 
 export interface Course {
@@ -47,8 +48,9 @@ export interface Course {
     courseType: CourseType;
     dayOfWeek: DayOfWeek;
     id: number;
-    startTime: Time;
+    startTime: string;
     teacher: Teacher;
+    weekType: string;
 }
 
 export interface Subject extends SubjectShort {
@@ -56,10 +58,14 @@ export interface Subject extends SubjectShort {
 }
 
 export interface Student {
-    admin: boolean;
     id: number;
     name: string;
     surname: string;
+    indexNumber: string;
+}
+
+export interface StudentWithCourses extends Student {
+    coursesIds: number[];
 }
 
 export interface OneForOneOffer {
@@ -71,8 +77,34 @@ export interface OneForOneOffer {
 
 export interface OneForOneOfferParams {
     givenCourseId: number;
-    studentId: number;
     takenCourseId: number;
+}
+
+export interface TimeBlock {
+    startTime: string;
+    endTime: string;
+    id?: number;
+    dayOfWeek: DayOfWeek;
+}
+
+export interface OfferConditions {
+    id: number;
+    teachers: Teacher[];
+    timeBlocks: TimeBlock[];
+}
+
+export interface Offer {
+    givenCourse: Course;
+    id: number;
+    student: Student;
+    isOneToOne: boolean;
+    offerConditions: OfferConditions;
+}
+
+export interface OfferParams {
+    givenCourseId: number;
+    teacherIds: number[];
+    timeBlocks: TimeBlock[];
 }
 
 export interface PaginatedResponse<T> {
@@ -86,4 +118,8 @@ export interface PaginatedResponse<T> {
 export interface BasicQueryParams {
     pageNo?: number;
     pageSize?: number;
+}
+
+export interface OffersQueryParams extends BasicQueryParams {
+    search?: string;
 }

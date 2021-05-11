@@ -32,7 +32,7 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
                 <P.Subheader isOffered>Oferowany termin</P.Subheader>
                 <P.ClassBox isOffered>
                     <b>{offer.givenCourse.teacher.name} {offer.givenCourse.teacher.surname}</b>
-                    <b>{translations[offer.givenCourse.dayOfWeek]}, {offer.givenCourse.startTime.hour}:{offer.givenCourse.startTime.minute}</b>
+                    <b>{translations[offer.givenCourse.dayOfWeek]}, tydzień {offer.givenCourse.weekType}, {offer.givenCourse.startTime}</b>
                     {/* <span>{offeredGroup.comment}</span> */}
                     <span>{offer.student.name} {offer.student.surname}</span>
                 </P.ClassBox>
@@ -48,7 +48,7 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
                 <P.Subheader>Oczekiwany termin</P.Subheader>
                 <P.ClassBox>
                     <b>{offer.takenCourse.teacher.name} {offer.takenCourse.teacher.surname}</b>
-                    <b>{translations[offer.takenCourse.dayOfWeek]}, {offer.takenCourse.startTime.hour}:{offer.takenCourse.startTime.minute}</b>
+                    <b>{translations[offer.takenCourse.dayOfWeek]}, tydzień {offer.takenCourse.weekType}, {offer.takenCourse.startTime}</b>
                 </P.ClassBox>
             </P.SlotBox>
         </P.OffersBox>

@@ -1,15 +1,14 @@
-import { OffersListingAction, OffersListingActionType, FiltersData, Offer, Filters, ListingType } from './constants';
+import { OffersListingAction, OffersListingActionType, Offer, Filters, ListingType } from './constants';
 
 export const getPageRequest = (page: number): OffersListingAction => ({
     type: OffersListingActionType.GetPageRequest,
     page,
 });
 
-export const getPageSuccess = (offers: Offer[], totalPages: number, filtersData: FiltersData): OffersListingAction => ({
+export const getPageSuccess = (offers: Offer[], totalPages: number): OffersListingAction => ({
     type: OffersListingActionType.GetPageSuccess,
     offers,
     totalPages,
-    filtersData,
 });
 
 export const getPageFail = (): OffersListingAction => ({

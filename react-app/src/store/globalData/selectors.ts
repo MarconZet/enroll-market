@@ -30,3 +30,5 @@ export const coursesForSubjectAndTypeSelector = (subjectId: number, type: Course
 };
 
 export const isLoadingGlobalDataSelector = (state: ApplicationState) => state.globalData.isLoading;
+
+export const myCoursesSelector = (state: ApplicationState) => state.globalData.myCourses;

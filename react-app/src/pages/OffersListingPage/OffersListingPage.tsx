@@ -4,12 +4,13 @@ import { useLocation, Link } from 'react-router-dom';
 import { FiltersColumn } from '../../components/FiltersColumn/FiltersColumn';
 import OneForOneTile from '../../components/OneForOneTile/OneForOneTile';
 import { Pagination } from '../../components/Pagination/Pagination';
-import { offersListingFiltersDataSelector, offersListingIsLoadingSelector, offersListingPageSelector, offersListingSelector, offersListingTotalPagesSelector } from '../../store/offersListing/selectors';
+import { offersListingIsLoadingSelector, offersListingPageSelector, offersListingSelector, offersListingTotalPagesSelector } from '../../store/offersListing/selectors';
 import * as P from './parts';
 import * as A from '../../store/offersListing/actions';
 import { Filters, ListingType } from '../../store/offersListing/constants';
 import { userAuthIdSelector } from '../../store/userAuth/selectors';
 import { deleteOfferRequest } from '../../store/offersManagement/actions';
+import { getGlobalDataRequest } from '../../store/globalData/actions';
 
 export const OffersListingPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -17,9 +18,12 @@ export const OffersListingPage: React.FC = () => {
     let totalPages = useSelector(offersListingTotalPagesSelector);
     let offers = useSelector(offersListingSelector);
     let isLoading = useSelector(offersListingIsLoadingSelector);
-    let filtersData = useSelector(offersListingFiltersDataSelector);
     let userId = useSelector(userAuthIdSelector);
     let location = useLocation();
+
+    useEffect(() => {
+		dispatch(getGlobalDataRequest());
+	}, [dispatch]);
 
     useEffect(() => {
         let type: ListingType = 'all';
@@ -75,7 +79,7 @@ export const OffersListingPage: React.FC = () => {
                         </Link>
                     </P.TypeContainer>
                 )}
-                <FiltersColumn submitCallback={filtersSubmitCallback} timeSlots={filtersData.timeSlots} subjectsList={filtersData.subjectsList} />
+                <FiltersColumn submitCallback={filtersSubmitCallback} timeSlots={[]} subjectsList={[]} />
             </P.FiltersContainer>
             <P.OffersContainer>
                 {

@@ -15,7 +15,6 @@ export const offersListingReducer = (state = C.InitialOffersListingState, action
                 isLoading: false,
                 offers: action.offers,
                 totalPages: action.totalPages,
-                filtersData: action.filtersData,
             };
         case C.OffersListingActionType.GetPageFail:
             return {

@@ -13,6 +13,7 @@ export const globalDataReducer = (state = C.GlobalDataIinitialState, action: Any
                 ...state,
                 subjects: action.subjects,
                 teachers: action.teachers,
+                myCourses: action.myCourses,
                 isLoading: false,
             };
         case C.GlobalDataActionType.GetGlobalDataFail:

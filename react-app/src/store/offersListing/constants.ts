@@ -15,7 +15,6 @@ export type OffersListingAction = {
     type: OffersListingActionType.GetPageSuccess,
     offers: Offer[];
     totalPages: number;
-    filtersData: FiltersData;
 } | {
     type: OffersListingActionType.GetPageFail,
 } | {
@@ -62,7 +61,6 @@ export interface OffersListingState {
     offers: Offer[];
     isLoading: boolean;
     filters?: Filters;
-    filtersData: FiltersData;
     type: ListingType;
 };
 
@@ -72,9 +70,5 @@ export const InitialOffersListingState: OffersListingState = {
     offers: [],
     isLoading: false,
     filters: undefined,
-    filtersData: {
-        timeSlots: undefined,
-        subjectsList: undefined,
-    },
     type: 'all',
 };

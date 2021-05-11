@@ -1,3 +1,4 @@
+import { TimeBlock } from "../../api/models";
 import { OffersManagementAction, OffersManagementActionType } from "./constants";
 
 export const deleteOfferRequest = (id: number): OffersManagementAction => ({
@@ -13,8 +14,15 @@ export const deleteOfferFail = (): OffersManagementAction => ({
     type: OffersManagementActionType.DeleteOfferFail,
 });
 
-export const createOfferRequest = (givenCourseId: number, takenCourseId: number): OffersManagementAction => ({
+export const createOfferRequest = (givenCourseId: number, teacherIds: number[], timeBlocks: TimeBlock[]): OffersManagementAction => ({
     type: OffersManagementActionType.CreateOfferRequest,
+    givenCourseId,
+    teacherIds,
+    timeBlocks,
+});
+
+export const createOneForOneOfferRequest = (givenCourseId: number, takenCourseId: number): OffersManagementAction => ({
+    type: OffersManagementActionType.CreateOneForOneOfferRequest,
     givenCourseId,
     takenCourseId,
 });
