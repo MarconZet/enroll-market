@@ -18,6 +18,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
@@ -124,8 +125,10 @@ public class DbInit implements CommandLineRunner {
                 new OneToOneOfferPostDto(18L, 19L),
                 new OneToOneOfferPostDto(17L, 16L)
         );
-//        List<Offer> offers = oneToOneOfferMapper.oneToOneOfferPostDtosToOffers(oneToOneOfferPostDtos);
-//        offers.get(0).setStudent(savedStudents.get(0));
-//        offerRepository.saveAll(offers);
+        List<Offer> offers = oneToOneOfferMapper.oneToOneOfferPostDtosToOffers(oneToOneOfferPostDtos);
+        offers.get(0).setStudent(savedStudents.get(0));
+        offers.get(1).setStudent(savedStudents.get(0));
+        offers.get(2).setStudent(savedStudents.get(1));
+        offerRepository.saveAll(offers);
     }
 }
