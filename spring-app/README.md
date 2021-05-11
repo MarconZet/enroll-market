@@ -9,6 +9,12 @@ Creates docker image of an app.
 ### `docker run -d -p 8080:8080 --name enroll-market-backend spring-app`
 Starts image at with opened port 8080
 
+## Profiles
+You can run spring with following profiles:
+- dev
+- security
+- backend
+
 ## Documentation
 
 Api documentation available at [localhost:8080/swagger-ui/]()

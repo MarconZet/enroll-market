@@ -16,4 +16,5 @@ public class ParsingContainerDTO {
     private String dayOfWeek;
     private String startTime;
     private String studentName;
+    private String studentIndex;
 }

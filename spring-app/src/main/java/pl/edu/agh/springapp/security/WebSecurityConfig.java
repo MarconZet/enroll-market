@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,9 +41,6 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     public static final String STUDENT_ROLE = "student";
     public static final String ADMIN_ROLE = "admin";
 
-    @Value("${enroll-market.backend-developer}")
-    private String backendDeveloper;
-
     private final Environment environment;
 
     @Autowired
@@ -66,19 +64,21 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         boolean security = Arrays.asList(environment.getActiveProfiles()).contains("security");
+        boolean backend = Arrays.asList(environment.getActiveProfiles()).contains("backend");
         http.cors().and().csrf().disable();
         if (security) {
             super.configure(http);
             http.authorizeRequests()
+                    .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                     .antMatchers("/api/enroll/**").hasRole(ADMIN_ROLE)
                     .antMatchers("/api/**").hasRole(STUDENT_ROLE)
                     .anyRequest().permitAll()
                     .and()
                     .exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
 
-            if (backendDeveloper.equals("off"))
+            if (!backend)
                 http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            if (backendDeveloper.equals("on"))
+            else
                 http.headers().frameOptions().disable();
         } else {
             http.authorizeRequests().anyRequest().permitAll();
@@ -97,7 +97,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:9000"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "OPTIONS", "HEAD"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", configuration);
         return source;
