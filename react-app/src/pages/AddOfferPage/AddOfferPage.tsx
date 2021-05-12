@@ -5,6 +5,7 @@ import * as A from '../../store/offersManagement/actions';
 import { CourseType } from '../../api/models';
 import { coursesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, subjectsNamesAndIdsSelector } from '../../store/globalData/selectors';
 import { getGlobalDataRequest } from '../../store/globalData/actions';
+import OneForOneForm from '../../components/OneForOneForm/OneForOneForm';
 
 export const AddOfferPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -31,16 +32,6 @@ export const AddOfferPage: React.FC = () => {
         event.preventDefault();
     };
 
-    const translations = {
-        'MONDAY': 'Poniedziałek',
-        'TUESDAY': 'Wtorek',
-        'WEDNESDAY': 'Środa',
-        'THURSDAY': 'Czwartek',
-        'FRIDAY': 'Piątek',
-        'SATURDAY': 'Sobota',
-        'SUNDAY': 'Niedziela',
-    };
-
     return isLoadingSubjects ? (<></>) : (
         <P.Wrapper>
             <P.Form onSubmit={onSubmit}>
@@ -62,22 +53,13 @@ export const AddOfferPage: React.FC = () => {
                 {courses.length > 0
                     ? (
                         <>
-                            <P.Select name="givenCourseId" id="givenCourseId" onChange={(e) => setGivenCourseId(+e.target.value)} value={givenCourseId}>
-                                <option key={-1} value={-1}>Wybierz zajęcia, które chcesz wymienić</option>
-                                {
-                                    courses.map((e, index) => (
-                                        <option key={index} value={e.id}>{translations[e.dayOfWeek]}, {e?.weekType ? `tydzień ${e.weekType}, `  : ''}{e.startTime}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
-                                    ))
-                                }
-                            </P.Select>
-                            <P.Select name="takenCourseId" id="takenCourseId" onChange={(e) => setTakenCourseId(+e.target.value)} value={takenCourseId}>
-                                <option key={-1} value={-1}>Wybierz zajęcia, na które chcesz się wymienić</option>
-                                {
-                                    courses.map((e, index) => (
-                                        <option key={index} value={e.id}>{translations[e.dayOfWeek]}, tydzień {e.weekType}, {e.startTime}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
-                                    ))
-                                }
-                            </P.Select>
+                            <OneForOneForm
+                                givenCourseId={givenCourseId}
+                                takenCourseId={takenCourseId}
+                                courses={courses}
+                                onChangeGivenCourse={(e) => setGivenCourseId(+e.target.value)}
+                                onChangeTakenCourse={(e) => setTakenCourseId(+e.target.value)}
+                            />
                         </>
                     ) : (
                         <P.Title>Brak terminów. Ustaw inny przedmiot lub typ zajęć.</P.Title>
