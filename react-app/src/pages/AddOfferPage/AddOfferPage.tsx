@@ -5,7 +5,6 @@ import * as A from '../../store/offersManagement/actions';
 import { CourseType } from '../../api/models';
 import { coursesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, subjectsNamesAndIdsSelector } from '../../store/globalData/selectors';
 import { getGlobalDataRequest } from '../../store/globalData/actions';
-import { useKeycloak } from '@react-keycloak/web';
 
 export const AddOfferPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -18,13 +17,9 @@ export const AddOfferPage: React.FC = () => {
     let courses = useSelector(coursesForSubjectAndTypeSelector(subject, type));
     let isLoadingSubjects = useSelector(isLoadingGlobalDataSelector);
 
-    let { keycloak } = useKeycloak();
-
     useEffect(() => {
-		if (typeof keycloak?.token !== 'undefined') {
-            dispatch(getGlobalDataRequest(keycloak?.token));
-        }
-	}, [dispatch, keycloak?.token]);
+        dispatch(getGlobalDataRequest());
+	}, [dispatch]);
 
     useEffect(() => {
         setGivenCourseId(-1);
@@ -71,7 +66,7 @@ export const AddOfferPage: React.FC = () => {
                                 <option key={-1} value={-1}>Wybierz zajęcia, które chcesz wymienić</option>
                                 {
                                     courses.map((e, index) => (
-                                        <option key={index} value={e.id}>{translations[e.dayOfWeek]}, tydzień {e.weekType}, {e.startTime}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
+                                        <option key={index} value={e.id}>{translations[e.dayOfWeek]}, {e?.weekType ? `tydzień ${e.weekType}, `  : ''}{e.startTime}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
                                     ))
                                 }
                             </P.Select>

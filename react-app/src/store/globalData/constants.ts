@@ -8,7 +8,6 @@ export enum GlobalDataActionType {
 
 export type GlobalDataAction = {
     type: GlobalDataActionType.GetGlobalDataRequest,
-    token: string;
 } | {
     type: GlobalDataActionType.GetGlobalDataSuccess,
     subjects: Subject[];

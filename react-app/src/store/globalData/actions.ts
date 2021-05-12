@@ -1,9 +1,8 @@
 import { Subject, Teacher } from "../../api/models";
 import { GlobalDataAction, GlobalDataActionType } from "./constants";
 
-export const getGlobalDataRequest = (token: string): GlobalDataAction => ({
+export const getGlobalDataRequest = (): GlobalDataAction => ({
     type: GlobalDataActionType.GetGlobalDataRequest,
-    token,
 });
 
 export const getGlobalDataSuccess = (subjects: Subject[], teachers: Teacher[]): GlobalDataAction => ({

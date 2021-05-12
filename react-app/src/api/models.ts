@@ -40,7 +40,7 @@ export interface CourseWithoutSubject {
     id: number;
     startTime: string;
     teacherId: number;
-    weekType: string;
+    weekType?: string;
 }
 
 export interface Course {
@@ -50,7 +50,7 @@ export interface Course {
     id: number;
     startTime: string;
     teacher: Teacher;
-    weekType: string;
+    weekType?: string;
 }
 
 export interface Subject extends SubjectShort {

@@ -7,8 +7,8 @@ import AddOfferPage from './pages/AddOfferPage/AddOfferPage';
 import DataUploadAndDownloadPage from './pages/DataUploadAndDownloadPage/DataUploadAndDownloadPage';
 import OffersListingPage from './pages/OffersListingPage/OffersListingPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import { useDispatch } from 'react-redux';
-import { getUserDataRequest } from './store/userAuth/actions';
+// import { useDispatch } from 'react-redux';
+// import { getUserDataRequest } from './store/userAuth/actions';
 import TimetablePage from "./pages/TimetablePage/TimetablePage";
 
 const IndexFiller: React.FC = () => (
@@ -23,7 +23,7 @@ const NoFoundPageFiller: React.FC = () => (<h1>Tej strony jeszcze nie ma i możl
 const LoadingFiller: React.FC = () => (<h1>Poczekaj...</h1>);
 
 const App: React.FC = () => {
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
 	const initOptions = { pkceMethod: 'S256' };
 
@@ -31,7 +31,7 @@ const App: React.FC = () => {
 		if (event === 'onAuthSuccess') {
 			if (keycloak.authenticated && typeof keycloak?.token !== 'undefined') {
 				console.log('Auth!');
-				dispatch(getUserDataRequest(keycloak?.token));
+				// dispatch(getUserDataRequest(keycloak?.token));
 			}
 		}
 	  }
