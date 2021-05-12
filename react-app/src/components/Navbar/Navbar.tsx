@@ -14,6 +14,11 @@ export const Navbar: React.FC = () => {
             path: '/',
         },
         {
+            title: 'Mój plan',
+            path: '/timetable',
+            checkAuth: true,
+        },
+        {
             title: 'Import/export',
             path: '/dataUploadAndDownload',
             checkAuth: true,

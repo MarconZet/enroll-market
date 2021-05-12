@@ -7,6 +7,7 @@ import AddOfferPage from './pages/AddOfferPage/AddOfferPage';
 import DataUploadAndDownloadPage from './pages/DataUploadAndDownloadPage/DataUploadAndDownloadPage';
 import OffersListingPage from './pages/OffersListingPage/OffersListingPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import TimetablePage from "./pages/TimetablePage/TimetablePage";
 // import { useDispatch } from 'react-redux';
 // import { getUserDataRequest } from './store/userAuth/actions';
 
@@ -49,6 +50,7 @@ const App: React.FC = () => {
 					<PrivateRoute path={["/myOffers/madeByMe", "/myOffers/acceptedByMe"]} component={NoFoundPageFiller} />
 					<PrivateRoute path={["/dataUploadAndDownload"]} component={DataUploadAndDownloadPage} />
 					<PrivateRoute path={["/addOffer"]} component={AddOfferPage} />
+					<PrivateRoute path={["/timetable"]} component={TimetablePage} />
 					<Route exact path="/" component={IndexFiller} />
 					<Route path="*" component={NoFoundPageFiller} />
 				</Switch>
