@@ -14,6 +14,8 @@ const getFileUploadConfig = (filename: string) => ({
     },
 });
 
+const getConfigWithToken = (token: string) => ({ headers: { 'Authorization': `Bearer ${token}` } });
+
 ///////////////
 
 export const getOffers = (params?: OffersQueryParams) => axios.get<PaginatedResponse<Offer[]>>(process.env.REACT_APP_API_PATH + '/api/offers' + (params ? queryBuilder(params) : ''), getConfig());
@@ -40,13 +42,13 @@ export const deleteOneForOneOffer = (id: number) => axios.delete(process.env.REA
 
 ///////////////
 
-export const getMe = () => axios.get<StudentWithCourses>(process.env.REACT_APP_API_PATH + '/api/students/me', getConfig());
+export const getMe = (token: string) => axios.get<StudentWithCourses>(process.env.REACT_APP_API_PATH + '/api/students/me', getConfigWithToken(token));
 
-export const getMyCourses = () => axios.get<Course[]>(process.env.REACT_APP_API_PATH + '/api/students/me/courses', getConfig());
+export const getMyCourses = (token: string) => axios.get<Course[]>(process.env.REACT_APP_API_PATH + '/api/students/me/courses', getConfigWithToken(token));
 
-export const getSubjects = (params?: BasicQueryParams) => axios.get<PaginatedResponse<Subject[]>>(process.env.REACT_APP_API_PATH + '/api/subjects' + (params ? queryBuilder(params) : ''), getConfig());
+export const getSubjects = (token: string, params?: BasicQueryParams) => axios.get<PaginatedResponse<Subject[]>>(process.env.REACT_APP_API_PATH + '/api/subjects' + (params ? queryBuilder(params) : ''), getConfigWithToken(token));
 
-export const getTeachers = (params?: BasicQueryParams) => axios.get<PaginatedResponse<Teacher[]>>(process.env.REACT_APP_API_PATH + '/api/teachers' + (params ? queryBuilder(params) : ''), getConfig());
+export const getTeachers = (token: string, params?: BasicQueryParams) => axios.get<PaginatedResponse<Teacher[]>>(process.env.REACT_APP_API_PATH + '/api/teachers' + (params ? queryBuilder(params) : ''), getConfigWithToken(token));
 
 ////////////////
 

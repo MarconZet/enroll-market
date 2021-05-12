@@ -11,6 +11,7 @@ import { Filters, ListingType } from '../../store/offersListing/constants';
 import { userAuthIdSelector } from '../../store/userAuth/selectors';
 import { deleteOfferRequest } from '../../store/offersManagement/actions';
 import { getGlobalDataRequest } from '../../store/globalData/actions';
+import { useKeycloak } from '@react-keycloak/web';
 
 export const OffersListingPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -20,10 +21,13 @@ export const OffersListingPage: React.FC = () => {
     let isLoading = useSelector(offersListingIsLoadingSelector);
     let userId = useSelector(userAuthIdSelector);
     let location = useLocation();
+    let { keycloak } = useKeycloak();
 
     useEffect(() => {
-		dispatch(getGlobalDataRequest());
-	}, [dispatch]);
+		if (typeof keycloak?.token !== 'undefined') {
+            dispatch(getGlobalDataRequest(keycloak?.token));
+        }
+	}, [dispatch, keycloak?.token]);
 
     useEffect(() => {
         let type: ListingType = 'all';

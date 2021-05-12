@@ -5,6 +5,7 @@ import * as A from '../../store/offersManagement/actions';
 import { CourseType } from '../../api/models';
 import { coursesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, subjectsNamesAndIdsSelector } from '../../store/globalData/selectors';
 import { getGlobalDataRequest } from '../../store/globalData/actions';
+import { useKeycloak } from '@react-keycloak/web';
 
 export const AddOfferPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -17,9 +18,13 @@ export const AddOfferPage: React.FC = () => {
     let courses = useSelector(coursesForSubjectAndTypeSelector(subject, type));
     let isLoadingSubjects = useSelector(isLoadingGlobalDataSelector);
 
+    let { keycloak } = useKeycloak();
+
     useEffect(() => {
-		dispatch(getGlobalDataRequest());
-	}, [dispatch]);
+		if (typeof keycloak?.token !== 'undefined') {
+            dispatch(getGlobalDataRequest(keycloak?.token));
+        }
+	}, [dispatch, keycloak?.token]);
 
     useEffect(() => {
         setGivenCourseId(-1);

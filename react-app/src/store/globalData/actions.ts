@@ -1,16 +1,15 @@
-import { Course, StudentWithCourses, Subject, Teacher } from "../../api/models";
+import { Subject, Teacher } from "../../api/models";
 import { GlobalDataAction, GlobalDataActionType } from "./constants";
 
-export const getGlobalDataRequest = (): GlobalDataAction => ({
+export const getGlobalDataRequest = (token: string): GlobalDataAction => ({
     type: GlobalDataActionType.GetGlobalDataRequest,
+    token,
 });
 
-export const getGlobalDataSuccess = (subjects: Subject[], teachers: Teacher[], myData: StudentWithCourses | {}, myCourses: Course[]): GlobalDataAction => ({
+export const getGlobalDataSuccess = (subjects: Subject[], teachers: Teacher[]): GlobalDataAction => ({
     type: GlobalDataActionType.GetGlobalDataSuccess,
     subjects,
     teachers,
-    myData,
-    myCourses,
 });
 
 export const getGlobalDataFail = (): GlobalDataAction => ({
