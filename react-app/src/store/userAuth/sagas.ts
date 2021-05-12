@@ -1,4 +1,4 @@
-import { put, takeEvery, all, call, delay } from 'redux-saga/effects';
+import { put, takeEvery, all, call } from 'redux-saga/effects';
 import { getMe } from '../../api/requests';
 import * as A from './actions';
 import * as C from './constants'
@@ -7,7 +7,6 @@ import { AnyAction } from '@reduxjs/toolkit';
 
 export function* getUserDataWorker(action: AnyAction) {
     try {
-        yield delay(10000);
         const { data: myData } = yield call(getMe, action.token);
         yield put(A.getUserDataSuccess(myData));
     } catch (error) {
