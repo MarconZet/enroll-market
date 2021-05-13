@@ -46,29 +46,42 @@ export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptC
             </P.SVGBox>
             <P.SlotBox>
                 <P.Subheader>Warunki</P.Subheader>
-                <P.ClassBox>
-                    <b>Prowadzący - jeden z:</b>
-                    <ul>
-                        {
-                            offer.offerConditions.teachers.map((teacher, index) => (
-                                <li key={index}>{teacher.name} {teacher.surname}</li>
-                            ))
-                        }
-                    </ul>
-                    <b>Terminy - w zakresach:</b>
-                    <ul>
-                        {
-                            offer.offerConditions.timeBlocks.map((block, index) => (
-                                <li key={index}>{translations[block.dayOfWeek]}, {block.startTime} - {block.endTime}</li>
-                            ))
-                        }
-                    </ul>
+                <P.ClassBox fullHeight>
+                    {
+                        !!offer.offerConditions.teachers.length && (
+                            <>
+                                <b>Prowadzący - jeden z:</b>
+                                <ul>
+                                    {
+                                        offer.offerConditions.teachers.map((teacher, index) => (
+                                            <li key={index}>{teacher.name} {teacher.surname}</li>
+                                        ))
+                                    }
+                                </ul>
+                            </>
+                        )
+                    }
+                    {
+                        !!offer.offerConditions.timeBlocks.length && (
+                            <>
+                                <b>Terminy - w zakresach:</b>
+                                <ul>
+                                    {
+                                        offer.offerConditions.timeBlocks.map((block, index) => (
+                                            <li key={index}>{translations[block.dayOfWeek]}, {block.startTime} - {block.endTime}</li>
+                                        ))
+                                    }
+                                </ul>
+                            </>
+                        )
+                    }
                 </P.ClassBox>
             </P.SlotBox>
         </P.OffersBox>
         {
             !!offer.matchingCourses?.length && (
                 <P.MatchingCoursesBox>
+
                     {
                         offer.matchingCourses.map((course) => (
                             <P.CourseBox>

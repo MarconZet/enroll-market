@@ -18,6 +18,7 @@ export const SubjectName = styled.span`
 export const OffersBox = styled.div<{ reverseOrder?: boolean }>`
     display: flex;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
 
     ${({ reverseOrder }) => reverseOrder ? 'flex-direction: row-reverse;' : 'flex-direction: row;'}
@@ -34,22 +35,28 @@ export const Subheader = styled.span<{ isOffered?: boolean }>`
     ${({ isOffered }) => isOffered ? 'color: #1D7991;' : 'color: #91163F;'}
 `;
 
-export const ClassBox = styled.div<{ isOffered?: boolean }>`
+export const ClassBox = styled.div<{ isOffered?: boolean, fullHeight?: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 8px;
-    height: 100px;
     width: 300px;
     border-radius: 5px;  
   
     ${({ isOffered }) => isOffered ? 'background-color: #1D7991;' : 'background-color: #91163F;'}
 
-    span, b, li {
+    ${({ fullHeight }) => !fullHeight ? 'height: 100px;' : ''}
+
+    span, b {
         font-size: 16px;
         display: inline-block;
         margin: 2px 0;
+        color: white;
+    }
+
+    li {
+        font-size: 16px;
         color: white;
     }
 `;
@@ -77,6 +84,8 @@ export const CourseBox = styled.div`
     flex-direction: row;
     width: 100%;
     padding: 4px;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const Button = styled.button`
