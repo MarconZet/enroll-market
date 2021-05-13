@@ -25,7 +25,7 @@ public class OneToOneOfferMapper {
     private final CourseMapper courseMapper;
     private final CourseRepository courseRepository;
 
-    private static int courseTime = 90;
+    public static int courseTime = 90;
 
     public Offer oneToOneOfferPostDtoToOffer(OneToOneOfferPostDto oneToOneOfferPostDto) {
         Offer offer = new Offer();

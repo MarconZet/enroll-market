@@ -6,15 +6,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.springapp.data.dto.IdListDto;
+import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
+import pl.edu.agh.springapp.data.mapper.CourseMapper;
 import pl.edu.agh.springapp.data.mapper.OfferMapper;
-import pl.edu.agh.springapp.data.model.CourseType;
-import pl.edu.agh.springapp.data.model.Offer;
-import pl.edu.agh.springapp.data.model.Student;
-import pl.edu.agh.springapp.data.model.TimeBlock;
+import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
+import pl.edu.agh.springapp.data.model.*;
 import pl.edu.agh.springapp.error.EntityNotFoundException;
 import pl.edu.agh.springapp.error.WrongFieldsException;
+import pl.edu.agh.springapp.repository.CourseRepository;
 import pl.edu.agh.springapp.repository.OfferRepository;
 import pl.edu.agh.springapp.repository.StudentRepository;
 import pl.edu.agh.springapp.repository.specification.OfferSpecifications;
@@ -22,8 +24,10 @@ import pl.edu.agh.springapp.repository.specification.searchCriteria.SearchCriter
 import pl.edu.agh.springapp.repository.specification.searchCriteria.SearchCriteriaParser;
 import pl.edu.agh.springapp.security.user.CurrentUser;
 
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +35,9 @@ public class OfferService {
 
     private final OfferRepository offerRepository;
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
     private final OfferMapper offerMapper;
+    private final CourseMapper courseMapper;
     private final CurrentUser currentUser;
 
     public OfferDto createOffer(OfferPostDto offerPostDto) {
@@ -73,7 +79,8 @@ public class OfferService {
             return offerRepository.findAll(spec, paging)
                     .map(offerMapper::offerToOfferDto);
         }
-        return offerRepository.findOffersWhereStudentIsNot(currentUser.getIndex(), paging).map(offerMapper::offerToOfferDto);
+        return offerRepository.findOffersWhereStudentIsNot(currentUser.getIndex(), paging)
+                .map(offerMapper::offerToOfferDto);
     }
 
     public void deleteWithId(Long id) {
@@ -83,5 +90,35 @@ public class OfferService {
     public OfferDto findWithId(Long id) {
         Offer offer = offerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
         return offerMapper.offerToOfferDto(offer);
+    }
+
+    public List<CourseDto> getCoursesMatchingOffer(Long id) {
+        Offer offer = offerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
+        OfferConditions offerConditions = offer.getOfferConditions();
+        List<Course> coursesOfStudent = courseRepository.findCoursesOfStudent(currentUser.getIndex());
+        return coursesOfStudent.stream()
+                .filter( course -> course.getSubject().equals(offer.getGivenCourse().getSubject()))
+                .filter( course -> {
+                    List<TimeBlock> timeBlocks = offerConditions.getTimeBlocks();
+                    return timeBlocks.stream().map( timeBlock -> {
+                        LocalTime startTime = course.getStartTime();
+                        LocalTime endTime = course.getStartTime().plusMinutes(OneToOneOfferMapper.courseTime);
+                        boolean dayCheck = timeBlock.getDay().equals(course.getDay());
+                        boolean startTimeCheck = true;
+                        boolean endTimeCheck = true;
+                        if (startTime != null && endTime != null) {
+                            startTimeCheck = startTime.compareTo(timeBlock.getStartTime()) <= 0;
+                            endTimeCheck = endTime.compareTo(timeBlock.getEndTime()) >= 0;
+                        }
+                        return dayCheck && startTimeCheck && endTimeCheck;
+                    }).reduce(false, (a, b) -> a || b);
+                })
+                .filter( course -> offerConditions.getTeachers().contains(course.getTeacher()))
+                .filter( course -> {
+                    System.out.println(course.getStudents().size());
+                    return course.getStudents().size() < course.getMaxStudentCount() + 1;
+                })
+                .map(courseMapper::courseToCourseDto)
+                .collect(Collectors.toList());
     }
 }

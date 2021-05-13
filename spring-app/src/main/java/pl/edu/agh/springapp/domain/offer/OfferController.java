@@ -73,9 +73,9 @@ public class OfferController {
     }
 
     @GetMapping("offers/{id}/courses")
-    @ApiOperation(value = "Get list of matching offers - without logic")
+    @ApiOperation(value = "Get list of matching offers")
     public ResponseEntity<List<CourseDto>> getCoursesMatchingOffer(@PathVariable Long id) {
-        return ResponseEntity.ok(new ArrayList<>());
+        return ResponseEntity.ok(service.getCoursesMatchingOffer(id));
     }
 
     @PostMapping("offers/{id}/accept")
