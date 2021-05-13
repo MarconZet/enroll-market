@@ -1,9 +1,10 @@
 package pl.edu.agh.springapp.security.user;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
-@SessionScope
+@RequestScope
 @Component
 public class DummyUser implements CurrentUser {
     @Override

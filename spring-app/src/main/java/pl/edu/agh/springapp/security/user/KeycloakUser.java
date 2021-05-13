@@ -4,11 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.IDToken;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.security.Principal;
@@ -17,7 +19,7 @@ import java.util.Map;
 @Slf4j
 @Primary
 @Profile("security")
-@SessionScope
+@RequestScope
 @Component
 public class KeycloakUser implements CurrentUser {
     private final String firstname;
@@ -34,8 +36,12 @@ public class KeycloakUser implements CurrentUser {
         final Principal principal = (Principal) authentication.getPrincipal();
 
         if (principal instanceof KeycloakPrincipal) {
-            KeycloakPrincipal<KeycloakSecurityContext> keycloakPrincipal = (KeycloakPrincipal) principal;
+            @SuppressWarnings({"unchecked", "rawtypes"}) KeycloakPrincipal<KeycloakSecurityContext> keycloakPrincipal = (KeycloakPrincipal) principal;
+
             IDToken token = keycloakPrincipal.getKeycloakSecurityContext().getIdToken();
+            if (token == null)
+                token = keycloakPrincipal.getKeycloakSecurityContext().getToken();
+
 
             firstname = token.getName();
             surname = token.getFamilyName();
