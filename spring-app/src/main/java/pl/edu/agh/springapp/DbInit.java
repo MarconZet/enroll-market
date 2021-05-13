@@ -12,6 +12,7 @@ import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.data.mapper.*;
 import pl.edu.agh.springapp.data.model.*;
 import pl.edu.agh.springapp.repository.*;
+import pl.edu.agh.springapp.security.dev.KeycloakInitializerRunner;
 import pl.edu.agh.springapp.security.user.CurrentUser;
 
 import java.time.LocalTime;
@@ -112,7 +113,11 @@ public class DbInit implements CommandLineRunner {
                 new StudentPostDto("Janusz", "Kowal", "123004"),
                 new StudentPostDto("Grażyna", "Gwóźdź", "123005"),
                 new StudentPostDto("Marcin", "Zielonka", "123006"),
-                new StudentPostDto("Galus", "Anonimus", "123456")
+                new StudentPostDto("Galus", "Anonimus", "123456"),
+                new StudentPostDto("Sirzechs", "Lucifer", "666001"),
+                new StudentPostDto("Serafall", "Leviathan", "666002"),
+                new StudentPostDto("Ajuka", "Beelzebub", "666003"),
+                new StudentPostDto("Falbium", "Asmodeus", "666004")
         );
         List<Student> students = studentMapper.studentPostDtosToStudents(studentPostDtos);
         List<Student> savedStudents = new ArrayList<>();
