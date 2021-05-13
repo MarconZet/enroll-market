@@ -34,6 +34,8 @@ public class FileUploadService {
     private final SubjectMapper subjectMapper;
     private final StudentMapper studentMapper;
 
+    private String csvHeaders = "subjectName,courseType,maxCount,groupNumber,teacher,teacherMailAddress,isOnline,weekAB,dayOfWeek,startTime,studentName,studentIndex";
+
     private String getDataFromCourse(Course course) {
         String courseData = "";
 
@@ -53,12 +55,11 @@ public class FileUploadService {
         courseData += course.getDay().toString() + ",";
         courseData += course.getStartTime().toString() + ",";
 
-
         return courseData;
     }
 
     public String getFileWithAll() {
-        String fileContent = "";
+        String fileContent = csvHeaders + "\r\n";
 
         for (Course course: courseRepository.findAll()) {
             String courseData = getDataFromCourse(course);
@@ -79,6 +80,7 @@ public class FileUploadService {
         Student student = studentRepository.findFirstByIndexNumber(indexNumber);
         String studentData = student.getSurname() + " " + student.getName() + "," + student.getIndexNumber();
         if (student != null) {
+            fileContent += csvHeaders + "\r\n";
             for (Course course : student.getCourses()) {
 
                 fileContent += getDataFromCourse(course);
@@ -89,10 +91,27 @@ public class FileUploadService {
         return fileContent;
     }
 
-    public String getFileForTeacher(String fullName) {
+    public String getFileForTeacher(String name, String surname) {
+        String fileContent = "";
+        Teacher teacher = teacherRepository.findFirstByNameAndSurname(name, surname);
 
+        if (teacher != null) {
+            fileContent += csvHeaders + "\r\n";
+            for (Course course: teacher.getCourses()) {
+                String courseData = getDataFromCourse(course);
 
-        return null;
+                if (course.getType() == CourseType.LECTURE) {
+                    fileContent += courseData + ",\r\n";
+                } else {
+                    for (Student student: course.getStudents()) {
+                        fileContent += courseData;
+                        fileContent += student.getSurname() + " " + student.getName() + "," + student.getIndexNumber() + "\r\n";
+                    }
+                }
+            }
+        }
+
+        return fileContent;
     }
 
     public void loadFile(InputStream file) throws IOException {

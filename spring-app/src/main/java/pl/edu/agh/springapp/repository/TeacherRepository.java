@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface TeacherRepository extends PagingAndSortingRepository<Teacher, Long> {
     List<Teacher> findByNameAndSurnameAndEmailAddress(String name, String surname, String emailAddress);
+    Teacher findFirstByNameAndSurname(String name, String surname);
 }

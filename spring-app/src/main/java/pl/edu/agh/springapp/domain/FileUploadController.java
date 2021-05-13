@@ -38,7 +38,7 @@ public class FileUploadController {
     public ResponseEntity<String> handleFileDownloadTeacherPlan(@PathVariable("name") String name,
                                                                 @PathVariable("surname") String surname) {
 
-        String fileContent = fileUploadService.getFileForTeacher(name + " " + surname);
+        String fileContent = fileUploadService.getFileForTeacher(name, surname);
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + "teacher_groups.csv" + "\"").body(fileContent);
