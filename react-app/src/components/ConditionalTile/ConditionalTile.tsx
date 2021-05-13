@@ -79,9 +79,9 @@ export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptC
             </P.SlotBox>
         </P.OffersBox>
         {
-            !!offer.matchingCourses?.length && (
+            !!offer.matchingCourses?.length ? (
                 <P.MatchingCoursesBox>
-
+                    <P.Subheader>Pasujące terminy spośród twoich zajęć:</P.Subheader>
                     {
                         offer.matchingCourses.map((course) => (
                             <P.CourseBox>
@@ -91,7 +91,7 @@ export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptC
                         ))
                     }
                 </P.MatchingCoursesBox>
-            )
+            ) : <P.Subheader>Nie możesz zaakceptować tej oferty</P.Subheader>
         }
         <P.ButtonsBox>
             {editCallback && <P.Button onClick={editCallback}>Edytuj</P.Button>}

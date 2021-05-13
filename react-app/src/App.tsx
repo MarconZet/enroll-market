@@ -8,7 +8,7 @@ import DataUploadAndDownloadPage from './pages/DataUploadAndDownloadPage/DataUpl
 import OffersListingPage from './pages/OffersListingPage/OffersListingPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import { useDispatch } from 'react-redux';
-// import { getUserDataRequest } from './store/userAuth/actions';
+import { getUserDataRequest } from './store/userAuth/actions';
 import TimetablePage from "./pages/TimetablePage/TimetablePage";
 import { getGlobalDataRequest } from './store/globalData/actions';
 
@@ -33,7 +33,7 @@ const App: React.FC = () => {
 			if (keycloak.authenticated && typeof keycloak?.token !== 'undefined') {
 				console.log('Auth!');
 				dispatch(getGlobalDataRequest());
-				// dispatch(getUserDataRequest(keycloak?.token));
+				dispatch(getUserDataRequest(keycloak?.token));
 			}
 		}
 	  }
