@@ -65,7 +65,6 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         boolean security = Arrays.asList(environment.getActiveProfiles()).contains("security");
         boolean backend = Arrays.asList(environment.getActiveProfiles()).contains("backend");
-        http.cors().and().csrf().disable();
         if (security) {
             super.configure(http);
             http.authorizeRequests()
@@ -84,6 +83,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
             http.authorizeRequests().anyRequest().permitAll();
             http.headers().frameOptions().disable();
         }
+        http.cors().and().csrf().disable();
     }
 
     @Bean
