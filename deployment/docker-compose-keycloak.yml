@@ -1,9 +1,9 @@
 version: "3.8"
 
 services:
-  mysql:
+  mysql-kc:
     image: mysql:5.7.34
-    container_name: mysql
+    container_name: mysql-kc
     ports:
       - "3306:3306"
     environment:
@@ -15,21 +15,21 @@ services:
       test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
       start_period: 10s
 
-  keycloak:
+  keycloak-kc:
     image: jboss/keycloak:12.0.4
-    container_name: keycloak
+    container_name: keycloak-kc
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
       - DB_VENDOR=mysql
-      - DB_ADDR=mysql
+      - DB_ADDR=mysql-kc
       - DB_USER=keycloak
       - DB_PASSWORD=password
       - JDBC_PARAMS=useSSL=false
     ports:
       - "9000:8080"
     depends_on:
-      - mysql
+      - mysql-kc
     healthcheck:
       test: "curl -f http://localhost:8080/auth || exit 1"
       start_period: 20s

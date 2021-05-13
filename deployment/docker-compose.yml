@@ -1,53 +1,55 @@
 version: "3"
 
 services:
-    react:
-        container_name: react
+    react-em:
         build: ../react-app/.
+        container_name: react-em
         environment:
-            - REACT_APP_API_PATH=http://spring:8080
+            - REACT_APP_API_PATH=http://localhost:8081
+            - REACT_APP_KEYCLOAK_PATH=http://localhost:8080
             - CHOKIDAR_USEPOLLING=true
             - CI=true
         ports:
             - 3000:3000
         depends_on:
-            - spring
+            - spring-em
         stdin_open: true
-        restart: on-failure
 
-    spring:
-        container_name: spring
+    spring-em:
         build: ../spring-app/.
+        container_name: spring-em         
         environment: 
-            - spring.profiles.active=dev,security
-            - keycloak.auth-server-url=http://keycloak:8080/auth
+            - SPRING_APP_PROFILES=dev,security
+            - SPRING_APP_REDIRECT_URL=http://localhost:3000/*
+            - SPRING_APP_PORT=8080
+            - SPRING_APP_KEYCLOAK_SERVER_URL=http://localhost:8080/auth
         depends_on: 
-            - keycloak
+            - keycloak-em
         ports:
-            - "8080:8080"
+            - "8081:8080"
 
-    keycloak:
+    keycloak-em:
         image: jboss/keycloak:12.0.4
-        container_name: keycloak
+        container_name: keycloak-em
         environment:
           - KEYCLOAK_USER=admin
           - KEYCLOAK_PASSWORD=admin
           - DB_VENDOR=mysql
-          - DB_ADDR=mysql
+          - DB_ADDR=mysql-em
           - DB_USER=keycloak
           - DB_PASSWORD=password
           - JDBC_PARAMS=useSSL=false
         ports:
           - "9000:8080"
         depends_on:
-          - mysql
+          - mysql-em
         healthcheck:
-          test: "curl -f http://localhost:8080/auth || exit 1"
+          test: "curl -f http://localhost:9000/auth || exit 1"
           start_period: 20s
 
-    mysql:
+    mysql-em:
         image: mysql:5.7.34
-        container_name: mysql
+        container_name: mysql-em
         ports:
             - "3306:3306"
         environment:
