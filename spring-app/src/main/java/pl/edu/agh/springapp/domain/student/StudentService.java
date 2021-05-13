@@ -14,6 +14,7 @@ import pl.edu.agh.springapp.data.mapper.CourseMapper;
 import pl.edu.agh.springapp.data.mapper.StudentMapper;
 import pl.edu.agh.springapp.data.mapper.TeacherMapper;
 import pl.edu.agh.springapp.data.model.Student;
+import pl.edu.agh.springapp.error.EntityNotFoundException;
 import pl.edu.agh.springapp.error.WrongFieldsException;
 import pl.edu.agh.springapp.repository.StudentRepository;
 import pl.edu.agh.springapp.security.user.CurrentUser;
@@ -49,11 +50,17 @@ public class StudentService {
 
     public StudentWithCoursesDto getMe(){
         var student = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
+        if (student == null) {
+            throw new EntityNotFoundException("Logged student doesn't exist in database");
+        }
         return studentMapper.studentToStudentWithCoursesDto(student);
     }
 
     public List<CourseDto> getMyCourses(){
         var student = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
+        if (student == null) {
+            throw new EntityNotFoundException("Logged student doesn't exist in database");
+        }
         return courseMapper.coursesToCoursesDtos(student.getCourses());
     }
 

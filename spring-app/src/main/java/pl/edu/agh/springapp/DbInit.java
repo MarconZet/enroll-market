@@ -12,12 +12,14 @@ import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.data.mapper.*;
 import pl.edu.agh.springapp.data.model.*;
 import pl.edu.agh.springapp.repository.*;
+import pl.edu.agh.springapp.security.dev.KeycloakInitializerRunner;
 import pl.edu.agh.springapp.security.user.CurrentUser;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
@@ -111,7 +113,11 @@ public class DbInit implements CommandLineRunner {
                 new StudentPostDto("Janusz", "Kowal", "123004"),
                 new StudentPostDto("Grażyna", "Gwóźdź", "123005"),
                 new StudentPostDto("Marcin", "Zielonka", "123006"),
-                new StudentPostDto("Galus", "Anonimus", "123456")
+                new StudentPostDto("Galus", "Anonimus", "123456"),
+                new StudentPostDto("Sirzechs", "Lucifer", "666001"),
+                new StudentPostDto("Serafall", "Leviathan", "666002"),
+                new StudentPostDto("Ajuka", "Beelzebub", "666003"),
+                new StudentPostDto("Falbium", "Asmodeus", "666004")
         );
         List<Student> students = studentMapper.studentPostDtosToStudents(studentPostDtos);
         List<Student> savedStudents = new ArrayList<>();
@@ -124,8 +130,10 @@ public class DbInit implements CommandLineRunner {
                 new OneToOneOfferPostDto(18L, 19L),
                 new OneToOneOfferPostDto(17L, 16L)
         );
-//        List<Offer> offers = oneToOneOfferMapper.oneToOneOfferPostDtosToOffers(oneToOneOfferPostDtos);
-//        offers.get(0).setStudent(savedStudents.get(0));
-//        offerRepository.saveAll(offers);
+        List<Offer> offers = oneToOneOfferMapper.oneToOneOfferPostDtosToOffers(oneToOneOfferPostDtos);
+        offers.get(0).setStudent(savedStudents.get(0));
+        offers.get(1).setStudent(savedStudents.get(0));
+        offers.get(2).setStudent(savedStudents.get(1));
+        offerRepository.saveAll(offers);
     }
 }

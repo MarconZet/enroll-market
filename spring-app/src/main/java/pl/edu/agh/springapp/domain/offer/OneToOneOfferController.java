@@ -33,15 +33,15 @@ public class OneToOneOfferController {
     }
 
     @DeleteMapping("/one-to-one-offers/{id}")
-    public ResponseEntity<Boolean> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<Boolean> deleteOneToOneOffer(@PathVariable Long id) {
         service.deleteWithId(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/one-to-one-offers/{id}")
-    @ApiOperation(value = "Get offer with id - without logic")
+    @ApiOperation(value = "Get offer with id")
     public ResponseEntity<OneToOneOfferDto> getOneToOneOffer(@PathVariable Long id) {
-        return ResponseEntity.ok(new OneToOneOfferDto());
+        return ResponseEntity.ok(service.findWithId(id));
     }
 
 }

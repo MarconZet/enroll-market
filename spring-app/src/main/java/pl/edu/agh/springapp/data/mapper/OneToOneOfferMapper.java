@@ -24,18 +24,11 @@ public class OneToOneOfferMapper {
     private final StudentMapper studentMapper;
     private final CourseMapper courseMapper;
     private final CourseRepository courseRepository;
-    private final StudentRepository studentRepository;
-    private final CurrentUser currentUser;
 
     private static int courseTime = 90;
 
     public Offer oneToOneOfferPostDtoToOffer(OneToOneOfferPostDto oneToOneOfferPostDto) {
         Offer offer = new Offer();
-        Student student = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
-        if (student == null) {
-            throw new WrongFieldsException("Logged student doesn't exist in database");
-        }
-        offer.setStudent(student);
 
         Course givenCourse = courseRepository.findById(oneToOneOfferPostDto.getGivenCourseId())
                 .orElseThrow(() -> new WrongFieldsException("No given course with id: " + oneToOneOfferPostDto.getGivenCourseId()));

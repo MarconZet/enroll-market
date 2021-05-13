@@ -133,6 +133,22 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(WrongPathVariableEnumValueException.class)
+    protected ResponseEntity<Object> handleEntityNotFound(
+            WrongPathVariableEnumValueException ex) {
+        ApiError apiError = new ApiError(BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(WrongPathVariableException.class)
+    protected ResponseEntity<Object> handleConstraintViolation(
+            WrongPathVariableException ex) {
+        ApiError apiError = new ApiError(BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
     /**
      * Handle HttpMessageNotReadableException. Happens when request JSON is malformed.
      *
