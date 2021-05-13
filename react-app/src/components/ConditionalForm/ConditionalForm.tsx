@@ -7,7 +7,7 @@ export interface ConditionalFormProps {
     teachers: { [key: string]: string };
     onCheckDay: React.ChangeEventHandler<HTMLInputElement>;
     onCheckTeacher: React.ChangeEventHandler<HTMLInputElement>;
-    courses: CourseWithoutSubjectWithTeacher[];
+    myCourses: CourseWithoutSubjectWithTeacher[];
     onChangeGivenCourse: React.ChangeEventHandler<HTMLSelectElement>;
     givenCourseId: number;
 }
@@ -22,12 +22,12 @@ const translations = {
     'SUNDAY': 'Niedziela',
 };
 
-const ConditionalForm: React.FC<ConditionalFormProps> = ({ days, teachers, onCheckDay, onCheckTeacher, courses, onChangeGivenCourse, givenCourseId }) => (
+const ConditionalForm: React.FC<ConditionalFormProps> = ({ days, teachers, onCheckDay, onCheckTeacher, myCourses, onChangeGivenCourse, givenCourseId }) => (
     <>
         <P.Select name="givenCourseId" id="givenCourseId" onChange={onChangeGivenCourse} value={givenCourseId}>
             <option key={-1} value={-1}>Wybierz zajęcia, które chcesz wymienić</option>
             {
-                courses.map((e, index) => (
+                myCourses.map((e, index) => (
                     <option key={index} value={e.id}>{translations[e.dayOfWeek]}, {e?.weekType ? `tydzień ${e.weekType}, `  : ''}{e.startTime}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
                 ))
             }

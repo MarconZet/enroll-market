@@ -4,6 +4,7 @@ import { acceptOffer, createOffer, createOneForOneOffer, deleteOffer } from '../
 import * as A from './actions';
 import * as C from './constants';
 import notitier from '../../utils/notifications';
+import { OfferParams } from '../../api/models';
 
 export function* deleteOfferWorker(action: AnyAction) {
     try {
@@ -35,11 +36,15 @@ export function* createOfferWorker(action: AnyAction) {
                 takenCourseId: action.takenCourseId,
             });
         } else if (action.type === C.OffersManagementActionType.CreateOfferRequest) {
-            yield call(createOffer, {
+            const params: OfferParams = {
                 givenCourseId: action.givenCourseId,
-                teacherIds: action.teacherIds,
-                timeBlocks: action.timeBlocks,
-            });
+                offerConditions: {
+                    teacherIds: action.teacherIds,
+                    timeBlocks: action.timeBlocks,
+                }
+            };
+
+            yield call(createOffer, params);
         }
         
         yield put(A.createOfferSuccess());

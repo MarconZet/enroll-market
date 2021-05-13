@@ -20,19 +20,20 @@ export interface CourseWithoutSubjectWithTeacher extends CourseWithoutSubject {
 
 export interface OneForOneFormProps {
     courses: CourseWithoutSubjectWithTeacher[];
+    myCourses: CourseWithoutSubjectWithTeacher[];
     onChangeGivenCourse: React.ChangeEventHandler<HTMLSelectElement>;
     onChangeTakenCourse: React.ChangeEventHandler<HTMLSelectElement>;
     givenCourseId: number;
     takenCourseId: number;
 }
 
-const OneForOneForm: React.FC<OneForOneFormProps> = ({ courses, onChangeGivenCourse, onChangeTakenCourse, givenCourseId, takenCourseId }) => {
+const OneForOneForm: React.FC<OneForOneFormProps> = ({ courses, myCourses, onChangeGivenCourse, onChangeTakenCourse, givenCourseId, takenCourseId }) => {
     return (
         <>
             <P.Select name="givenCourseId" id="givenCourseId" onChange={onChangeGivenCourse} value={givenCourseId}>
                 <option key={-1} value={-1}>Wybierz zajęcia, które chcesz wymienić</option>
                 {
-                    courses.map((e, index) => (
+                    myCourses.map((e, index) => (
                         <option key={index} value={e.id}>{translations[e.dayOfWeek]}, {e?.weekType ? `tydzień ${e.weekType}, `  : ''}{e.startTime}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
                     ))
                 }

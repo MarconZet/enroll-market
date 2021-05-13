@@ -103,8 +103,10 @@ export interface Offer {
 
 export interface OfferParams {
     givenCourseId: number;
-    teacherIds: number[];
-    timeBlocks: TimeBlock[];
+    offerConditions: {
+        teacherIds: number[];
+        timeBlocks: TimeBlock[];
+    }
 }
 
 export interface PaginatedResponse<T> {

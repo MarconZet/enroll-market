@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as P from './parts';
 import * as A from '../../store/offersManagement/actions';
 import { CourseType, DayOfWeek } from '../../api/models';
-import { coursesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, subjectsNamesAndIdsSelector, teachersNamesForSubjectAndTypeSelector } from '../../store/globalData/selectors';
+import { myCousesForSubjectAndTypeSelector, coursesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, subjectsNamesAndIdsSelector, teachersNamesForSubjectAndTypeSelector } from '../../store/globalData/selectors';
 import OneForOneForm from '../../components/OneForOneForm/OneForOneForm';
 import ConditionalForm from '../../components/ConditionalForm/ConditionalForm';
 
@@ -20,6 +20,7 @@ export const AddOfferPage: React.FC = () => {
     const [chosenDays, setChosenDays] = useState<string[]>([]);
 
     let subjects = useSelector(subjectsNamesAndIdsSelector);
+    let myCourses = useSelector(myCousesForSubjectAndTypeSelector(subject, type));
     let courses = useSelector(coursesForSubjectAndTypeSelector(subject, type));
     let teachers = useSelector(teachersNamesForSubjectAndTypeSelector(subject, type));
     let isLoadingSubjects = useSelector(isLoadingGlobalDataSelector);
@@ -88,6 +89,7 @@ export const AddOfferPage: React.FC = () => {
                 <OneForOneForm
                     givenCourseId={givenCourseId}
                     takenCourseId={takenCourseId}
+                    myCourses={myCourses}
                     courses={courses}
                     onChangeGivenCourse={(e) => setGivenCourseId(+e.target.value)}
                     onChangeTakenCourse={(e) => setTakenCourseId(+e.target.value)}
@@ -101,7 +103,7 @@ export const AddOfferPage: React.FC = () => {
                     onCheckDay={onCheckDay}
                     onCheckTeacher={onCheckTeacher}
                     givenCourseId={givenCourseId}
-                    courses={courses}
+                    myCourses={myCourses}
                     onChangeGivenCourse={(e) => setGivenCourseId(+e.target.value)}
                 />
             );

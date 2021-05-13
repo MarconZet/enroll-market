@@ -52,3 +52,17 @@ export const teachersNamesForSubjectAndTypeSelector = (subjectId: number, type: 
 
     return teachersMap;
 };
+
+export const myCousesForSubjectAndTypeSelector = (subjectId: number, type: CourseType | "none") => (state: ApplicationState) => {
+    if (subjectId === -1 || type === "none") {
+        return [];
+    }
+
+    const data = state.globalData?.myCourses.filter(c => (c.subject.id === subjectId) && (c.courseType === type)).map(e => ({
+        ...e,
+        teacherId: e.teacher.id,
+    }));
+
+    return data || [];
+};
+
