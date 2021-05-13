@@ -13,7 +13,7 @@ export function* getPageWorker(action: AnyAction) {
         const queryParams: OffersQueryParams = {};
 
         if (!!action.page) {
-            queryParams.pageNo = action.page;
+            queryParams.pageNo = action.page - 1;
         }
 
         // const search: string = yield select(offersListingFiltersSelector);

@@ -34,3 +34,17 @@ export const createOfferSuccess = (): OffersManagementAction => ({
 export const createOfferFail = (): OffersManagementAction => ({
     type: OffersManagementActionType.CreateOfferFail,
 });
+
+export const acceptOfferRequest = (offerId: number, courseId: number): OffersManagementAction => ({
+    type: OffersManagementActionType.AcceptOfferRequest,
+    offerId,
+    courseId,
+});
+
+export const acceptOfferSuccess = (): OffersManagementAction => ({
+    type: OffersManagementActionType.AcceptOfferSuccess,
+});
+
+export const acceptOfferFail = (): OffersManagementAction => ({
+    type: OffersManagementActionType.AcceptOfferFail,
+});

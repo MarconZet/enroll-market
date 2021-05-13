@@ -1,4 +1,4 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { FiltersColumn } from '../../components/FiltersColumn/FiltersColumn';
@@ -8,7 +8,7 @@ import { offersListingIsLoadingSelector, offersListingPageSelector, offersListin
 import * as P from './parts';
 import * as A from '../../store/offersListing/actions';
 import { userAuthIdSelector } from '../../store/userAuth/selectors';
-import { deleteOfferRequest } from '../../store/offersManagement/actions';
+import { acceptOfferRequest, deleteOfferRequest } from '../../store/offersManagement/actions';
 
 export const OffersListingPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -31,6 +31,10 @@ export const OffersListingPage: React.FC = () => {
     //     dispatch(A.setType(type));
     // }, [dispatch, location]);
 
+    useEffect(() => {
+        dispatch(A.getPageRequest(1))
+    }, [dispatch])
+
     const filtersSubmitCallback = (filters: string) => {
         dispatch(A.applyFilters(filters));
     };
@@ -39,8 +43,8 @@ export const OffersListingPage: React.FC = () => {
         dispatch(A.getPageRequest(page));
     }
 
-    const acceptCallback = (id: number) => () => {
-        console.log('accept ' + id);
+    const acceptCallback = (offerId: number, courseId: number) => () => {
+        dispatch(acceptOfferRequest(offerId, courseId));
     }
 
     const editCallback = (id: number) => () => {
@@ -51,8 +55,8 @@ export const OffersListingPage: React.FC = () => {
         dispatch(deleteOfferRequest(id));
     }
 
-    const othersOfferProps = (id: number) => ({
-        acceptCallback: acceptCallback(id),
+    const othersOfferProps = (offerId: number, courseId: number) => ({
+        acceptCallback: acceptCallback(offerId, courseId),
     });
 
     const myOfferProps = (id: number) => ({
@@ -88,7 +92,7 @@ export const OffersListingPage: React.FC = () => {
                                         {...(
                                             offer.student.id === userId
                                                 ? myOfferProps(offer.id)
-                                                : othersOfferProps(offer.id)
+                                                : othersOfferProps(offer.id, offer.givenCourse.id)
                                         )}
                                         reverseOrder={location.pathname === '/myOffers/madeByMe'}
                                     />

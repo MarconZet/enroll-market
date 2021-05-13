@@ -8,6 +8,9 @@ export enum OffersManagementActionType {
     DeleteOfferRequest = 'offersManagement/DELETE_OFFER_REQUEST',
     DeleteOfferSuccess = 'offersManagement/DELETE_OFFER_SUCCESS',
     DeleteOfferFail = 'offersManagement/DELETE_OFFER_FAIL',
+    AcceptOfferRequest = 'offersManagement/ACCEPT_OFFER_REQUEST',
+    AcceptOfferSuccess = 'offersManagement/ACCEPT_OFFER_SUCCESS',
+    AcceptOfferFail = 'offersManagement/ACCEPT_OFFER_FAIL',
 };
 
 export type OffersManagementAction = {
@@ -30,4 +33,12 @@ export type OffersManagementAction = {
     type: OffersManagementActionType.DeleteOfferSuccess,
 } | {
     type: OffersManagementActionType.DeleteOfferFail,
+} | {
+    type: OffersManagementActionType.AcceptOfferRequest,
+    offerId: number;
+    courseId: number;
+} | {
+    type: OffersManagementActionType.AcceptOfferSuccess,
+} | {
+    type: OffersManagementActionType.AcceptOfferFail,
 };
