@@ -34,25 +34,34 @@ public class FileUploadService {
     private final SubjectMapper subjectMapper;
     private final StudentMapper studentMapper;
 
-    public String getFile() {
+    private String getDataFromCourse(Course course) {
+        String courseData = "";
+
+        Subject subject = course.getSubject();
+        courseData = subject.getName() + "," + course.getType().toString() + ",";
+        courseData += course.getMaxStudentCount() + "," + course.getGroupNumber() + ",";
+        Teacher teacher = course.getTeacher();
+        String teacherData = teacher.getSurname() + " " + teacher.getName() + "," + teacher.getEmailAddress() + ",";
+        courseData += teacherData + "Zdalnie,";
+
+        if (course.getWeekType() == WeekType.AB) {
+            courseData += ",";
+        } else {
+            courseData += course.getWeekType().toString() + ",";
+        }
+
+        courseData += course.getDay().toString() + ",";
+        courseData += course.getStartTime().toString() + ",";
+
+
+        return courseData;
+    }
+
+    public String getFileWithAll() {
         String fileContent = "";
 
         for (Course course: courseRepository.findAll()) {
-            Subject subject = course.getSubject();
-            String courseData = subject.getName() + "," + course.getType().toString() + ",";
-            courseData += course.getMaxStudentCount() + "," + course.getGroupNumber() + ",";
-            Teacher teacher = course.getTeacher();
-            String teacherData = teacher.getSurname() + " " + teacher.getName() + "," + teacher.getEmailAddress() + ",";
-            courseData += teacherData + "Zdalnie,";
-
-            if (course.getWeekType() == WeekType.AB) {
-                courseData += ",";
-            } else {
-                courseData += course.getWeekType().toString() + ",";
-            }
-
-            courseData += course.getDay().toString() + ",";
-            courseData += course.getStartTime().toString() + ",";
+            String courseData = getDataFromCourse(course);
 
             if (course.getType() == CourseType.LECTURE){
                 fileContent += courseData + ",\r\n";
@@ -63,6 +72,27 @@ public class FileUploadService {
             }
         }
         return fileContent;
+    }
+
+    public String getFileForStudent(String indexNumber) {
+        String fileContent = "";
+        Student student = studentRepository.findFirstByIndexNumber(indexNumber);
+        String studentData = student.getSurname() + " " + student.getName() + "," + student.getIndexNumber();
+        if (student != null) {
+            for (Course course : student.getCourses()) {
+
+                fileContent += getDataFromCourse(course);
+                fileContent += studentData + "\r\n";
+            }
+        }
+
+        return fileContent;
+    }
+
+    public String getFileForTeacher(String fullName) {
+
+
+        return null;
     }
 
     public void loadFile(InputStream file) throws IOException {
