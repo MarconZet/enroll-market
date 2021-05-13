@@ -81,8 +81,8 @@ export interface OneForOneOfferParams {
 }
 
 export interface TimeBlock {
-    startTime: string;
-    endTime: string;
+    startTime: string | null;
+    endTime: string | null;
     id?: number;
     dayOfWeek: DayOfWeek;
 }

@@ -42,6 +42,6 @@ export function* createOfferWorker(action: AnyAction) {
 export function* offersManagementWatcher() {
     yield all([
         takeEvery(C.OffersManagementActionType.DeleteOfferRequest, deleteOfferWorker),
-        takeEvery([C.OffersManagementActionType.CreateOneForOneOfferRequest, C.OffersManagementActionType.CreateOneForOneOfferRequest], createOfferWorker),
+        takeEvery([C.OffersManagementActionType.CreateOfferRequest, C.OffersManagementActionType.CreateOneForOneOfferRequest], createOfferWorker),
     ]);
 };

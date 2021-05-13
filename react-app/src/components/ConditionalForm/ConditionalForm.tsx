@@ -1,14 +1,37 @@
 import MultiCheckbox from "../MultiCheckbox/MultiCheckbox";
+import { CourseWithoutSubjectWithTeacher } from "../OneForOneForm/OneForOneForm";
+import * as P from './parts';
 
 export interface ConditionalFormProps {
     days: { [key: string]: string };
     teachers: { [key: string]: string };
     onCheckDay: React.ChangeEventHandler<HTMLInputElement>;
     onCheckTeacher: React.ChangeEventHandler<HTMLInputElement>;
+    courses: CourseWithoutSubjectWithTeacher[];
+    onChangeGivenCourse: React.ChangeEventHandler<HTMLSelectElement>;
+    givenCourseId: number;
 }
 
-const ConditionalForm: React.FC<ConditionalFormProps> = ({ days, teachers, onCheckDay, onCheckTeacher }) => (
+const translations = {
+    'MONDAY': 'Poniedziałek',
+    'TUESDAY': 'Wtorek',
+    'WEDNESDAY': 'Środa',
+    'THURSDAY': 'Czwartek',
+    'FRIDAY': 'Piątek',
+    'SATURDAY': 'Sobota',
+    'SUNDAY': 'Niedziela',
+};
+
+const ConditionalForm: React.FC<ConditionalFormProps> = ({ days, teachers, onCheckDay, onCheckTeacher, courses, onChangeGivenCourse, givenCourseId }) => (
     <>
+        <P.Select name="givenCourseId" id="givenCourseId" onChange={onChangeGivenCourse} value={givenCourseId}>
+            <option key={-1} value={-1}>Wybierz zajęcia, które chcesz wymienić</option>
+            {
+                courses.map((e, index) => (
+                    <option key={index} value={e.id}>{translations[e.dayOfWeek]}, {e?.weekType ? `tydzień ${e.weekType}, `  : ''}{e.startTime}, prowadzący: {e.teacher.name} {e.teacher.surname}</option>
+                ))
+            }
+        </P.Select>
         <MultiCheckbox
             name="teachers"
             label="Wybierz nauczycieli:"

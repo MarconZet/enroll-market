@@ -28,7 +28,7 @@ export const canAcceptOffer = (id: number) => axios.get<boolean>(process.env.REA
 
 export const acceptOffer = (offerId: number, courseId: number) => axios.post(process.env.REACT_APP_API_PATH + '/api/offers/' + offerId + '/accept?courseId=' + courseId, '', getConfig());
 
-export const getMatchingOffers = (id: number) => axios.get<PaginatedResponse<Offer[]>>(process.env.REACT_APP_API_PATH + '/api/offers/' + id + '/courses', getConfig());
+export const getMatchingOffers = (id: number) => axios.get<Course[]>(process.env.REACT_APP_API_PATH + '/api/offers/' + id + '/courses', getConfig());
 
 ///////////////
 

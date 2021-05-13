@@ -23,7 +23,7 @@ export function* getPageWorker(action: AnyAction) {
         // }
 
         const { data: { content, totalPages } } = yield call(getOneForOneOffers, queryParams);
-        yield put(A.getPageSuccess(content, totalPages+1));
+        yield put(A.getPageSuccess(content, totalPages < 1 ? 1 : totalPages));
     } catch (error) {
         yield put(A.getPageFail());
         notitier.alert('Ładowanie strony nie powiodło się. Spróbuj jeszcze raz.');

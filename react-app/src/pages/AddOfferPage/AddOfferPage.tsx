@@ -2,7 +2,7 @@ import { FormEventHandler, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as P from './parts';
 import * as A from '../../store/offersManagement/actions';
-import { CourseType } from '../../api/models';
+import { CourseType, DayOfWeek } from '../../api/models';
 import { coursesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, subjectsNamesAndIdsSelector, teachersNamesForSubjectAndTypeSelector } from '../../store/globalData/selectors';
 import OneForOneForm from '../../components/OneForOneForm/OneForOneForm';
 import ConditionalForm from '../../components/ConditionalForm/ConditionalForm';
@@ -30,6 +30,12 @@ export const AddOfferPage: React.FC = () => {
         setChosenTeachers([]);
     }, [subject, type]);
 
+    useEffect(() => {
+        setChosenTeachers([]);
+        setChosenDays([]);
+        setTakenCourseId(-1);
+    }, [offerType]);
+
     const days = {
         'MONDAY': 'Poniedziałek',
         'TUESDAY': 'Wtorek',
@@ -41,7 +47,16 @@ export const AddOfferPage: React.FC = () => {
     };
 
     const onSubmit: FormEventHandler<Element> = (event) => {
-        dispatch(A.createOneForOneOfferRequest(givenCourseId, takenCourseId));
+        if (offerType === '1for1') {
+            dispatch(A.createOneForOneOfferRequest(givenCourseId, takenCourseId));
+        } else if (offerType === 'cond') {
+            const timeBlocks = chosenDays.map(day => ({
+                dayOfWeek: (day as DayOfWeek),
+                startTime: null,
+                endTime: null,
+            }))
+            dispatch(A.createOfferRequest(givenCourseId, chosenTeachers, timeBlocks));
+        }
         event.preventDefault();
     };
 
@@ -67,8 +82,8 @@ export const AddOfferPage: React.FC = () => {
         }
     };
 
-    const formGetter = (type: string) => {
-        if (type === "1for1") {
+    const formGetter = () => {
+        if (offerType === "1for1") {
             return (
                 <OneForOneForm
                     givenCourseId={givenCourseId}
@@ -78,19 +93,34 @@ export const AddOfferPage: React.FC = () => {
                     onChangeTakenCourse={(e) => setTakenCourseId(+e.target.value)}
                 />
             );
-        } else if (type === "cond") {
+        } else if (offerType === "cond") {
             return (
                 <ConditionalForm
                     days={days}
                     teachers={teachers}
                     onCheckDay={onCheckDay}
                     onCheckTeacher={onCheckTeacher}
+                    givenCourseId={givenCourseId}
+                    courses={courses}
+                    onChangeGivenCourse={(e) => setGivenCourseId(+e.target.value)}
                 />
             );
         }
 
         return null;
     };
+
+    const disableForm = () => {
+        if ((subject === -1) || (type === "none") || (givenCourseId === -1)) {
+            return true;
+        }
+
+        if ((offerType === "1for1") && (takenCourseId === -1)) {
+            return true;
+        }
+
+        return false;
+    }
 
     return isLoadingSubjects ? (<></>) : (
         <P.Wrapper>
@@ -116,12 +146,12 @@ export const AddOfferPage: React.FC = () => {
                 </P.Select>
                 {courses.length > 0
                     ? (
-                        formGetter(offerType)
+                        formGetter()
                     ) : (
                         <P.Title>Brak terminów. Ustaw inny przedmiot lub typ zajęć.</P.Title>
                     )
                 }
-                <P.Submit disabled={(subject === -1) || (type === "none") || (givenCourseId === -1) || (takenCourseId === -1)}>Dodaj</P.Submit>
+                <P.Submit disabled={disableForm()}>Dodaj</P.Submit>
             </P.Form>
         </P.Wrapper>
     );
