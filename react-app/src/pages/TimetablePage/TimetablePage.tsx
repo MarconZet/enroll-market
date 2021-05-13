@@ -4,17 +4,17 @@ import TimetableTemplate from "../../components/TimetableTemplate/TimetableTempl
 
 export const TimetablePage: React.FC = () => {
     const translations = {
-        'PROJECT': 'Projekt',
-        'LABORATORY': 'Laboratorium',
-        'LECTURE': 'Wykład',
-        'LESSON': 'Ćwiczenia',
+        'PROJECT': 'P',
+        'LABORATORY': 'L',
+        'LECTURE': 'W',
+        'LESSON': 'C',
     };
 
     const dims = {
-        columnWidth: 200,
-        hourWidth: 100,
+        columnWidth: 190,
+        hourWidth: 50,
         dayHeight: 30,
-        unitHeight: 15,
+        unitHeight: 8,
         unitsNo: 12
     }
 
@@ -58,31 +58,46 @@ export const TimetablePage: React.FC = () => {
         return timePad(startTime.hour) + ":" + timePad(startTime.minute) + " - " + timePad(endHour) + ":" + timePad(endMinute)
     }
 
+    const courseTypeColor = (courseType: CourseType): string => {
+        switch (courseType){
+            case CourseType.LABORATORY:
+                return "#0995ff"
+            case CourseType.LECTURE:
+                return "#ff6614"
+            case CourseType.LESSON:
+                return "green"
+            case CourseType.PROJECT:
+                return "#7614ff"
+        }
+    }
+
     let timetable = new Timetable()
     // TODO
     // Here provide with courses
     courses.forEach(c => timetable.addCourse(c))
 
     return (
-        <div style={{position: "relative"}}>
-            <TimetableTemplate columnWidth={dims.columnWidth} hourWidth={dims.hourWidth} dayHeight={dims.dayHeight} unitHeight={dims.unitHeight} unitsNo={dims.unitsNo}/>
-            {timetable.days.map((clusters, idx1) => (
-                clusters.map((cluster, idx2) => (
-                    cluster.courses.map((course, idx3) => (
-                        <P.Course key={idx3} style={{
-                            transform: "translate(" + translationX(course.dayOfWeek, idx3, cluster.courses.length) + "px, " + translationY(formatTime(course.startTime)) + "px)",
-                            width: dimX(cluster.courses.length),
-                            height: dimY(18)
-                        }}>
-                            <p>{timeRangeString(formatTime(course.startTime))} {course.weekType}</p>
-                            <p>{course.subject.name}</p>
-                            <p>{course.teacher.name + " " + course.teacher.surname}</p>
-                            <p>{translations[course.courseType]}</p>
-                        </P.Course>
+        <P.Wrapper>
+            <div style={{position: "relative"}}>
+                <TimetableTemplate columnWidth={dims.columnWidth} hourWidth={dims.hourWidth} dayHeight={dims.dayHeight} unitHeight={dims.unitHeight} unitsNo={dims.unitsNo}/>
+                {timetable.days.map((clusters, idx1) => (
+                    clusters.map((cluster, idx2) => (
+                        cluster.courses.map((course, idx3) => (
+                            <P.Course key={idx3} style={{
+                                transform: "translate(" + translationX(course.dayOfWeek, idx3, cluster.courses.length) + "px, " + translationY(formatTime(course.startTime)) + "px)",
+                                width: dimX(cluster.courses.length),
+                                height: dimY(18),
+                                background: courseTypeColor(course.courseType)
+                            }}>
+                                <P.Time>{timeRangeString(formatTime(course.startTime))} {course.weekType}</P.Time>
+                                <P.Subject>{course.subject.name} - {translations[course.courseType]}</P.Subject>
+                                <P.Teacher>{course.teacher.name + " " + course.teacher.surname}</P.Teacher>
+                            </P.Course>
+                        ))
                     ))
-                ))
-            ))}
-        </div>
+                ))}
+            </div>
+        </P.Wrapper>
     )
 }
 
@@ -212,7 +227,7 @@ const courses = [{
     },
     {
         subject: {id: 1, name: "OI"},
-        courseType: CourseType.LESSON,
+        courseType: CourseType.PROJECT,
         dayOfWeek: DayOfWeek.TUESDAY,
         id: 0,
         startTime: "11:29",
@@ -221,6 +236,48 @@ const courses = [{
             id: 0,
             name: "Elo",
             surname: "Elo"
+        },
+        weekType: "B"
+    },
+    {
+        subject: {id: 1, name: "WDIB"},
+        courseType: CourseType.LABORATORY,
+        dayOfWeek: DayOfWeek.WEDNESDAY,
+        id: 0,
+        startTime: "12:50",
+        teacher: {
+            emailAddress: "",
+            id: 0,
+            name: "Marek",
+            surname: "Gajęcki"
+        },
+        weekType: "A"
+    },
+    {
+        subject: {id: 1, name: "AK"},
+        courseType: CourseType.LABORATORY,
+        dayOfWeek: DayOfWeek.WEDNESDAY,
+        id: 0,
+        startTime: "12:50",
+        teacher: {
+            emailAddress: "",
+            id: 0,
+            name: "Łukasz",
+            surname: "Czekierda"
+        },
+        weekType: "B"
+    },
+    {
+        subject: {id: 1, name: "PP"},
+        courseType: CourseType.LESSON,
+        dayOfWeek: DayOfWeek.WEDNESDAY,
+        id: 0,
+        startTime: "14:20",
+        teacher: {
+            emailAddress: "",
+            id: 0,
+            name: "Bartosz",
+            surname: "Kwolek"
         },
         weekType: "B"
     }]
