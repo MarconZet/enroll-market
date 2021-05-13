@@ -14,6 +14,10 @@ public class WrongPathVariableException extends RuntimeException {
         super(generateMessage(isWrongCriterion, wrongField));
     }
 
+    public WrongPathVariableException(String message) {
+        super(message);
+    }
+
     private static String generateMessage(boolean isWrongCriterion, String field) {
         if (isWrongCriterion) {
             return "Wrong criterion name: " + field;

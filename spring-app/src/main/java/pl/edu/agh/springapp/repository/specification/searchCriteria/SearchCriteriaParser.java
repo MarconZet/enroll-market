@@ -44,7 +44,7 @@ public class SearchCriteriaParser {
         return result;
     }
 
-    public List<SearchCriteria> parse(String searchString) {
+    public Specification<Offer> parse(String searchString) {
         List<SearchCriteria> searchCriterias = new ArrayList<>();
         if (searchString != null) {
             Matcher matcher = searchPattern.matcher(searchString + ",");
@@ -61,7 +61,8 @@ public class SearchCriteriaParser {
                 searchCriterias.add(searchCriteria);
             }
         }
-        return searchCriterias;
+        List<Specification<Offer>> specifications = specificationsFromSearchCriteria(searchCriterias);
+        return andSpecification(specifications).orElseThrow(() -> new WrongPathVariableException("No right search string"));
     }
 
     private void parseValue(SearchCriteria criteria, SearchCriterion criterion, String value) {

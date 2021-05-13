@@ -67,11 +67,9 @@ public class OfferService {
         Pageable paging = PageRequest.of(pageNo, pageSize);
         SearchCriteriaParser searchCriteriaParser = new SearchCriteriaParser();
         if (searchString != null) {
-            List<SearchCriteria> criteria = searchCriteriaParser.parse(searchString);
-            List<Specification<Offer>> specifications = searchCriteriaParser.specificationsFromSearchCriteria(criteria);
-            specifications.add(OfferSpecifications.studentIndexDoesNotEqual(currentUser.getIndex()));
-            Specification<Offer> spec = searchCriteriaParser.andSpecification(specifications)
-                    .orElseThrow(() -> new IllegalArgumentException());
+            Specification<Offer> searchSpec = searchCriteriaParser.parse(searchString);
+            Specification<Offer> spec = searchSpec
+                    .and(OfferSpecifications.studentIndexDoesNotEqual(currentUser.getIndex()));
             return offerRepository.findAll(spec, paging)
                     .map(offerMapper::offerToOfferDto);
         }
