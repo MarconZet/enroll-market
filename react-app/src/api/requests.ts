@@ -42,7 +42,7 @@ export const deleteOneForOneOffer = (id: number) => axios.delete(process.env.REA
 
 ///////////////
 
-export const getMe = (token: string) => axios.get<StudentWithCourses>(process.env.REACT_APP_API_PATH + '/api/students/me', getConfigWithToken(token));
+export const getMe = () => axios.get<StudentWithCourses>(process.env.REACT_APP_API_PATH + '/api/students/me', getConfig());
 
 export const getMyCourses = (token: string) => axios.get<Course[]>(process.env.REACT_APP_API_PATH + '/api/students/me/courses', getConfigWithToken(token));
 

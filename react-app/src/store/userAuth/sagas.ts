@@ -7,8 +7,9 @@ import { AnyAction } from '@reduxjs/toolkit';
 
 export function* getUserDataWorker(action: AnyAction) {
     try {
-        const { data: myData } = yield call(getMe, action.token);
-        yield put(A.getUserDataSuccess(myData));
+        const { data } = yield call(getMe);
+        console.log(data)
+        yield put(A.getUserDataSuccess(data));
     } catch (error) {
         yield put(A.getUserDataFail());
         notitier.alert('Ładowanie danych użytkownika nie powiodło się. Odśwież, by spróbować jeszcze raz.');

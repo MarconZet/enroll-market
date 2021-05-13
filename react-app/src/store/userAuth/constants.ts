@@ -8,7 +8,6 @@ export enum UserAuthActionType {
 
 export type UserAuthAction = {
     type: UserAuthActionType.GetUserDataRequest;
-    token: string;
 } | {
     type: UserAuthActionType.GetUserDataSuccess;
     myData: StudentWithCourses;

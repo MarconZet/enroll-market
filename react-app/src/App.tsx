@@ -33,7 +33,7 @@ const App: React.FC = () => {
 			if (keycloak.authenticated && typeof keycloak?.token !== 'undefined') {
 				console.log('Auth!');
 				dispatch(getGlobalDataRequest());
-				dispatch(getUserDataRequest(keycloak?.token));
+				dispatch(getUserDataRequest());
 			}
 		}
 	  }

@@ -1,9 +1,8 @@
 import { StudentWithCourses } from "../../api/models";
 import { UserAuthAction, UserAuthActionType } from "./constants";
 
-export const getUserDataRequest = (token: string): UserAuthAction => ({
+export const getUserDataRequest = (): UserAuthAction => ({
     type: UserAuthActionType.GetUserDataRequest,
-    token,
 });
 
 export const getUserDataSuccess = (myData: StudentWithCourses): UserAuthAction => ({
