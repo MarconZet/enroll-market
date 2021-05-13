@@ -10,6 +10,17 @@ export interface TimetableTemplateProps {
 }
 
 export const TimetableTemplate: React.FC<TimetableTemplateProps> = ({columnWidth, hourWidth, dayHeight, unitHeight, unitsNo}) => {
+    const translations = {
+        'MONDAY': 'Poniedziałek',
+        'TUESDAY': 'Wtorek',
+        'WEDNESDAY': 'Środa',
+        'THURSDAY': 'Czwartek',
+        'FRIDAY': 'Piątek',
+        'SATURDAY': 'Sobota',
+        'SUNDAY': 'Niedziela',
+        'PROJECT': 'Projekt'
+    }
+
     const days = Object.values(DayOfWeek)
     const hours = Array.from({length: (20 - 8)}, (v, k) => k + 8)
 
@@ -19,12 +30,12 @@ export const TimetableTemplate: React.FC<TimetableTemplateProps> = ({columnWidth
                 <P.Tr>
                     <P.Td_hour/>
                     {days.map((day, idx) => (
-                        <P.Th key={idx} style={{minWidth: columnWidth, height: dayHeight}}>{day}</P.Th>
+                        <P.Th key={idx} style={{minWidth: columnWidth, height: dayHeight}}>{translations[day]}</P.Th>
                     ))}
                 </P.Tr>
                 {hours.map((hour, idx) => (
                     <P.Tr key={idx}>
-                        <P.Td_hour style={{minWidth: hourWidth}}>{hour}:00</P.Td_hour>
+                        <P.Td_hour style={{minWidth: hourWidth}}>{String(hour).padStart(2, "0")}:00</P.Td_hour>
                         {days.map((_, idx2) => (
                             <P.Td key={idx2}>
                                 <P.Table_internal>
