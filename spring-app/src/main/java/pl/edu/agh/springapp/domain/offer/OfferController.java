@@ -31,7 +31,7 @@ public class OfferController {
     }
 
     @GetMapping("/offers")
-    @ApiOperation(value = "Get list of offers - paging work, filtering (searching) - not")
+    @ApiOperation(value = "Get list of offers - paging work")
     public ResponseEntity<Page<OfferDto>> getAllOffers(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
@@ -51,8 +51,7 @@ public class OfferController {
             )
             @RequestParam(required = false) String search
     ) {
-        Page<OfferDto> list = service.getAllOffers(pageNo, pageSize);
-        System.out.println(search);
+        Page<OfferDto> list = service.getAllOffers(search, pageNo, pageSize);
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 

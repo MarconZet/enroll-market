@@ -1,5 +1,9 @@
 package pl.edu.agh.springapp.data.model;
 
+import pl.edu.agh.springapp.repository.specification.searchCriteria.SearchCriterion;
+
+import java.util.Optional;
+
 public enum DayOfWeek {
     MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
 
@@ -40,4 +44,11 @@ public enum DayOfWeek {
         return SUNDAY;
     }
 
+    static public Optional<DayOfWeek> fromString(String name) {
+        try {
+            return Optional.of(DayOfWeek.valueOf(name));
+        } catch (IllegalArgumentException ex) {
+            return Optional.empty();
+        }
+    }
 }

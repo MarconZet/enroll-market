@@ -6,7 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OneToOneOfferPostDto;
 import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
@@ -65,7 +64,7 @@ public class OneToOneOfferService {
     public Page<OneToOneOfferDto> getAllOneToOneOffers(Integer pageNo, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
         Specification isOneToOneSpec = OfferSpecifications.isOneToOne(true);
-        Specification indexIsNotEqualSpec = OfferSpecifications.indexDoesNotEqual(currentUser.getIndex());
+        Specification indexIsNotEqualSpec = OfferSpecifications.studentIndexDoesNotEqual(currentUser.getIndex());
 
         Specification spec = Specification.where(isOneToOneSpec).and(indexIsNotEqualSpec);
         return offerRepository.findAll(spec, paging)
