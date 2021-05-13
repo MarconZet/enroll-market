@@ -34,15 +34,83 @@ public class FileUploadService {
     private final SubjectMapper subjectMapper;
     private final StudentMapper studentMapper;
 
-    public String getFile() {
-        String fileContent = "";
+    private String csvHeaders = "subjectName,courseType,maxCount,groupNumber,teacher,teacherMailAddress,isOnline,weekAB,dayOfWeek,startTime,studentName,studentIndex";
 
+    private String getDataFromCourse(Course course) {
+        String courseData = "";
+
+        Subject subject = course.getSubject();
+        courseData = subject.getName() + "," + course.getType().toString() + ",";
+        courseData += course.getMaxStudentCount() + "," + course.getGroupNumber() + ",";
+        Teacher teacher = course.getTeacher();
+        String teacherData = teacher.getSurname() + " " + teacher.getName() + "," + teacher.getEmailAddress() + ",";
+        courseData += teacherData + "Zdalnie,";
+
+        if (course.getWeekType() == WeekType.AB) {
+            courseData += ",";
+        } else {
+            courseData += course.getWeekType().toString() + ",";
+        }
+
+        courseData += course.getDay().toString() + ",";
+        courseData += course.getStartTime().toString() + ",";
+
+        return courseData;
+    }
+
+    public String getFileWithAll() {
+        String fileContent = csvHeaders + "\r\n";
 
         for (Course course: courseRepository.findAll()) {
-            if (course != null) {
-                fileContent += course.getSubject().getName() + ", ";
+            String courseData = getDataFromCourse(course);
+
+            if (course.getType() == CourseType.LECTURE){
+                fileContent += courseData + ",\r\n";
+            } else {
+                for (Student student: course.getStudents()) {
+                    fileContent += courseData + student.getSurname() + " " + student.getName() + "," + student.getIndexNumber() + "\r\n";
+                }
             }
         }
+        return fileContent;
+    }
+
+    public String getFileForStudent(String indexNumber) {
+        String fileContent = "";
+        Student student = studentRepository.findFirstByIndexNumber(indexNumber);
+        String studentData = student.getSurname() + " " + student.getName() + "," + student.getIndexNumber();
+        if (student != null) {
+            fileContent += csvHeaders + "\r\n";
+            for (Course course : student.getCourses()) {
+
+                fileContent += getDataFromCourse(course);
+                fileContent += studentData + "\r\n";
+            }
+        }
+
+        return fileContent;
+    }
+
+    public String getFileForTeacher(String name, String surname) {
+        String fileContent = "";
+        Teacher teacher = teacherRepository.findFirstByNameAndSurname(name, surname);
+
+        if (teacher != null) {
+            fileContent += csvHeaders + "\r\n";
+            for (Course course: teacher.getCourses()) {
+                String courseData = getDataFromCourse(course);
+
+                if (course.getType() == CourseType.LECTURE) {
+                    fileContent += courseData + ",\r\n";
+                } else {
+                    for (Student student: course.getStudents()) {
+                        fileContent += courseData;
+                        fileContent += student.getSurname() + " " + student.getName() + "," + student.getIndexNumber() + "\r\n";
+                    }
+                }
+            }
+        }
+
         return fileContent;
     }
 
@@ -125,7 +193,7 @@ public class FileUploadService {
                 }
 
                 CoursePostDto coursePostDto = new CoursePostDto(subject.getId(), classType, LocalTime.of(hour, min),
-                        DayOfWeek.convertDayOfWeekName(line.getDayOfWeek()), weekAB, teacher.getId());
+                        DayOfWeek.convertDayOfWeekName(line.getDayOfWeek()), weekAB, line.getMaxCount(), line.getGroupNumber(), teacher.getId());
                 course = courseMapper.coursePostDtoToCourse(coursePostDto);
                 courses.add(course);
                 courseRepository.save(course);

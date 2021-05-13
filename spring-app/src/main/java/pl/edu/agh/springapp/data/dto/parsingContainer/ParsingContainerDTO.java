@@ -7,8 +7,8 @@ public class ParsingContainerDTO {
 
     private String subjectName;
     private String courseType;
-    private String maxCount;
-    private String groupNumber;
+    private int maxCount;
+    private int groupNumber;
     private String teacher;
     private String teacherMailAddress;
     private String isOnline;
