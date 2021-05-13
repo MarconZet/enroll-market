@@ -37,10 +37,29 @@ public class FileUploadService {
     public String getFile() {
         String fileContent = "";
 
-
         for (Course course: courseRepository.findAll()) {
-            if (course != null) {
-                fileContent += course.getSubject().getName() + ", ";
+            Subject subject = course.getSubject();
+            String courseData = subject.getName() + "," + course.getType().toString() + ",";
+            courseData += course.getMaxStudentCount() + "," + course.getGroupNumber() + ",";
+            Teacher teacher = course.getTeacher();
+            String teacherData = teacher.getSurname() + " " + teacher.getName() + "," + teacher.getEmailAddress() + ",";
+            courseData += teacherData + "Zdalnie,";
+
+            if (course.getWeekType() == WeekType.AB) {
+                courseData += ",";
+            } else {
+                courseData += course.getWeekType().toString() + ",";
+            }
+
+            courseData += course.getDay().toString() + ",";
+            courseData += course.getStartTime().toString() + ",";
+
+            if (course.getType() == CourseType.LECTURE){
+                fileContent += courseData + ",\r\n";
+            } else {
+                for (Student student: course.getStudents()) {
+                    fileContent += courseData + student.getSurname() + " " + student.getName() + "," + student.getIndexNumber() + "\r\n";
+                }
             }
         }
         return fileContent;
@@ -125,7 +144,7 @@ public class FileUploadService {
                 }
 
                 CoursePostDto coursePostDto = new CoursePostDto(subject.getId(), classType, LocalTime.of(hour, min),
-                        DayOfWeek.convertDayOfWeekName(line.getDayOfWeek()), weekAB, teacher.getId());
+                        DayOfWeek.convertDayOfWeekName(line.getDayOfWeek()), weekAB, line.getMaxCount(), line.getGroupNumber(), teacher.getId());
                 course = courseMapper.coursePostDtoToCourse(coursePostDto);
                 courses.add(course);
                 courseRepository.save(course);

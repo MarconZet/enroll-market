@@ -30,6 +30,8 @@ public class Course {
     private LocalTime startTime;
     private DayOfWeek day;
     private WeekType weekType;
+    private int maxStudentCount;
+    private int groupNumber;
 
     @ManyToOne
     @JoinColumn(name="subject_id")

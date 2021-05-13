@@ -51,6 +51,8 @@ public class CourseDto {
             dataType = "String"
     )
     private String weekType;
+    private int maxStudentCount;
+    private int groupNumber;
 
     private TeacherDto teacher;
 }

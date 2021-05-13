@@ -18,7 +18,7 @@ public class FileUploadController {
 
     private final FileUploadService fileUploadService;
 
-    @GetMapping("/enroll/download")
+    @GetMapping("/enroll/download/all")
     public ResponseEntity<String> handleFileDownload() {
 
         // create file to send
