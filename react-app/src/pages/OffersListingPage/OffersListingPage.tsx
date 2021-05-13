@@ -1,16 +1,14 @@
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { FiltersColumn } from '../../components/FiltersColumn/FiltersColumn';
 import OneForOneTile from '../../components/OneForOneTile/OneForOneTile';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { offersListingIsLoadingSelector, offersListingPageSelector, offersListingSelector, offersListingTotalPagesSelector } from '../../store/offersListing/selectors';
 import * as P from './parts';
 import * as A from '../../store/offersListing/actions';
-import { Filters, ListingType } from '../../store/offersListing/constants';
 import { userAuthIdSelector } from '../../store/userAuth/selectors';
 import { deleteOfferRequest } from '../../store/offersManagement/actions';
-import { getGlobalDataRequest } from '../../store/globalData/actions';
 
 export const OffersListingPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -21,24 +19,20 @@ export const OffersListingPage: React.FC = () => {
     let userId = useSelector(userAuthIdSelector);
     let location = useLocation();
 
-    useEffect(() => {
-        dispatch(getGlobalDataRequest());
-	}, [dispatch]);
+    // useEffect(() => {
+    //     let type: ListingType = 'all';
 
-    useEffect(() => {
-        let type: ListingType = 'all';
+    //     if (location.pathname === '/myOffers/madeByMe') {
+    //         type = 'madeByMe';
+    //     } else if (location.pathname === '/myOffers/acceptedByMe') {
+    //         type = 'acceptedByMe';
+    //     }
 
-        if (location.pathname === '/myOffers/madeByMe') {
-            type = 'madeByMe';
-        } else if (location.pathname === '/myOffers/acceptedByMe') {
-            type = 'acceptedByMe';
-        }
+    //     dispatch(A.setType(type));
+    // }, [dispatch, location]);
 
-        dispatch(A.setType(type));
-    }, [dispatch, location]);
-
-    const filtersSubmitCallback = (data: Filters) => {
-        dispatch(A.applyFilters(data));
+    const filtersSubmitCallback = (filters: string) => {
+        dispatch(A.applyFilters(filters));
     };
 
     const onPageChange = (page: number) => {
@@ -69,7 +63,7 @@ export const OffersListingPage: React.FC = () => {
     return (
         <P.Wrapper>
             <P.FiltersContainer>
-                {((location.pathname === '/myOffers/madeByMe') || (location.pathname === '/myOffers/acceptedByMe')) &&(
+                {/* ((location.pathname === '/myOffers/madeByMe') || (location.pathname === '/myOffers/acceptedByMe')) && (
                     <P.TypeContainer>
                         <Link to='/myOffers/madeByMe'>
                             <P.TypeButton isCurrent={location.pathname === '/myOffers/madeByMe'}>Złożone przeze mnie</P.TypeButton>
@@ -78,8 +72,8 @@ export const OffersListingPage: React.FC = () => {
                             <P.TypeButton isCurrent={location.pathname === '/myOffers/acceptedByMe'}>Zaakceptowane przeze mnie</P.TypeButton>
                         </Link>
                     </P.TypeContainer>
-                )}
-                <FiltersColumn submitCallback={filtersSubmitCallback} timeSlots={[]} subjectsList={[]} />
+                ) */}
+                <FiltersColumn submitCallback={filtersSubmitCallback} />
             </P.FiltersContainer>
             <P.OffersContainer>
                 {

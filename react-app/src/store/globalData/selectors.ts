@@ -30,3 +30,25 @@ export const coursesForSubjectAndTypeSelector = (subjectId: number, type: Course
 };
 
 export const isLoadingGlobalDataSelector = (state: ApplicationState) => state.globalData.isLoading;
+
+export const teachersNamesForSubjectAndTypeSelector = (subjectId: number, type: CourseType | "none") => (state: ApplicationState) => {
+    if (subjectId === -1 || type === "none") {
+        return {};
+    }
+
+    const teacherIds = state.globalData.subjects.find((e) => e.id === subjectId)?.courses.filter(c => c.courseType === type).map(c => c.teacherId);
+
+    if (!teacherIds?.length) {
+        return {};
+    }
+
+    let teachersMap: { [key: string]: string } = {};
+
+    const teachers = state.globalData.teachers.filter(t => teacherIds.some(id => id === t.id));
+
+    for (let i = 0; i < teachers.length; i++) {
+        teachersMap[`${teachers[i].id}`] = `${teachers[i].name} ${teachers[i].surname}`;
+    }
+
+    return teachersMap;
+};

@@ -19,7 +19,7 @@ export type OffersListingAction = {
     type: OffersListingActionType.GetPageFail,
 } | {
     type: OffersListingActionType.ApplyFilters,
-    filters: Filters,
+    filters: string,
 } | {
     type: OffersListingActionType.SetType,
     listingType: ListingType,
@@ -43,16 +43,6 @@ export type OffersListingAction = {
 
 export type Offer = OneForOneOffer;
 
-export interface FiltersData {
-    timeSlots?: string[],
-    subjectsList?: string[],
-}
-
-export interface Filters {
-    subject: string;
-    offeredSlot: string;
-    wantedSlot: string;
-}
 
 export type ListingType = 'all' | 'madeByMe' | 'acceptedByMe';
 export interface OffersListingState {
@@ -60,7 +50,7 @@ export interface OffersListingState {
     totalPages: number;
     offers: Offer[];
     isLoading: boolean;
-    filters?: Filters;
+    filters?: string;
     type: ListingType;
 };
 

@@ -1,4 +1,4 @@
-import { OffersListingAction, OffersListingActionType, Offer, Filters, ListingType } from './constants';
+import { OffersListingAction, OffersListingActionType, Offer, ListingType } from './constants';
 
 export const getPageRequest = (page: number): OffersListingAction => ({
     type: OffersListingActionType.GetPageRequest,
@@ -15,7 +15,7 @@ export const getPageFail = (): OffersListingAction => ({
     type: OffersListingActionType.GetPageFail,
 });
 
-export const applyFilters = (filters: Filters): OffersListingAction => ({
+export const applyFilters = (filters: string): OffersListingAction => ({
     type: OffersListingActionType.ApplyFilters,
     filters,
 });
