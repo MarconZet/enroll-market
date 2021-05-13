@@ -11,7 +11,7 @@ const MultiCheckbox: React.FC<MultiCheckboxProps> = ({ name, choices, onElementC
         {
             Object.keys(choices).map((val, index) => (
                 <label>
-                    <input key={`name${index}`} type="checkbox" name={name} value={val} onChange={onElementChange} /> {choices[val]}
+                    <input key={`${name} ${index}`} type="checkbox" name={name} value={val} onChange={onElementChange} /> {choices[val]}
                 </label>
             ))
         }

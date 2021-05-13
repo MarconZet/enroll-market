@@ -1,11 +1,11 @@
-import { OffersListingAction, OffersListingActionType, Offer, ListingType } from './constants';
+import { OffersListingAction, OffersListingActionType, ExtendedOffer, ListingType } from './constants';
 
 export const getPageRequest = (page: number): OffersListingAction => ({
     type: OffersListingActionType.GetPageRequest,
     page,
 });
 
-export const getPageSuccess = (offers: Offer[], totalPages: number): OffersListingAction => ({
+export const getPageSuccess = (offers: ExtendedOffer[], totalPages: number): OffersListingAction => ({
     type: OffersListingActionType.GetPageSuccess,
     offers,
     totalPages,

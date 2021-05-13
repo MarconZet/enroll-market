@@ -1,9 +1,9 @@
 import * as P from './parts';
 import { ReactComponent as Arrow } from '../../assets/arrow-point-to-right.svg';
-import { OneForOneOffer } from '../../api/models';
+import { ExtendedOffer } from '../../store/offersListing/constants';
 
 export interface OneForOneTileProps {
-    offer: OneForOneOffer;
+    offer: ExtendedOffer;
     acceptCallback?: () => void;
     editCallback?: () => void;
     deleteCallback?: () => void;
@@ -44,13 +44,17 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
                     // viewBox="0 -5 25 25"
                 />
             </P.SVGBox>
-            <P.SlotBox>
-                <P.Subheader>Oczekiwany termin</P.Subheader>
-                <P.ClassBox>
-                    <b>{offer.takenCourse.teacher.name} {offer.takenCourse.teacher.surname}</b>
-                    <b>{translations[offer.takenCourse.dayOfWeek]}, {offer.takenCourse?.weekType ? `tydzień ${offer.takenCourse.weekType}, `  : ''}{offer.takenCourse.startTime}</b>
-                </P.ClassBox>
-            </P.SlotBox>
+            {
+                (typeof offer.takenCourse !== 'undefined') && (
+                    <P.SlotBox>
+                    <P.Subheader>Oczekiwany termin</P.Subheader>
+                    <P.ClassBox>
+                        <b>{offer.takenCourse.teacher.name} {offer.takenCourse.teacher.surname}</b>
+                        <b>{translations[offer.takenCourse.dayOfWeek]}, {offer.takenCourse?.weekType ? `tydzień ${offer.takenCourse.weekType}, `  : ''}{offer.takenCourse.startTime}</b>
+                    </P.ClassBox>
+                </P.SlotBox>
+                )
+            }
         </P.OffersBox>
         <P.ButtonsBox>
             {acceptCallback && <P.Button onClick={acceptCallback}>Akceptuj</P.Button>}

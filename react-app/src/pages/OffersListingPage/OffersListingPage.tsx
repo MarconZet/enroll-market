@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { FiltersColumn } from '../../components/FiltersColumn/FiltersColumn';
 import OneForOneTile from '../../components/OneForOneTile/OneForOneTile';
+import ConditionalTile from '../../components/ConditionalTile/ConditionalTile';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { offersListingIsLoadingSelector, offersListingPageSelector, offersListingSelector, offersListingTotalPagesSelector } from '../../store/offersListing/selectors';
 import * as P from './parts';
@@ -55,15 +56,6 @@ export const OffersListingPage: React.FC = () => {
         dispatch(deleteOfferRequest(id));
     }
 
-    const othersOfferProps = (offerId: number, courseId: number) => ({
-        acceptCallback: acceptCallback(offerId, courseId),
-    });
-
-    const myOfferProps = (id: number) => ({
-        editCallback: editCallback(id),
-        deleteCallback: deleteCallback(id),
-    });
-
     return (
         <P.Wrapper>
             <P.FiltersContainer>
@@ -86,16 +78,51 @@ export const OffersListingPage: React.FC = () => {
                         : (
                             <>
                                 {offers.map((offer, index) => (
-                                    <OneForOneTile
-                                        key={index}
-                                        offer={offer}
-                                        {...(
-                                            offer.student.id === userId
-                                                ? myOfferProps(offer.id)
-                                                : othersOfferProps(offer.id, offer.givenCourse.id)
-                                        )}
-                                        reverseOrder={location.pathname === '/myOffers/madeByMe'}
-                                    />
+                                    offer.isOneToOne
+                                    ? (
+                                        <OneForOneTile
+                                            key={index}
+                                            offer={offer}
+                                            {...(
+                                                offer.student.id === userId
+                                                    ? {
+                                                        editCallback: editCallback(offer.id),
+                                                        deleteCallback: deleteCallback(offer.id),
+                                                    }
+                                                    : {}
+                                            )}
+                                            {...(
+                                                offer.canAccept
+                                                ? {
+                                                    acceptCallback: acceptCallback(offer.id, offer.givenCourse.id),
+                                                }
+                                                : {}
+                                            )}
+                                            reverseOrder={location.pathname === '/myOffers/madeByMe'}
+                                        />
+                                    )
+                                    : (
+                                        <ConditionalTile
+                                            key={index}
+                                            offer={offer}
+                                            {...(
+                                                offer.student.id === userId
+                                                    ? {
+                                                        editCallback: editCallback(offer.id),
+                                                        deleteCallback: deleteCallback(offer.id),
+                                                    }
+                                                    : {}
+                                            )}
+                                            {...(
+                                                offer.canAccept
+                                                ? {
+                                                    acceptCallback,
+                                                }
+                                                : {}
+                                            )}
+                                            reverseOrder={location.pathname === '/myOffers/madeByMe'}
+                                        />
+                                    )
                                 ))}
                                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
                             </>

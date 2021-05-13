@@ -1,10 +1,10 @@
 import * as P from './parts';
 import { ReactComponent as Arrow } from '../../assets/arrow-point-to-right.svg';
-import { OneForOneOffer } from '../../api/models';
+import { ExtendedOffer } from '../../store/offersListing/constants';
 
 export interface ConditionalTileProps {
-    offer: OneForOneOffer;
-    acceptCallback?: () => void;
+    offer: ExtendedOffer;
+    acceptCallback?: (offerId: number, courseId: number) => () => void;
     editCallback?: () => void;
     deleteCallback?: () => void;
     reverseOrder?: boolean;
@@ -45,15 +45,42 @@ export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptC
                 />
             </P.SVGBox>
             <P.SlotBox>
-                <P.Subheader>Oczekiwany termin</P.Subheader>
+                <P.Subheader>Warunki</P.Subheader>
                 <P.ClassBox>
-                    <b>{offer.takenCourse.teacher.name} {offer.takenCourse.teacher.surname}</b>
-                    <b>{translations[offer.takenCourse.dayOfWeek]}, tydzień {offer.takenCourse.weekType}, {offer.takenCourse.startTime}</b>
+                    <b>Prowadzący - jeden z:</b>
+                    <ul>
+                        {
+                            offer.offerConditions.teachers.map((teacher, index) => (
+                                <li key={index}>{teacher.name} {teacher.surname}</li>
+                            ))
+                        }
+                    </ul>
+                    <b>Terminy - w zakresach:</b>
+                    <ul>
+                        {
+                            offer.offerConditions.timeBlocks.map((block, index) => (
+                                <li key={index}>{translations[block.dayOfWeek]}, {block.startTime} - {block.endTime}</li>
+                            ))
+                        }
+                    </ul>
                 </P.ClassBox>
             </P.SlotBox>
         </P.OffersBox>
+        {
+            !!offer.matchingCourses?.length && (
+                <P.MatchingCoursesBox>
+                    {
+                        offer.matchingCourses.map((course) => (
+                            <P.CourseBox>
+                                <b>{course.teacher.name} {course.teacher.surname}, {translations[course.dayOfWeek]}, {course?.weekType ? `tydzień ${course.weekType}, `  : ''}{course.startTime}</b>
+                                {acceptCallback && <P.Button onClick={acceptCallback(offer.id, course.id)}>Akceptuj</P.Button>}
+                            </P.CourseBox>
+                        ))
+                    }
+                </P.MatchingCoursesBox>
+            )
+        }
         <P.ButtonsBox>
-            {acceptCallback && <P.Button onClick={acceptCallback}>Akceptuj</P.Button>}
             {editCallback && <P.Button onClick={editCallback}>Edytuj</P.Button>}
             {deleteCallback && <P.Button onClick={deleteCallback}>Usuń</P.Button>}
         </P.ButtonsBox>

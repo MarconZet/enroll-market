@@ -46,7 +46,7 @@ export const ClassBox = styled.div<{ isOffered?: boolean }>`
   
     ${({ isOffered }) => isOffered ? 'background-color: #1D7991;' : 'background-color: #91163F;'}
 
-    span, b {
+    span, b, li {
         font-size: 16px;
         display: inline-block;
         margin: 2px 0;
@@ -61,6 +61,22 @@ export const ButtonsBox = styled.div`
     padding-top: 16px;
     margin-top: 16px;
     border-top: 1px solid black;
+`;
+
+export const MatchingCoursesBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 1px solid black;
+`;
+
+export const CourseBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 4px;
 `;
 
 export const Button = styled.button`

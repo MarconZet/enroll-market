@@ -1,4 +1,4 @@
-import { OneForOneOffer } from "../../api/models";
+import { Course, Offer } from "../../api/models";
 
 export enum OffersListingActionType {
     GetPageRequest = 'offersListing/GET_PAGE_REQUEST',
@@ -13,7 +13,7 @@ export type OffersListingAction = {
     page: number;
 } | {
     type: OffersListingActionType.GetPageSuccess,
-    offers: Offer[];
+    offers: ExtendedOffer[];
     totalPages: number;
 } | {
     type: OffersListingActionType.GetPageFail,
@@ -41,14 +41,17 @@ export type OffersListingAction = {
 //     offerentId: string;
 // }
 
-export type Offer = OneForOneOffer;
-
+export interface ExtendedOffer extends Offer {
+    takenCourse?: Course;
+    matchingCourses?: Course[];
+    canAccept: boolean;
+} 
 
 export type ListingType = 'all' | 'madeByMe' | 'acceptedByMe';
 export interface OffersListingState {
     page: number;
     totalPages: number;
-    offers: Offer[];
+    offers: ExtendedOffer[];
     isLoading: boolean;
     filters?: string;
     type: ListingType;
