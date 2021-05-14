@@ -11,10 +11,14 @@ import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.data.mapper.*;
 import pl.edu.agh.springapp.data.model.*;
+import pl.edu.agh.springapp.domain.FileUploadService;
 import pl.edu.agh.springapp.repository.*;
 import pl.edu.agh.springapp.security.dev.KeycloakInitializerRunner;
 import pl.edu.agh.springapp.security.user.CurrentUser;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +41,8 @@ public class DbInit implements CommandLineRunner {
     private final StudentMapper studentMapper;
     private final OneToOneOfferMapper oneToOneOfferMapper;
     private final OfferMapper offerMapper;
+
+    private final FileUploadService fileUploadService;
 
     @Override
     public void run(String... args) {
@@ -107,21 +113,15 @@ public class DbInit implements CommandLineRunner {
         courseRepository.saveAll(courses).forEach(savedCourses::add);
 
         List<StudentPostDto> studentPostDtos = Arrays.asList(
-                new StudentPostDto("Grzegorz", "Janosz", "123001"),
-                new StudentPostDto("Adam", "Bera", "123002"),
-                new StudentPostDto("Magdalena", "Pastuła", "123003"),
-                new StudentPostDto("Janusz", "Kowal", "123004"),
-                new StudentPostDto("Grażyna", "Gwóźdź", "123005"),
-                new StudentPostDto("Marcin", "Zielonka", "123006"),
-                new StudentPostDto("Galus", "Anonimus", "123456"),
-                new StudentPostDto("Sirzechs", "Lucifer", "666001"),
-                new StudentPostDto("Serafall", "Leviathan", "666002"),
-                new StudentPostDto("Ajuka", "Beelzebub", "666003"),
-                new StudentPostDto("Falbium", "Asmodeus", "666004")
+                new StudentPostDto("Marta", "Słomka", "123456"),
+                new StudentPostDto("Śmieszek", "Melisa", "797955"),
+                new StudentPostDto("Kazimierz", "Siodełko", "313414"),
+                new StudentPostDto("Brandon", "Kwiatek", "222999"),
+                new StudentPostDto("Beniamin", "Wystrzał", "232595")
         );
         List<Student> students = studentMapper.studentPostDtosToStudents(studentPostDtos);
         List<Student> savedStudents = new ArrayList<>();
-        Student student = students.get(6);
+        Student student = students.get(0);
         student.getCourses().add(savedCourses.get(0));
         studentRepository.saveAll(students).forEach(savedStudents::add);
 
@@ -131,9 +131,16 @@ public class DbInit implements CommandLineRunner {
                 new OneToOneOfferPostDto(17L, 16L)
         );
         List<Offer> offers = oneToOneOfferMapper.oneToOneOfferPostDtosToOffers(oneToOneOfferPostDtos);
-        offers.get(0).setStudent(savedStudents.get(0));
-        offers.get(1).setStudent(savedStudents.get(0));
-        offers.get(2).setStudent(savedStudents.get(1));
+        offers.get(0).setStudent(savedStudents.get(1));
+        offers.get(1).setStudent(savedStudents.get(1));
+        offers.get(2).setStudent(savedStudents.get(0));
         offerRepository.saveAll(offers);
+
+        try {
+            File initialFile = new File("enroll_example.csv");
+            fileUploadService.loadFile(new FileInputStream(initialFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

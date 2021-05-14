@@ -12,6 +12,7 @@ import pl.edu.agh.springapp.data.mapper.*;
 import pl.edu.agh.springapp.data.model.*;
 import pl.edu.agh.springapp.repository.*;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalTime;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 @Slf4j
 public class FileUploadService {
 

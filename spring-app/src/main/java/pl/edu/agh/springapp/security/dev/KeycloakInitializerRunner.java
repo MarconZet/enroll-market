@@ -139,10 +139,10 @@ public class KeycloakInitializerRunner implements CommandLineRunner {
     }
 
     private static final List<TestUserInfo> TEST_USER_INFO = Arrays.asList(
-            new TestUserInfo("admin", "Galus", "Anonimus", "123456"),
-            new TestUserInfo("user1", "Sirzechs", "Lucifer", "666001"),
-            new TestUserInfo("user2", "Serafall", "Leviathan", "666002"),
-            new TestUserInfo("user3", "Ajuka", "Beelzebub", "666003"),
-            new TestUserInfo("user4", "Falbium", "Asmodeus", "666004")
+            new TestUserInfo("admin", "Marta", "Słomka", "123456"),
+            new TestUserInfo("user1", "Śmieszek", "Melisa", "797955"),
+            new TestUserInfo("user2", "Kazimierz", "Siodełko", "313414"),
+            new TestUserInfo("user3", "Brandon", "Kwiatek", "222999"),
+            new TestUserInfo("user4", "Beniamin", "Wystrzał", "232595")
     );
 }

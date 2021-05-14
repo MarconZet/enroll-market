@@ -14,6 +14,7 @@ import pl.edu.agh.springapp.data.mapper.CourseMapper;
 import pl.edu.agh.springapp.data.mapper.OfferMapper;
 import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
 import pl.edu.agh.springapp.data.model.*;
+import pl.edu.agh.springapp.domain.FileUploadService;
 import pl.edu.agh.springapp.error.EntityNotFoundException;
 import pl.edu.agh.springapp.error.WrongFieldsException;
 import pl.edu.agh.springapp.repository.CourseRepository;
