@@ -67,9 +67,9 @@ public class OfferController {
     }
 
     @GetMapping("offers/{id}/can-accept")
-    @ApiOperation(value = "Check if you can accept offer - without logic")
+    @ApiOperation(value = "Check if you can accept offer")
     public ResponseEntity<Boolean> canAcceptOffer(@PathVariable Long id) {
-        return ResponseEntity.ok(false);
+        return ResponseEntity.ok(service.checkIfCanAcceptOffer(id));
     }
 
     @GetMapping("offers/{id}/courses")
@@ -78,10 +78,10 @@ public class OfferController {
         return ResponseEntity.ok(service.getCoursesMatchingOffer(id));
     }
 
-    @PostMapping("offers/{id}/accept")
-    @ApiOperation(value = "Accept offer - without logic")
+    @PostMapping("offers/{offerId}/accept")
+    @ApiOperation(value = "Accept offer")
     public ResponseEntity<Boolean> acceptOffer(@PathVariable Long offerId,
                                                @RequestParam(required = true) Long courseId) {
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(service.acceptOffer(offerId, courseId));
     }
 }

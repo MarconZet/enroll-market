@@ -6,7 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.springapp.data.dto.IdListDto;
 import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
@@ -14,21 +13,22 @@ import pl.edu.agh.springapp.data.mapper.CourseMapper;
 import pl.edu.agh.springapp.data.mapper.OfferMapper;
 import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
 import pl.edu.agh.springapp.data.model.*;
-import pl.edu.agh.springapp.domain.FileUploadService;
 import pl.edu.agh.springapp.error.EntityNotFoundException;
 import pl.edu.agh.springapp.error.WrongFieldsException;
+import pl.edu.agh.springapp.error.WrongPathVariableException;
 import pl.edu.agh.springapp.repository.CourseRepository;
 import pl.edu.agh.springapp.repository.OfferRepository;
 import pl.edu.agh.springapp.repository.StudentRepository;
 import pl.edu.agh.springapp.repository.specification.OfferSpecifications;
-import pl.edu.agh.springapp.repository.specification.searchCriteria.SearchCriteria;
 import pl.edu.agh.springapp.repository.specification.searchCriteria.SearchCriteriaParser;
 import pl.edu.agh.springapp.security.user.CurrentUser;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -93,11 +93,82 @@ public class OfferService {
         return offerMapper.offerToOfferDto(offer);
     }
 
+    public boolean acceptOffer(Long offerId, Long courseId) {
+        Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new EntityNotFoundException(Offer.class, offerId));
+        Course givenCourse = courseRepository.findById(courseId).orElseThrow(() -> new EntityNotFoundException(Course.class, courseId));
+        List<Course> coursesOfStudent = courseRepository.findCoursesOfStudent(currentUser.getIndex());
+        List<Course> matchingCourses = filterCoursesStreamToMatchingOffer(coursesOfStudent.stream(), offer)
+                .collect(Collectors.toList());
+        if (!matchingCourses.contains(givenCourse)) {
+            throw new WrongPathVariableException("Course with id: " + courseId + " doesn't match offer conditions!");
+        }
+        if (!checkConflictedCourses(coursesOfStudent.stream(), offer.getGivenCourse())) {
+            throw new WrongPathVariableException("Course given in offer is in collision with your plan!");
+        }
+        List<Course> coursesOfGiver = courseRepository.findCoursesOfStudent(offer.getStudent().getIndexNumber());
+        if (!checkConflictedCourses(coursesOfGiver.stream(), givenCourse)) {
+            throw new WrongPathVariableException("Taken course is in collision with plan of offer giver!");
+        }
+        Course takenCourse = offer.getGivenCourse();
+        Student giver = offer.getStudent();
+        Student taker = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
+        if (taker == null) {
+            throw new WrongFieldsException("Logged student doesn't exist in database");
+        }
+        giver.getCourses().add(givenCourse);
+        giver.getCourses().remove(takenCourse);
+        taker.getCourses().add(takenCourse);
+        taker.getCourses().remove(givenCourse);
+        studentRepository.save(giver);
+        studentRepository.save(taker);
+        return true;
+    }
+
+    public boolean checkIfCanAcceptOffer(Long id) {
+        Offer offer = offerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
+        List<Course> coursesOfStudent = courseRepository.findCoursesOfStudent(currentUser.getIndex());
+        List<Course> matchingCourses = filterCoursesStreamToMatchingOffer(coursesOfStudent.stream(), offer)
+                .collect(Collectors.toList());
+        if (matchingCourses.size() <= 0) {
+            return false;
+        }
+        return checkConflictedCourses(coursesOfStudent.stream(), offer.getGivenCourse());
+    }
+
+    private boolean checkConflictedCourses(Stream<Course> courseStream, Course takenCourse) {
+        List<Course> conflictedCourses = courseStream
+                .filter(course -> course.getDay() == takenCourse.getDay())
+                .filter(course -> !course.getSubject().equals(takenCourse.getSubject()))
+                .filter(course -> {
+                    boolean colidateWeeks = false;
+                    switch (takenCourse.getWeekType()) {
+                        case A:
+                            colidateWeeks = course.getWeekType() != WeekType.B;
+                            break;
+                        case B:
+                            colidateWeeks = course.getWeekType() != WeekType.A;
+                            break;
+                        case AB:
+                            colidateWeeks = true;
+                            break;
+                    }
+                    return takenCourse.getStartTime().equals(course.getStartTime()) && colidateWeeks;
+                })
+                .collect(Collectors.toList());
+        return conflictedCourses.size() == 0;
+    }
+
     public List<CourseDto> getCoursesMatchingOffer(Long id) {
         Offer offer = offerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
-        OfferConditions offerConditions = offer.getOfferConditions();
         List<Course> coursesOfStudent = courseRepository.findCoursesOfStudent(currentUser.getIndex());
-        return coursesOfStudent.stream()
+        return filterCoursesStreamToMatchingOffer(coursesOfStudent.stream(), offer)
+                .map(courseMapper::courseToCourseDto)
+                .collect(Collectors.toList());
+    }
+
+    private Stream<Course> filterCoursesStreamToMatchingOffer(Stream<Course> courseStream, Offer offer) {
+        OfferConditions offerConditions = offer.getOfferConditions();
+        return courseStream
                 .filter( course -> course.getSubject().equals(offer.getGivenCourse().getSubject()))
                 .filter( course -> {
                     List<TimeBlock> timeBlocks = offerConditions.getTimeBlocks();
@@ -115,11 +186,6 @@ public class OfferService {
                     }).reduce(false, (a, b) -> a || b);
                 })
                 .filter( course -> offerConditions.getTeachers().contains(course.getTeacher()))
-                .filter( course -> {
-                    System.out.println(course.getStudents().size());
-                    return course.getStudents().size() < course.getMaxStudentCount() + 1;
-                })
-                .map(courseMapper::courseToCourseDto)
-                .collect(Collectors.toList());
+                .filter( course -> course.getStudents().size() < course.getMaxStudentCount() + 1 );
     }
 }
