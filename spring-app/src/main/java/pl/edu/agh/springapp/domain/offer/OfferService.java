@@ -181,7 +181,7 @@ public class OfferService {
                         boolean dayCheck = timeBlock.getDay().equals(course.getDay());
                         boolean startTimeCheck = true;
                         boolean endTimeCheck = true;
-                        if (startTime != null && endTime != null) {
+                        if (timeBlock.getStartTime() != null && timeBlock.getEndTime() != null) {
                             startTimeCheck = startTime.compareTo(timeBlock.getStartTime()) <= 0;
                             endTimeCheck = endTime.compareTo(timeBlock.getEndTime()) >= 0;
                         }
