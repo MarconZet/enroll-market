@@ -129,10 +129,12 @@ public class OfferService {
         List<Course> coursesOfStudent = courseRepository.findCoursesOfStudent(currentUser.getIndex());
         List<Course> matchingCourses = filterCoursesStreamToMatchingOffer(coursesOfStudent.stream(), offer)
                 .collect(Collectors.toList());
-        if (matchingCourses.size() <= 0) {
+        if (matchingCourses.size() != 1) {
             return false;
         }
-        return checkConflictedCourses(coursesOfStudent.stream(), offer.getGivenCourse());
+        List<Course> coursesOfGiver = courseRepository.findCoursesOfStudent(offer.getStudent().getIndexNumber());
+        return checkConflictedCourses(coursesOfStudent.stream(), offer.getGivenCourse())
+                || checkConflictedCourses(coursesOfGiver.stream(), matchingCourses.get(0));
     }
 
     private boolean checkConflictedCourses(Stream<Course> courseStream, Course takenCourse) {
@@ -170,6 +172,7 @@ public class OfferService {
         OfferConditions offerConditions = offer.getOfferConditions();
         return courseStream
                 .filter( course -> course.getSubject().equals(offer.getGivenCourse().getSubject()))
+                .filter( course -> course.getType().equals(offer.getGivenCourse().getType()))
                 .filter( course -> {
                     List<TimeBlock> timeBlocks = offerConditions.getTimeBlocks();
                     return timeBlocks.stream().map( timeBlock -> {
