@@ -1,5 +1,6 @@
 package pl.edu.agh.springapp.domain.student;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.springapp.data.dto.course.CourseDto;
+import pl.edu.agh.springapp.data.dto.offer.OfferWithoutStudentDto;
 import pl.edu.agh.springapp.data.dto.student.StudentDto;
 import pl.edu.agh.springapp.data.dto.student.StudentPostDto;
 import pl.edu.agh.springapp.data.dto.student.StudentWithCoursesDto;
@@ -44,5 +46,25 @@ public class StudentController {
     @GetMapping("/students/me/courses")
     public ResponseEntity<List<CourseDto>> getMyCourses() {
         return ResponseEntity.ok(service.getMyCourses());
+    }
+
+    @GetMapping("students/me/active-offers")
+    @ApiOperation("Get list of your active offers (not realised)")
+    public ResponseEntity<Page<OfferWithoutStudentDto>> getActiveOffers(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize
+    ) {
+        Page<OfferWithoutStudentDto> list = service.getActiveOffers(pageNo, pageSize);
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping("students/me/realised-offers")
+    @ApiOperation("Get list of your realised offers")
+    public ResponseEntity<Page<OfferWithoutStudentDto>> getRealisedOffers(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize
+    ) {
+        Page<OfferWithoutStudentDto> list = service.getRealisedOffers(pageNo, pageSize);
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 }

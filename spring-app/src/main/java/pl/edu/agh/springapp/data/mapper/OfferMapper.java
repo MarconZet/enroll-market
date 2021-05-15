@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
+import pl.edu.agh.springapp.data.dto.offer.OfferWithoutStudentDto;
 import pl.edu.agh.springapp.data.model.Offer;
 
 import java.util.List;
@@ -17,5 +18,6 @@ public interface OfferMapper {
     @Mapping(source = "givenCourseId", target = "givenCourse")
     Offer offerPostDtoToOffer(OfferPostDto offerPostDto);
     OfferDto offerToOfferDto(Offer offer);
+    OfferWithoutStudentDto offerToOfferWithoutStudentDto(Offer offer);
     List<OfferDto> offersToOfferDtos(List<Offer> offers);
 }
