@@ -1,10 +1,13 @@
 import { useLocation, Link, useHistory } from 'react-router-dom';
 import { useKeycloak } from '@react-keycloak/web';
 import * as P from './parts';
+import { useSelector } from 'react-redux';
+import { userAuthSelector } from '../../store/userAuth/selectors';
 
 export const Navbar: React.FC = () => {
     const location = useLocation();
     const history = useHistory();
+    let userData = useSelector(userAuthSelector);
 
     const { keycloak } = useKeycloak();
 
@@ -64,7 +67,7 @@ export const Navbar: React.FC = () => {
     };
 
     const getLogInOutText = () => {
-        return keycloak.authenticated ? "Logout" : "Login"
+        return keycloak.authenticated ? "Wyloguj" : "Zaloguj"
     };
 
     console.log(keycloak.token);
@@ -74,6 +77,7 @@ export const Navbar: React.FC = () => {
             {/* <P.SelectSemester>
                 <option>Wybór semestru zrobi się w swoim czasie</option>
             </P.SelectSemester> */}
+            <P.UserName>{!userData.id ? 'Użytkownik niezalogowany' : `Witaj, ${userData.name} ${userData.surname}`}</P.UserName>
             <div>
                 {links.map(
                     (link, index) => (

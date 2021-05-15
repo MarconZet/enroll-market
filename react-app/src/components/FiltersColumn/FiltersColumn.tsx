@@ -44,7 +44,7 @@ export const FiltersColumn: React.FC<FiltersColumnProps> = ({ submitCallback }) 
                 search += ',';
             }
 
-            search += `type:${type}`
+            search += `courseType:${type}`
         }
 
         if (!!chosenDays.length) {

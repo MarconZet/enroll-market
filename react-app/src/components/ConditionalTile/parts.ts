@@ -77,6 +77,7 @@ export const MatchingCoursesBox = styled.div`
     padding-top: 16px;
     margin-top: 16px;
     border-top: 1px solid black;
+    align-items: center;
 `;
 
 export const CourseBox = styled.div`

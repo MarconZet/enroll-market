@@ -56,11 +56,13 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
                 )
             }
         </P.OffersBox>
-        <P.ButtonsBox>
-            {acceptCallback && <P.Button onClick={acceptCallback}>Akceptuj</P.Button>}
-            {editCallback && <P.Button onClick={editCallback}>Edytuj</P.Button>}
-            {deleteCallback && <P.Button onClick={deleteCallback}>Usuń</P.Button>}
-        </P.ButtonsBox>
+        {(!!acceptCallback || !!editCallback || !!deleteCallback) && (
+            <P.ButtonsBox>
+                {acceptCallback && <P.Button onClick={acceptCallback}>Akceptuj</P.Button>}
+                {editCallback && <P.Button onClick={editCallback}>Edytuj</P.Button>}
+                {deleteCallback && <P.Button onClick={deleteCallback}>Usuń</P.Button>}
+            </P.ButtonsBox>
+        )}
     </P.Container>
 );
 

@@ -68,7 +68,11 @@ export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptC
                                 <ul>
                                     {
                                         offer.offerConditions.timeBlocks.map((block, index) => (
-                                            <li key={index}>{translations[block.dayOfWeek]}, {block.startTime} - {block.endTime}</li>
+                                            <li key={index}>{translations[block.dayOfWeek]},{
+                                                (!!block.startTime || !!block.endTime)
+                                                    ? (!!block.startTime ? ` od ${block.startTime}` : '') + (!!block.endTime ? ` do ${block.endTime}` : '')
+                                                    : ' cały dzień'
+                                                }</li>
                                         ))
                                     }
                                 </ul>
@@ -79,7 +83,7 @@ export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptC
             </P.SlotBox>
         </P.OffersBox>
         {
-            !!offer.matchingCourses?.length ? (
+            !!offer.matchingCourses?.length && (
                 <P.MatchingCoursesBox>
                     <P.Subheader>Pasujące terminy spośród twoich zajęć:</P.Subheader>
                     {
@@ -91,12 +95,14 @@ export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptC
                         ))
                     }
                 </P.MatchingCoursesBox>
-            ) : <P.Subheader>Nie możesz zaakceptować tej oferty</P.Subheader>
+            )
         }
-        <P.ButtonsBox>
-            {editCallback && <P.Button onClick={editCallback}>Edytuj</P.Button>}
-            {deleteCallback && <P.Button onClick={deleteCallback}>Usuń</P.Button>}
-        </P.ButtonsBox>
+        {(!!editCallback || !!deleteCallback) && (
+            <P.ButtonsBox>
+                {editCallback && <P.Button onClick={editCallback}>Edytuj</P.Button>}
+                {deleteCallback && <P.Button onClick={deleteCallback}>Usuń</P.Button>}
+            </P.ButtonsBox>
+        )}
     </P.Container>
 );
 

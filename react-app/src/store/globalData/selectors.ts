@@ -66,3 +66,5 @@ export const myCousesForSubjectAndTypeSelector = (subjectId: number, type: Cours
     return data || [];
 };
 
+export const myCoursesSelector = (state: ApplicationState) => state.globalData.myCourses;
+
