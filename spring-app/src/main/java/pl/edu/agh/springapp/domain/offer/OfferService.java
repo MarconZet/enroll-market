@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
+import pl.edu.agh.springapp.data.dto.offer.OfferWithoutStudentDto;
 import pl.edu.agh.springapp.data.mapper.CourseMapper;
 import pl.edu.agh.springapp.data.mapper.OfferMapper;
 import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
@@ -73,14 +74,16 @@ public class OfferService {
     public Page<OfferDto> getAllOffers(String searchString, Integer pageNo, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
         SearchCriteriaParser searchCriteriaParser = new SearchCriteriaParser();
+        Specification<Offer> studentSpec = OfferSpecifications.studentIndexDoesNotEqual(currentUser.getIndex());
+        Specification<Offer> isRealisedSpec = OfferSpecifications.isRealised(false);
+        Specification<Offer> spec = studentSpec.and(isRealisedSpec);
         if (searchString != null) {
             Specification<Offer> searchSpec = searchCriteriaParser.parse(searchString);
-            Specification<Offer> spec = searchSpec
-                    .and(OfferSpecifications.studentIndexDoesNotEqual(currentUser.getIndex()));
+            spec = searchSpec.and(spec);
             return offerRepository.findAll(spec, paging)
                     .map(offerMapper::offerToOfferDto);
         }
-        return offerRepository.findOffersWhereStudentIsNot(currentUser.getIndex(), paging)
+        return offerRepository.findAll(spec, paging)
                 .map(offerMapper::offerToOfferDto);
     }
 
@@ -95,6 +98,9 @@ public class OfferService {
 
     public boolean acceptOffer(Long offerId, Long courseId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new EntityNotFoundException(Offer.class, offerId));
+        if (offer.getIsRealised()) {
+            throw new WrongPathVariableException("This offer was realised!");
+        }
         Course givenCourse = courseRepository.findById(courseId).orElseThrow(() -> new EntityNotFoundException(Course.class, courseId));
         List<Course> coursesOfStudent = courseRepository.findCoursesOfStudent(currentUser.getIndex());
         List<Course> matchingCourses = filterCoursesStreamToMatchingOffer(coursesOfStudent.stream(), offer)
@@ -121,11 +127,16 @@ public class OfferService {
         taker.getCourses().remove(givenCourse);
         studentRepository.save(giver);
         studentRepository.save(taker);
+        offer.setIsRealised(true);
+        offerRepository.save(offer);
         return true;
     }
 
     public boolean checkIfCanAcceptOffer(Long id) {
         Offer offer = offerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
+        if (offer.getIsRealised()) {
+            return false;
+        }
         List<Course> coursesOfStudent = courseRepository.findCoursesOfStudent(currentUser.getIndex());
         List<Course> matchingCourses = filterCoursesStreamToMatchingOffer(coursesOfStudent.stream(), offer)
                 .collect(Collectors.toList());
@@ -162,6 +173,9 @@ public class OfferService {
 
     public List<CourseDto> getCoursesMatchingOffer(Long id) {
         Offer offer = offerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
+        if (offer.getIsRealised()) {
+            throw new WrongPathVariableException("This offer was realised!");
+        }
         List<Course> coursesOfStudent = courseRepository.findCoursesOfStudent(currentUser.getIndex());
         return filterCoursesStreamToMatchingOffer(coursesOfStudent.stream(), offer)
                 .map(courseMapper::courseToCourseDto)

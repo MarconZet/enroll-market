@@ -14,8 +14,16 @@ public class OfferSpecifications {
         return (root, query, builder) -> builder.equal(root.get("isOneToOne"), isOneToOne);
     }
 
+    public static Specification<Offer> isRealised(Boolean isRealised) {
+        return ((root, query, builder) -> builder.equal(root.get("isRealised"), isRealised));
+    }
+
     public static Specification<Offer> studentIndexDoesNotEqual(String index) {
         return (root, query, builder) -> builder.notEqual(root.get("student").get("indexNumber"), index);
+    }
+
+    public static Specification<Offer> studentIndexDoesEqual(String index) {
+        return (root, query, builder) -> builder.equal(root.get("student").get("indexNumber"), index);
     }
 
     public static Specification<Offer> compareGivenCourseDayOfWeek(DayOfWeek day, SearchOperation operation) {

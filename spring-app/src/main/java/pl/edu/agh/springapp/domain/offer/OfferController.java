@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
+import pl.edu.agh.springapp.data.dto.offer.OfferWithoutStudentDto;
 
 import java.util.ArrayList;
 import java.util.List;

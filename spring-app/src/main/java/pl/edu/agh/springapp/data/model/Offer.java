@@ -24,6 +24,7 @@ public class Offer {
     private Course givenCourse;
 
     private Boolean isOneToOne = false;
+    private Boolean isRealised = false;
 
     @OneToOne(
             orphanRemoval = true,
