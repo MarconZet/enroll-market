@@ -11,7 +11,7 @@ import pl.edu.agh.springapp.data.dto.subject.SubjectPostDto;
 import pl.edu.agh.springapp.data.dto.teacher.TeacherPostDto;
 import pl.edu.agh.springapp.data.mapper.*;
 import pl.edu.agh.springapp.data.model.*;
-import pl.edu.agh.springapp.domain.FileUploadService;
+import pl.edu.agh.springapp.domain.FileUploadDownloadService;
 import pl.edu.agh.springapp.repository.*;
 import pl.edu.agh.springapp.security.dev.KeycloakInitializerRunner;
 import pl.edu.agh.springapp.security.user.CurrentUser;
@@ -42,7 +42,7 @@ public class DbInit implements CommandLineRunner {
     private final OneToOneOfferMapper oneToOneOfferMapper;
     private final OfferMapper offerMapper;
 
-    private final FileUploadService fileUploadService;
+    private final FileUploadDownloadService fileUploadDownloadService;
 
     @Override
     public void run(String... args) {
@@ -138,7 +138,7 @@ public class DbInit implements CommandLineRunner {
 
         try {
             File initialFile = new File("enroll_example.csv");
-            fileUploadService.loadFile(new FileInputStream(initialFile));
+            fileUploadDownloadService.loadFile(new FileInputStream(initialFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
