@@ -12,15 +12,15 @@ import java.io.InputStream;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class FileUploadController {
+public class FileUploadDownloadController {
 
-    private final FileUploadService fileUploadService;
+    private final FileUploadDownloadService fileUploadDownloadService;
 
     @GetMapping("/enroll/download/all")
     public ResponseEntity<String> handleFileDownloadAll() {
 
         // create file to send
-        String fileContent = fileUploadService.getFileWithAll();
+        String fileContent = fileUploadDownloadService.getFileWithAll();
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + "enroll_groups.csv" + "\"").body(fileContent);
@@ -28,17 +28,16 @@ public class FileUploadController {
 
     @GetMapping("/enroll/download/student/{index}")
     public ResponseEntity<String> handleFileDownloadStudentPlan(@PathVariable("index") String index) {
-        String fileContent = fileUploadService.getFileForStudent(index);
+        String fileContent = fileUploadDownloadService.getFileForStudent(index);
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + "student_groups.csv" + "\"").body(fileContent);
     }
 
-    @GetMapping("/enroll/download/teacher/{name}/{surname}")
-    public ResponseEntity<String> handleFileDownloadTeacherPlan(@PathVariable("name") String name,
-                                                                @PathVariable("surname") String surname) {
+    @GetMapping("/enroll/download/teacher/{id}")
+    public ResponseEntity<String> handleFileDownloadTeacherPlan(@PathVariable("id") Long id) {
 
-        String fileContent = fileUploadService.getFileForTeacher(name, surname);
+        String fileContent = fileUploadDownloadService.getFileForTeacher(id);
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + "teacher_groups.csv" + "\"").body(fileContent);
@@ -46,7 +45,7 @@ public class FileUploadController {
 
     @PostMapping("/enroll/upload")
     public ResponseEntity<Void> handleFileUpload(InputStream dataStream) throws IOException {
-        fileUploadService.loadFile(dataStream);
+        fileUploadDownloadService.loadFile(dataStream);
         return ResponseEntity.ok().build();
     }
 }
