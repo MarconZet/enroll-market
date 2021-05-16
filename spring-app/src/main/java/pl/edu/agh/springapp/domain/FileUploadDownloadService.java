@@ -18,12 +18,13 @@ import java.io.InputStream;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class FileUploadService {
+public class FileUploadDownloadService {
 
     private final CSVParser fileParser;
     private final TeacherRepository teacherRepository;
@@ -93,11 +94,12 @@ public class FileUploadService {
         return fileContent;
     }
 
-    public String getFileForTeacher(String name, String surname) {
+    public String getFileForTeacher(Long id) {
         String fileContent = "";
-        Teacher teacher = teacherRepository.findFirstByNameAndSurname(name, surname);
+        Optional<Teacher> optional = teacherRepository.findById(id);
 
-        if (teacher != null) {
+        if (optional.isPresent()) {
+            Teacher teacher = optional.get();
             fileContent += csvHeaders + "\r\n";
             for (Course course: teacher.getCourses()) {
                 String courseData = getDataFromCourse(course);
@@ -111,6 +113,9 @@ public class FileUploadService {
                     }
                 }
             }
+        } else {
+            log.error("No such teacher in db");
+            fileContent = "";
         }
 
         return fileContent;
