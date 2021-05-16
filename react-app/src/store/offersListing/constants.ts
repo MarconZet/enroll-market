@@ -47,7 +47,7 @@ export interface ExtendedOffer extends Offer {
     canAccept: boolean;
 } 
 
-export type ListingType = 'all' | 'madeByMe' | 'acceptedByMe';
+export type ListingType = 'all' | 'myActive' | 'myRealised';
 export interface OffersListingState {
     page: number;
     totalPages: number;

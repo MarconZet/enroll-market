@@ -28,9 +28,9 @@ export const Navbar: React.FC = () => {
         },
         {
             title: 'Moje oferty',
-            path: '/myOffers/madeByMe',
+            path: '/myOffers/active',
             otherPathsToHighlight: [
-                '/myOffers/acceptedByMe',
+                '/myOffers/realised',
             ],
             checkAuth: true,
         },
@@ -42,11 +42,6 @@ export const Navbar: React.FC = () => {
         {
             title: 'Lista ofert',
             path: '/offers',
-            checkAuth: true,
-        },
-        {
-            title: 'Panel użytkownika',
-            path: '/userPanel',
             checkAuth: true,
         },
     ];

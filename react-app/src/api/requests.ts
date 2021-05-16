@@ -44,6 +44,10 @@ export const getMe = () => axios.get<StudentWithCourses>(process.env.REACT_APP_A
 
 export const getMyCourses = () => axios.get<Course[]>(process.env.REACT_APP_API_PATH + '/api/students/me/courses', getConfig());
 
+export const getMyActiveOffers = (params?: OffersQueryParams) => axios.get<PaginatedResponse<Offer[]>>(process.env.REACT_APP_API_PATH + '/api/students/me/active-offers' + (params ? queryBuilder(params) : ''), getConfig());
+
+export const getMyRealisedOffers = (params?: OffersQueryParams) => axios.get<PaginatedResponse<Offer[]>>(process.env.REACT_APP_API_PATH + '/api/students/me/realised-offers' + (params ? queryBuilder(params) : ''), getConfig());
+
 export const getSubjects = (params?: BasicQueryParams) => axios.get<PaginatedResponse<Subject[]>>(process.env.REACT_APP_API_PATH + '/api/subjects' + (params ? queryBuilder(params) : ''), getConfig());
 
 export const getTeachers = (params?: BasicQueryParams) => axios.get<PaginatedResponse<Teacher[]>>(process.env.REACT_APP_API_PATH + '/api/teachers' + (params ? queryBuilder(params) : ''), getConfig());

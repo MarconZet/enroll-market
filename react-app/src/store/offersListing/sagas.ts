@@ -1,12 +1,12 @@
 import { AnyAction } from 'redux';
 import { put, takeEvery, all, call, select } from 'redux-saga/effects';
-import { canAcceptOffer, getMatchingOffers, getOffers, getOneForOneOffer } from '../../api/requests';
+import { canAcceptOffer, getMatchingOffers, getMyActiveOffers, getMyRealisedOffers, getOffers, getOneForOneOffer } from '../../api/requests';
 import * as A from './actions';
 import * as C from './constants'
 import notitier from '../../utils/notifications';
 import { OffersManagementActionType } from '../offersManagement/constants';
 import { OffersQueryParams } from '../../api/models';
-import { offersListingFiltersSelector } from './selectors';
+import { offersListingFiltersSelector, offersListingTypeSelector } from './selectors';
 
 export function* getPageWorker(action: AnyAction) {
     try {
@@ -22,7 +22,17 @@ export function* getPageWorker(action: AnyAction) {
             queryParams.search = search;
         }
 
-        const { data: { content, totalPages } } = yield call(getOffers, (queryParams !== {} ? queryParams : undefined));
+        let method = getOffers;
+
+        const listingType: C.ListingType = yield select(offersListingTypeSelector);
+
+        if (listingType === 'myActive') {
+            method = getMyActiveOffers;
+        } else if (listingType === 'myRealised') {
+            method = getMyRealisedOffers;
+        }
+
+        const { data: { content, totalPages } } = yield call(method, (queryParams !== {} ? queryParams : undefined));
 
         const extendedContent: C.ExtendedOffer[] = [];
 

@@ -27,24 +27,26 @@ export const FiltersContainer = styled.div`
 `;
 
 export const TypeContainer = styled.div`
-    border: 1px solid black;
+    box-shadow: 0 0 5px 1px #B2B3B2;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 
     * {
         width: 100%;
     }
 `;
 
-export const TypeButton = styled.button<{ isCurrent?: boolean }>`
-    width: 100%;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    margin: 8px 0;
-    font-size: 16px;
+export const TypeButton = styled.div<{ isCurrent?: boolean }>`
+    font-size: 1.2em;
+    padding: 0;
+    margin: 10px;
+    color: black;
+    font-weight: bold;
+    text-align: center;
 
-    ${({ isCurrent }) => isCurrent && 'background-color: royalblue'}
+    ${({ isCurrent }) => isCurrent && 'color: #de3770'}
 `;

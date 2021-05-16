@@ -48,8 +48,7 @@ const App: React.FC = () => {
 			<BrowserRouter>
 				<Navbar />
 				<Switch>
-					<PrivateRoute path={["/offers"]} component={OffersListingPage} />
-					<PrivateRoute path={["/myOffers/madeByMe", "/myOffers/acceptedByMe"]} component={NoFoundPageFiller} />
+					<PrivateRoute path={["/offers", "/myOffers/active", "/myOffers/realised"]} component={OffersListingPage} />
 					<PrivateRoute path={["/dataUploadAndDownload"]} component={DataUploadAndDownloadPage} />
 					<PrivateRoute path={["/addOffer"]} component={AddOfferPage} />
 					<PrivateRoute path={["/timetable"]} component={TimetablePage} />

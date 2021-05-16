@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { FiltersColumn } from '../../components/FiltersColumn/FiltersColumn';
 import OneForOneTile from '../../components/OneForOneTile/OneForOneTile';
 import ConditionalTile from '../../components/ConditionalTile/ConditionalTile';
@@ -10,6 +10,7 @@ import * as P from './parts';
 import * as A from '../../store/offersListing/actions';
 import { userAuthIdSelector } from '../../store/userAuth/selectors';
 import { acceptOfferRequest, deleteOfferRequest } from '../../store/offersManagement/actions';
+import { ListingType } from '../../store/offersListing/constants';
 
 export const OffersListingPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -17,20 +18,19 @@ export const OffersListingPage: React.FC = () => {
     let totalPages = useSelector(offersListingTotalPagesSelector);
     let offers = useSelector(offersListingSelector);
     let isLoading = useSelector(offersListingIsLoadingSelector);
-    let userId = useSelector(userAuthIdSelector);
     let location = useLocation();
 
-    // useEffect(() => {
-    //     let type: ListingType = 'all';
+    useEffect(() => {
+        let type: ListingType = 'all';
 
-    //     if (location.pathname === '/myOffers/madeByMe') {
-    //         type = 'madeByMe';
-    //     } else if (location.pathname === '/myOffers/acceptedByMe') {
-    //         type = 'acceptedByMe';
-    //     }
+        if (location.pathname === '/myOffers/active') {
+            type = 'myActive';
+        } else if (location.pathname === '/myOffers/realised') {
+            type = 'myRealised';
+        }
 
-    //     dispatch(A.setType(type));
-    // }, [dispatch, location]);
+        dispatch(A.setType(type));
+    }, [dispatch, location]);
 
     useEffect(() => {
         dispatch(A.getPageRequest(1))
@@ -59,16 +59,16 @@ export const OffersListingPage: React.FC = () => {
     return (
         <P.Wrapper>
             <P.FiltersContainer>
-                {/* ((location.pathname === '/myOffers/madeByMe') || (location.pathname === '/myOffers/acceptedByMe')) && (
+                {((location.pathname === '/myOffers/active') || (location.pathname === '/myOffers/realised')) && (
                     <P.TypeContainer>
-                        <Link to='/myOffers/madeByMe'>
-                            <P.TypeButton isCurrent={location.pathname === '/myOffers/madeByMe'}>Złożone przeze mnie</P.TypeButton>
+                        <Link to='/myOffers/active'>
+                            <P.TypeButton isCurrent={location.pathname === '/myOffers/active'}>Aktywne</P.TypeButton>
                         </Link>
-                        <Link to='/myOffers/acceptedByMe'>
-                            <P.TypeButton isCurrent={location.pathname === '/myOffers/acceptedByMe'}>Zaakceptowane przeze mnie</P.TypeButton>
+                        <Link to='/myOffers/realised'>
+                            <P.TypeButton isCurrent={location.pathname === '/myOffers/realised'}>Zrealizowane</P.TypeButton>
                         </Link>
                     </P.TypeContainer>
-                ) */}
+                )}
                 <FiltersColumn submitCallback={filtersSubmitCallback} />
             </P.FiltersContainer>
             <P.OffersContainer>
@@ -84,7 +84,7 @@ export const OffersListingPage: React.FC = () => {
                                             key={index}
                                             offer={offer}
                                             {...(
-                                                offer.student.id === userId
+                                                (location.pathname === '/myOffers/active')
                                                     ? {
                                                         editCallback: editCallback(offer.id),
                                                         deleteCallback: deleteCallback(offer.id),
@@ -106,7 +106,7 @@ export const OffersListingPage: React.FC = () => {
                                             key={index}
                                             offer={offer}
                                             {...(
-                                                offer.student.id === userId
+                                                (location.pathname === '/myOffers/active')
                                                     ? {
                                                         editCallback: editCallback(offer.id),
                                                         deleteCallback: deleteCallback(offer.id),
