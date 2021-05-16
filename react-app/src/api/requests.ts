@@ -1,17 +1,24 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import queryBuilder from '../utils/queryBuilder';
 import { OneForOneOffer, OneForOneOfferParams, Subject, Teacher, PaginatedResponse, BasicQueryParams, Offer, OffersQueryParams, OfferParams, StudentWithCourses, Course } from './models';
 import keycloak from '../keycloak';
 
-const getConfig = () => ({ headers: { 'Authorization': `Bearer ${keycloak?.token ?? ''}` } });
+const getConfig = (): AxiosRequestConfig => ({ headers: { 'Authorization': `Bearer ${keycloak?.token ?? ''}` } });
 
-const getFileUploadConfig = (filename: string) => ({
+const getFileUploadConfig = (filename: string): AxiosRequestConfig => ({
     headers: {
         'Content-Type': 'application/octet-stream',
         'Accept': 'application/vnd.api+json',
         'Content-Disposition': `file; filename="${filename}"`,
         'Authorization': `Bearer ${keycloak?.token ?? ''}`,
     },
+});
+
+const getFileDownloadConfig = (): AxiosRequestConfig => ({
+    headers: {
+        'Authorization': `Bearer ${keycloak?.token ?? ''}`,
+    },
+    responseType: 'blob'
 });
 
 ///////////////
@@ -55,3 +62,7 @@ export const getTeachers = (params?: BasicQueryParams) => axios.get<PaginatedRes
 ////////////////
 
 export const uploadEnrollData = (file: File, filename: string) => axios.post(process.env.REACT_APP_API_PATH + '/api/enroll/upload', file, getFileUploadConfig(filename));
+
+export const getEnrollData = () => axios.get(process.env.REACT_APP_API_PATH + '/api/enroll/download/all', getFileDownloadConfig());
+
+export const getEnrollDataForTeacher = (id: number) => axios.get(process.env.REACT_APP_API_PATH + '/api/enroll/download/teacher/' + id, getFileDownloadConfig());

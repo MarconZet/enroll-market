@@ -27,7 +27,7 @@ export const ContainerTitle = styled.p`
     margin: 0 0 20px 0;
 `;
 
-export const Download = styled.a`
+export const Download = styled.button`
     padding: 16px 48px;
     margin-top: 16px;
     font-size: 24px;
@@ -41,6 +41,10 @@ export const Download = styled.a`
 
     :hover{
       cursor: pointer;
+    }
+
+    :disabled {
+        background: gray;
     }
 `;
 
@@ -70,4 +74,10 @@ export const Submit = styled.button`
     :hover{
       cursor: pointer;
     }
+`;
+
+export const Select = styled.select`
+    width: 100%;
+    font-size: 16px;
+    margin: 16px 0 8px;
 `;
