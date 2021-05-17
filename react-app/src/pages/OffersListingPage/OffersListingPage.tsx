@@ -68,7 +68,7 @@ export const OffersListingPage: React.FC = () => {
                         </Link>
                     </P.TypeContainer>
                 )}
-                <FiltersColumn submitCallback={filtersSubmitCallback} />
+                {location.pathname === '/offers' && (<FiltersColumn submitCallback={filtersSubmitCallback} />)}
             </P.FiltersContainer>
             <P.OffersContainer>
                 {

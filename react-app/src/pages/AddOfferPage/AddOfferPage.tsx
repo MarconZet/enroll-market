@@ -6,18 +6,20 @@ import { CourseType, DayOfWeek } from '../../api/models';
 import { myCousesForSubjectAndTypeSelector, coursesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, subjectsNamesAndIdsSelector, teachersNamesForSubjectAndTypeSelector } from '../../store/globalData/selectors';
 import OneForOneForm from '../../components/OneForOneForm/OneForOneForm';
 import ConditionalForm from '../../components/ConditionalForm/ConditionalForm';
+import { ExtendedTimeBlock } from '../../components/DayRangeInput/DayRangeInput';
 
 export const AddOfferPage: React.FC = () => {
     const dispatch = useDispatch();
     const [subject, setSubject] = useState(-1);
     const [type, setType] = useState<CourseType | "none">("none");
     const [offerType, setOfferType] = useState("1for1");
+    const [latestBlockIndex, setLatestBlockIndex] = useState(0);
 
     const [givenCourseId, setGivenCourseId] = useState(-1);
     const [takenCourseId, setTakenCourseId] = useState(-1);
 
     const [chosenTeachers, setChosenTeachers] = useState<number[]>([]);
-    const [chosenDays, setChosenDays] = useState<string[]>([]);
+    const [chosenTimeBlocks, setChosenTimeBlocks] = useState<ExtendedTimeBlock[]>([]);
 
     let subjects = useSelector(subjectsNamesAndIdsSelector);
     let myCourses = useSelector(myCousesForSubjectAndTypeSelector(subject, type));
@@ -33,28 +35,18 @@ export const AddOfferPage: React.FC = () => {
 
     useEffect(() => {
         setChosenTeachers([]);
-        setChosenDays([]);
+        setChosenTimeBlocks([]);
         setTakenCourseId(-1);
     }, [offerType]);
-
-    const days = {
-        'MONDAY': 'Poniedziałek',
-        'TUESDAY': 'Wtorek',
-        'WEDNESDAY': 'Środa',
-        'THURSDAY': 'Czwartek',
-        'FRIDAY': 'Piątek',
-        'SATURDAY': 'Sobota',
-        'SUNDAY': 'Niedziela',
-    };
 
     const onSubmit: FormEventHandler<Element> = (event) => {
         if (offerType === '1for1') {
             dispatch(A.createOneForOneOfferRequest(givenCourseId, takenCourseId));
         } else if (offerType === 'cond') {
-            const timeBlocks = chosenDays.map(day => ({
-                dayOfWeek: (day as DayOfWeek),
-                startTime: null,
-                endTime: null,
+            const timeBlocks = chosenTimeBlocks.map(block => ({
+                dayOfWeek: block.dayOfWeek,
+                startTime: block.wholeDay ? null : block.startTime,
+                endTime: block.wholeDay ? null : block.endTime,
             }))
             dispatch(A.createOfferRequest(givenCourseId, chosenTeachers, timeBlocks));
         }
@@ -72,15 +64,40 @@ export const AddOfferPage: React.FC = () => {
         }
     };
 
-    const onCheckDay: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        if (event.target.checked) {
-            setChosenDays([
-                ...chosenDays,
-                event.target.value,
-            ]);
-        } else {
-            setChosenDays(chosenDays.filter(e => e !== event.target.value));
-        }
+    const onChangeBlock = (id: number) => (dayOfWeek: DayOfWeek, wholeDay: boolean, startTime: string, endTime: string) => {
+        const blocks = chosenTimeBlocks;
+        blocks[id] = {
+            ...blocks[id],
+            dayOfWeek,
+            wholeDay,
+            startTime,
+            endTime,
+        };
+
+        setChosenTimeBlocks(blocks);
+    };
+
+    const onDeleteBlock = (id: number) => () => {
+        setChosenTimeBlocks(
+            [
+                ...( id > 0 ? chosenTimeBlocks.slice(0, id) : []),
+                ...( id < chosenTimeBlocks.length-1 ? chosenTimeBlocks.slice(id+1) : []),
+            ]
+        );
+    }
+
+    const onAddBlock = () => {
+        setChosenTimeBlocks([
+            ...chosenTimeBlocks,
+            {
+                dayOfWeek: DayOfWeek.MONDAY,
+                wholeDay: true,
+                startTime: "00:00",
+                endTime: "00:01",
+                index: latestBlockIndex + 1,
+            }
+        ]);
+        setLatestBlockIndex(latestBlockIndex+1);
     };
 
     const formGetter = () => {
@@ -98,13 +115,15 @@ export const AddOfferPage: React.FC = () => {
         } else if (offerType === "cond") {
             return (
                 <ConditionalForm
-                    days={days}
                     teachers={teachers}
-                    onCheckDay={onCheckDay}
                     onCheckTeacher={onCheckTeacher}
                     givenCourseId={givenCourseId}
                     myCourses={myCourses}
                     onChangeGivenCourse={(e) => setGivenCourseId(+e.target.value)}
+                    timeBlocks={chosenTimeBlocks}
+                    changeBlockHandler={onChangeBlock}
+                    deleteBlockHandler={onDeleteBlock}
+                    addBlockHandler={onAddBlock}
                 />
             );
         }
@@ -118,6 +137,10 @@ export const AddOfferPage: React.FC = () => {
         }
 
         if ((offerType === "1for1") && (takenCourseId === -1)) {
+            return true;
+        }
+
+        if ((offerType === "cond") && (!chosenTimeBlocks.length)) {
             return true;
         }
 
