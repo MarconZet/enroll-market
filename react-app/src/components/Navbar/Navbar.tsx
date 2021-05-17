@@ -22,11 +22,6 @@ export const Navbar: React.FC = () => {
             checkAuth: true,
         },
         {
-            title: 'Import/export',
-            path: '/dataUploadAndDownload',
-            checkAuth: true,
-        },
-        {
             title: 'Moje oferty',
             path: '/myOffers/active',
             otherPathsToHighlight: [
@@ -83,6 +78,9 @@ export const Navbar: React.FC = () => {
                         </Link>
                     )
                 )}
+                <Link key={-2} to={'/dataUploadAndDownload'} style={{ textDecoration: 'none' }} onClick={checkAuthenticated}>
+                    <P.Link isCurrent={location.pathname === '/dataUploadAndDownload'}>Import/export</P.Link>
+                </Link>
                 <Link key={-1} to={'/login'} style={{ textDecoration: 'none' }} onClick={handleLogInOut}>
                     <P.Link>{getLogInOutText()}</P.Link>
                 </Link>

@@ -21,6 +21,8 @@ const IndexFiller: React.FC = () => (
 
 const NoFoundPageFiller: React.FC = () => (<h1>Tej strony jeszcze nie ma i możliwe, że nie będzie. Amen.</h1>);
 
+const UnauthorizedFiller: React.FC = () => (<h1>Próbowaleś wejść na stronę bez potrzebnych uprawnień.</h1>);
+
 const LoadingFiller: React.FC = () => (<h1>Poczekaj...</h1>);
 
 const App: React.FC = () => {
@@ -49,10 +51,11 @@ const App: React.FC = () => {
 				<Navbar />
 				<Switch>
 					<PrivateRoute path={["/offers", "/myOffers/active", "/myOffers/realised"]} component={OffersListingPage} />
-					<PrivateRoute path={["/dataUploadAndDownload"]} component={DataUploadAndDownloadPage} />
+					<PrivateRoute path={["/dataUploadAndDownload"]} component={DataUploadAndDownloadPage} isAdminRoute />
 					<PrivateRoute path={["/addOffer"]} component={AddOfferPage} />
 					<PrivateRoute path={["/timetable"]} component={TimetablePage} />
 					<Route exact path="/" component={IndexFiller} />
+					<Route exact path="/unauthorized" component={UnauthorizedFiller} />
 					<Route path="*" component={NoFoundPageFiller} />
 				</Switch>
 			</BrowserRouter>

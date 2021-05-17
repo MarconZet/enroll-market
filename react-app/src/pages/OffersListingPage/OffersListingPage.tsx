@@ -8,7 +8,6 @@ import { Pagination } from '../../components/Pagination/Pagination';
 import { offersListingIsLoadingSelector, offersListingPageSelector, offersListingSelector, offersListingTotalPagesSelector } from '../../store/offersListing/selectors';
 import * as P from './parts';
 import * as A from '../../store/offersListing/actions';
-import { userAuthIdSelector } from '../../store/userAuth/selectors';
 import { acceptOfferRequest, deleteOfferRequest } from '../../store/offersManagement/actions';
 import { ListingType } from '../../store/offersListing/constants';
 
