@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as P from './parts';
 import * as A from '../../store/offersManagement/actions';
 import { CourseType, DayOfWeek } from '../../api/models';
-import { myCousesForSubjectAndTypeSelector, coursesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, subjectsNamesAndIdsSelector, teachersNamesForSubjectAndTypeSelector } from '../../store/globalData/selectors';
+import { myCousesForSubjectAndTypeSelector, coursesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, teachersNamesForSubjectAndTypeSelector, mySubjectsNamesAndIdsSelector } from '../../store/globalData/selectors';
 import OneForOneForm from '../../components/OneForOneForm/OneForOneForm';
 import ConditionalForm from '../../components/ConditionalForm/ConditionalForm';
 import { ExtendedTimeBlock } from '../../components/DayRangeInput/DayRangeInput';
@@ -21,7 +21,7 @@ export const AddOfferPage: React.FC = () => {
     const [chosenTeachers, setChosenTeachers] = useState<number[]>([]);
     const [chosenTimeBlocks, setChosenTimeBlocks] = useState<ExtendedTimeBlock[]>([]);
 
-    let subjects = useSelector(subjectsNamesAndIdsSelector);
+    let subjects = useSelector(mySubjectsNamesAndIdsSelector);
     let myCourses = useSelector(myCousesForSubjectAndTypeSelector(subject, type));
     let courses = useSelector(coursesForSubjectAndTypeSelector(subject, type));
     let teachers = useSelector(teachersNamesForSubjectAndTypeSelector(subject, type));

@@ -55,9 +55,9 @@ const DayRangeInput: React.FC<DayRangeInputProps> = ({ valueChangeHandler, delet
             <label>
                 do: <input type="time" value={endTime} min={startTime} onChange={(e) => setEndTime(e.target.value)} disabled={wholeDay} />
             </label>
-            <button type="button" onClick={(e) => { deleteHandler(); e.preventDefault(); }}>
+            <P.RemoveButton type="button" onClick={(e) => { deleteHandler(); e.preventDefault(); }}>
                 Usuń
-            </button>
+            </P.RemoveButton>
         </P.Wrapper>
     );
 };

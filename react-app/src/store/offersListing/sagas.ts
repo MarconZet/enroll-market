@@ -6,7 +6,7 @@ import * as C from './constants'
 import notitier from '../../utils/notifications';
 import { OffersManagementActionType } from '../offersManagement/constants';
 import { OffersQueryParams } from '../../api/models';
-import { offersListingFiltersSelector, offersListingTypeSelector } from './selectors';
+import { offersListingFiltersSelector, offersListingPageSelector, offersListingTypeSelector } from './selectors';
 
 export function* getPageWorker(action: AnyAction) {
     try {
@@ -62,13 +62,20 @@ export function* getPageWorker(action: AnyAction) {
     }
 }
 
+export function* refreshPageWorker() {
+    const page: number = yield select(offersListingPageSelector);
+
+    yield put(A.getPageRequest(page));
+}
+
 export function* applyFiltersWorker() {
     yield put(A.getPageRequest(1));
 }
 
 export function* offersListingWatcher() {
     yield all([
-        takeEvery([C.OffersListingActionType.GetPageRequest, OffersManagementActionType.DeleteOfferSuccess], getPageWorker),
+        takeEvery([C.OffersListingActionType.GetPageRequest], getPageWorker),
         takeEvery([C.OffersListingActionType.ApplyFilters, C.OffersListingActionType.SetType], applyFiltersWorker),
+        takeEvery([OffersManagementActionType.DeleteOfferSuccess], refreshPageWorker),
     ]);
 };

@@ -1,3 +1,5 @@
+import * as P from './parts';
+
 export interface MultiCheckboxProps {
     name: string;
     choices: { [key: string]: string };
@@ -7,7 +9,7 @@ export interface MultiCheckboxProps {
 
 const MultiCheckbox: React.FC<MultiCheckboxProps> = ({ name, choices, onElementChange, label }) => (
     <>
-        <span>{label}</span>
+        <P.Header>{label}</P.Header>
         {
             Object.keys(choices).map((val, index) => (
                 <label>

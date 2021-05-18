@@ -43,7 +43,7 @@ const ConditionalForm: React.FC<ConditionalFormProps> = ({ teachers, onCheckTeac
                 choices={teachers}
                 onElementChange={onCheckTeacher}
             />
-            <span>Wybierz terminy:</span>
+            <P.RangesHeader>Wybierz terminy:</P.RangesHeader>
             {
                 timeBlocks.map((block, index) => (
                     <DayRangeInput
@@ -54,7 +54,7 @@ const ConditionalForm: React.FC<ConditionalFormProps> = ({ teachers, onCheckTeac
                     />
                 ))
             }
-            <button onClick={(e) => { addBlockHandler(); e.preventDefault(); }}>Nowy termin</button>
+            <P.AddBlockButton onClick={(e) => { addBlockHandler(); e.preventDefault(); }}>Nowy termin</P.AddBlockButton>
         </>
     );
 }

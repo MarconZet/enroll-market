@@ -6,6 +6,15 @@ export const subjectsNamesAndIdsSelector = (state: ApplicationState) => state.gl
     name: e.name,
 }));
 
+export const mySubjectsNamesAndIdsSelector = (state: ApplicationState) => {
+    const data = state.globalData.myCourses.map((e) => ({
+        id: e.subject.id,
+        name: e.subject.name,
+    }));
+
+    return data.filter((item, index) => data.findIndex(e => e.id === item.id) === index);
+}
+
 export const coursesForSubjectAndTypeSelector = (subjectId: number, type: CourseType | "none") => (state: ApplicationState) => {
     if (subjectId === -1 || type === "none") {
         return [];

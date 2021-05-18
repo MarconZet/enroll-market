@@ -1,10 +1,12 @@
 import { AnyAction } from 'redux';
-import { put, takeEvery, all, call } from 'redux-saga/effects';
+import { put, takeEvery, all, call, fork } from 'redux-saga/effects';
 import { acceptOffer, createOffer, createOneForOneOffer, deleteOffer } from '../../api/requests';
 import * as A from './actions';
 import * as C from './constants';
 import notitier from '../../utils/notifications';
 import { OfferParams } from '../../api/models';
+import { getGlobalDataRequest } from '../globalData/actions';
+import { refreshPageWorker } from '../offersListing/sagas';
 
 export function* deleteOfferWorker(action: AnyAction) {
     try {
@@ -55,10 +57,16 @@ export function* createOfferWorker(action: AnyAction) {
     }
 }
 
+export function* acceptOfferSuccessWorker() {
+    yield put(getGlobalDataRequest());
+    yield fork(refreshPageWorker);
+}
+
 export function* offersManagementWatcher() {
     yield all([
         takeEvery(C.OffersManagementActionType.DeleteOfferRequest, deleteOfferWorker),
         takeEvery([C.OffersManagementActionType.CreateOfferRequest, C.OffersManagementActionType.CreateOneForOneOfferRequest], createOfferWorker),
         takeEvery(C.OffersManagementActionType.AcceptOfferRequest, acceptOfferWorker),
+        takeEvery(C.OffersManagementActionType.AcceptOfferSuccess, acceptOfferSuccessWorker),
     ]);
 };
