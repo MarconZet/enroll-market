@@ -190,14 +190,14 @@ public class OfferService {
                 .filter( course -> {
                     List<TimeBlock> timeBlocks = offerConditions.getTimeBlocks();
                     return timeBlocks.stream().map( timeBlock -> {
-                        LocalTime startTime = course.getStartTime();
-                        LocalTime endTime = course.getStartTime().plusMinutes(OneToOneOfferMapper.courseTime);
+                        LocalTime courseStartTime = course.getStartTime();
+                        LocalTime courseEndTime = course.getStartTime().plusMinutes(OneToOneOfferMapper.courseTime);
                         boolean dayCheck = timeBlock.getDay().equals(course.getDay());
                         boolean startTimeCheck = true;
                         boolean endTimeCheck = true;
                         if (timeBlock.getStartTime() != null && timeBlock.getEndTime() != null) {
-                            startTimeCheck = startTime.compareTo(timeBlock.getStartTime()) <= 0;
-                            endTimeCheck = endTime.compareTo(timeBlock.getEndTime()) >= 0;
+                            startTimeCheck = courseStartTime.compareTo(timeBlock.getStartTime()) >= 0;
+                            endTimeCheck = courseEndTime.compareTo(timeBlock.getEndTime()) <= 0;
                         }
                         return dayCheck && startTimeCheck && endTimeCheck;
                     }).reduce(false, (a, b) -> a || b);
