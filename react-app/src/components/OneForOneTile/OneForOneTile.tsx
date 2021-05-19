@@ -34,7 +34,7 @@ export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallb
                     <b>{offer.givenCourse.teacher.name} {offer.givenCourse.teacher.surname}</b>
                     <b>{translations[offer.givenCourse.dayOfWeek]}, {offer.givenCourse?.weekType ? `tydzień ${offer.givenCourse.weekType}, `  : ''}{offer.givenCourse.startTime}</b>
                     {/* <span>{offeredGroup.comment}</span> */}
-                    {!!offer?.student &&(<span>{offer.student.name} {offer.student.surname}</span>)}
+                    {!!offer?.student ? (<span>{offer.student.name} {offer.student.surname}</span>) : (<span>Oferta złożona przez ciebie</span>)}
                 </P.ClassBox>
             </P.SlotBox>
             <P.SVGBox>
