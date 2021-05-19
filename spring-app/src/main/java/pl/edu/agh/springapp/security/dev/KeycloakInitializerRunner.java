@@ -65,7 +65,7 @@ public class KeycloakInitializerRunner implements CommandLineRunner {
         clientRepresentation.setDirectAccessGrantsEnabled(true);
         clientRepresentation.setDefaultRoles(new String[]{STUDENT_ROLE});
         clientRepresentation.setPublicClient(true);
-        clientRepresentation.setRedirectUris(Arrays.asList("http://localhost:3000/*", "http://localhost:8080/*"));
+        clientRepresentation.setRedirectUris(Collections.singletonList(appRedirectUrl));
         clientRepresentation.setWebOrigins(Collections.singletonList("*"));
 
         ProtocolMapperRepresentation mapperRepresentation = new ProtocolMapperRepresentation();

@@ -5,12 +5,13 @@ services:
         build: ../react-app/.
         container_name: react-em
         environment:
-            - REACT_APP_API_PATH=http://localhost:8081
-            - REACT_APP_KEYCLOAK_PATH=http://localhost:8080
+            - REACT_APP_API_PATH=${MAIN_URL}:${SPRING_PORT}
+            - REACT_APP_KEYCLOAK_PATH=${MAIN_URL}:${KEYCLOAK_PORT}
             - CHOKIDAR_USEPOLLING=true
+            - PORT=3000
             - CI=true
         ports:
-            - 3000:3000
+            - ${REACT_PORT}:3000
         depends_on:
             - spring-em
         stdin_open: true
@@ -20,13 +21,13 @@ services:
         container_name: spring-em         
         environment: 
             - SPRING_APP_PROFILES=dev,security
-            - SPRING_APP_REDIRECT_URL=http://localhost:3000/*
+            - SPRING_APP_REDIRECT_URL=${MAIN_URL}:${REACT_PORT}/*
             - SPRING_APP_PORT=8080
-            - SPRING_APP_KEYCLOAK_SERVER_URL=http://localhost:8080/auth
+            - SPRING_APP_KEYCLOAK_SERVER_URL=${MAIN_URL}:${KEYCLOAK_PORT}/auth
         depends_on: 
             - keycloak-em
         ports:
-            - "8081:8080"
+            - "${SPRING_PORT}:8080"
 
     keycloak-em:
         image: jboss/keycloak:12.0.4
@@ -40,7 +41,7 @@ services:
           - DB_PASSWORD=password
           - JDBC_PARAMS=useSSL=false
         ports:
-          - "9000:8080"
+          - "${KEYCLOAK_PORT}:8080"
         depends_on:
           - mysql-em
         healthcheck:
@@ -50,8 +51,6 @@ services:
     mysql-em:
         image: mysql:5.7.34
         container_name: mysql-em
-        ports:
-            - "3306:3306"
         environment:
             - MYSQL_DATABASE=keycloak
             - MYSQL_USER=keycloak
