@@ -55,6 +55,12 @@ public class OneToOneOfferController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/one-to-one-offers/{id}")
+    public ResponseEntity<OneToOneOfferDto> updateOneToOneOffer(@PathVariable Long id,
+                                                                @RequestBody OneToOneOfferPostDto offerPostDto) {
+        return ResponseEntity.ok(service.updateOneToOneOffer(id, offerPostDto));
+    }
+
     @GetMapping("/one-to-one-offers/{id}")
     @ApiOperation(value = "Get offer with id")
     public ResponseEntity<OneToOneOfferDto> getOneToOneOffer(@PathVariable Long id) {

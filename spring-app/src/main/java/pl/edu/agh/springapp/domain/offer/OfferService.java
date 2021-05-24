@@ -96,6 +96,37 @@ public class OfferService {
         return offerMapper.offerToOfferDto(offer);
     }
 
+    public OfferDto updateOffer(Long offerId, OfferPostDto offerPostDto) {
+        Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new EntityNotFoundException(Offer.class, offerId));
+        Student loggedStudent = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
+        if (loggedStudent == null) {
+            throw new WrongFieldsException("Logged student doesn't exist in database");
+        }
+        if (offer.getStudent().getIndexNumber() != currentUser.getIndex()) {
+            throw new WrongPathVariableException("You cannot change offer from other student!");
+        }
+        Offer mapped = offerMapper.offerPostDtoToOffer(offerPostDto);
+        for (TimeBlock timeBlock: mapped.getOfferConditions().getTimeBlocks()) {
+            if (checkTimeBlocks(timeBlock)) {
+                throw new WrongFieldsException("End time is not after start time.",
+                        "startTime", timeBlock.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+                        "endTime", timeBlock.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm")));
+
+            }
+        }
+        if (mapped.getGivenCourse().getType() == CourseType.LECTURE) {
+            throw new WrongFieldsException("You cannot give lecture!");
+        }
+        if (!loggedStudent.getCourses().contains(mapped.getGivenCourse())) {
+            throw new WrongFieldsException("Given course doesn't belong to logged student!");
+        }
+        offer.setComment(mapped.getComment());
+        offer.setOfferConditions(mapped.getOfferConditions());
+        offer.setGivenCourse(mapped.getGivenCourse());
+        Offer savedOffer = offerRepository.save(offer);
+        return offerMapper.offerToOfferDto(savedOffer);
+    }
+
     public boolean acceptOffer(Long offerId, Long courseId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new EntityNotFoundException(Offer.class, offerId));
         if (offer.getIsRealised()) {

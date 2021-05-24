@@ -13,6 +13,7 @@ import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferPostDto;
 import pl.edu.agh.springapp.data.dto.offer.OfferWithoutStudentDto;
+import pl.edu.agh.springapp.data.model.Offer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class OfferController {
         OfferDto createdOffer = service.createOffer(offerPostDto);
         return new ResponseEntity<>(createdOffer, new HttpHeaders(), HttpStatus.CREATED);
     }
+
 
     @GetMapping("/offers")
     @ApiOperation(value = "Get list of offers - paging work")
@@ -65,6 +67,12 @@ public class OfferController {
     @GetMapping("/offers/{id}")
     public ResponseEntity<OfferDto> getOffer(@PathVariable Long id) {
         return ResponseEntity.ok(service.findWithId(id));
+    }
+
+    @PutMapping("/offers/{id}")
+    public ResponseEntity<OfferDto> updateOffer(@PathVariable Long id,
+                                             @RequestBody OfferPostDto offerPostDto) {
+        return ResponseEntity.ok(service.updateOffer(id, offerPostDto));
     }
 
     @GetMapping("offers/{id}/can-accept")

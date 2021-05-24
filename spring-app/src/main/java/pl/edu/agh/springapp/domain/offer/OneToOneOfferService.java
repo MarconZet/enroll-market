@@ -13,6 +13,7 @@ import pl.edu.agh.springapp.data.mapper.OneToOneOfferMapper;
 import pl.edu.agh.springapp.data.model.*;
 import pl.edu.agh.springapp.error.EntityNotFoundException;
 import pl.edu.agh.springapp.error.WrongFieldsException;
+import pl.edu.agh.springapp.error.WrongPathVariableException;
 import pl.edu.agh.springapp.repository.OfferRepository;
 import pl.edu.agh.springapp.repository.CourseRepository;
 import pl.edu.agh.springapp.repository.StudentRepository;
@@ -91,5 +92,42 @@ public class OneToOneOfferService {
             throw new EntityNotFoundException("One to one offer was not found for id: " + id);
         }
         return oneToOneOfferMapper.offerToOneToOneOfferDto(offer);
+    }
+
+    public OneToOneOfferDto updateOneToOneOffer(Long id, OneToOneOfferPostDto oneToOneOfferPostDto) {
+        Offer offer = offerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("One to one offer was not found for id: " + id));
+        Offer mapped = oneToOneOfferMapper.oneToOneOfferPostDtoToOffer(oneToOneOfferPostDto);
+        Student loggedStudent = studentRepository.findFirstByIndexNumber(currentUser.getIndex());
+        if (loggedStudent == null) {
+            throw new WrongFieldsException("Logged student doesn't exist in database");
+        }
+        if (offer.getStudent().getIndexNumber() != currentUser.getIndex()) {
+            throw new WrongPathVariableException("You cannot change offer from other student!");
+        }
+        Course takenCourse = courseRepository.findById(oneToOneOfferPostDto.getTakenCourseId())
+                .orElseThrow(() -> new WrongFieldsException("No taken course with id: " + oneToOneOfferPostDto.getTakenCourseId()));
+        if (!mapped.getGivenCourse().getSubject().equals(takenCourse.getSubject())) {
+            throw new WrongFieldsException("Given courses are not the same subject!",
+                    "givenCourse.subject", offer.getGivenCourse().getSubject().getName(),
+                    "takenCourse.subject", takenCourse.getSubject().getName()
+            );
+        }
+        if (mapped.getGivenCourse().getType() == CourseType.LECTURE || takenCourse.getType() == CourseType.LECTURE) {
+            throw new WrongFieldsException("You cannot give lecture!",
+                    "givenCourse.type", offer.getGivenCourse().getType().toString(),
+                    "takenCourse.type", takenCourse.getType().toString()
+            );
+        }
+        if (!mapped.getGivenCourse().getType().equals(takenCourse.getType())) {
+            throw new WrongFieldsException("Given courses do not have the same course type!",
+                    "givenCourse.type", offer.getGivenCourse().getType().toString(),
+                    "takenCourse.type", takenCourse.getType().toString()
+            );
+        }
+        offer.setComment(mapped.getComment());
+        offer.setOfferConditions(mapped.getOfferConditions());
+        offer.setGivenCourse(mapped.getGivenCourse());
+        Offer savedOffer = offerRepository.save(offer);
+        return oneToOneOfferMapper.offerToOneToOneOfferDto(savedOffer);
     }
 }
