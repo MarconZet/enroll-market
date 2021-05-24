@@ -9,5 +9,6 @@ public class OfferWithoutStudentDto {
     private Long id;
     private CourseDto givenCourse;
     private Boolean isOneToOne;
+    private String comment;
     private OfferConditionsDto offerConditions;
 }

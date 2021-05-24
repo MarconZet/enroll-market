@@ -8,6 +8,7 @@ import pl.edu.agh.springapp.data.dto.course.CourseDto;
 public class OneToOneOfferDto {
     private Long id;
     private StudentDto student;
+    private String comment;
     private CourseDto givenCourse;
     private CourseDto takenCourse;
 }

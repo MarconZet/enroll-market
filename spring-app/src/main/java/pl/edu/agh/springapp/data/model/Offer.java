@@ -25,6 +25,7 @@ public class Offer {
 
     private Boolean isOneToOne = false;
     private Boolean isRealised = false;
+    private String comment;
 
     @OneToOne(
             orphanRemoval = true,

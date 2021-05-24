@@ -126,9 +126,9 @@ public class DbInit implements CommandLineRunner {
         studentRepository.saveAll(students).forEach(savedStudents::add);
 
         List<OneToOneOfferPostDto> oneToOneOfferPostDtos = Arrays.asList(
-                new OneToOneOfferPostDto(16L, 15L),
-                new OneToOneOfferPostDto(18L, 19L),
-                new OneToOneOfferPostDto(17L, 16L)
+                new OneToOneOfferPostDto("example comment1", 16L, 15L),
+                new OneToOneOfferPostDto("example comment2", 18L, 19L),
+                new OneToOneOfferPostDto("example comment3", 17L, 16L)
         );
         List<Offer> offers = oneToOneOfferMapper.oneToOneOfferPostDtosToOffers(oneToOneOfferPostDtos);
         offers.get(0).setStudent(savedStudents.get(1));

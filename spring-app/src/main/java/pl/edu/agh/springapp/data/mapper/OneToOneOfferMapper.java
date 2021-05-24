@@ -39,6 +39,8 @@ public class OneToOneOfferMapper {
                 .orElseThrow(() -> new WrongFieldsException("No taken course with id: " + oneToOneOfferPostDto.getTakenCourseId()));
         offerConditions.getTeachers().add(takenCourse.getTeacher());
 
+        offer.setComment(oneToOneOfferPostDto.getComment());
+
         TimeBlock timeBlock = new TimeBlock();
         timeBlock.setStartTime(takenCourse.getStartTime());
         timeBlock.setEndTime(takenCourse.getStartTime().plusMinutes(courseTime));
@@ -59,6 +61,7 @@ public class OneToOneOfferMapper {
         oneToOneOfferDto.setGivenCourse(courseMapper.courseToCourseDto(
                 offer.getGivenCourse()));
         oneToOneOfferDto.setTakenCourse(findSubjectGroupWithOffer(offer));
+        oneToOneOfferDto.setComment(offer.getComment());
         return oneToOneOfferDto;
     }
 
