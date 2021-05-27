@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class ApiBasePathConfiguration implements WebMvcConfigurer {
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {

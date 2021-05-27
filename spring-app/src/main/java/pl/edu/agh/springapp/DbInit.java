@@ -13,8 +13,6 @@ import pl.edu.agh.springapp.data.mapper.*;
 import pl.edu.agh.springapp.data.model.*;
 import pl.edu.agh.springapp.domain.FileUploadDownloadService;
 import pl.edu.agh.springapp.repository.*;
-import pl.edu.agh.springapp.security.dev.KeycloakInitializerRunner;
-import pl.edu.agh.springapp.security.user.CurrentUser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,8 +21,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Component
 @RequiredArgsConstructor

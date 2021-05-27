@@ -1,7 +1,5 @@
-package pl.edu.agh.springapp.security.dev;
+package pl.edu.agh.springapp.security.keycloak;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
@@ -10,20 +8,19 @@ import org.keycloak.representations.idm.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import pl.edu.agh.springapp.security.WebSecurityConfig;
+import pl.edu.agh.springapp.security.keycloak.api.KeycloakUserInfo;
 
-import javax.ws.rs.Produces;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static pl.edu.agh.springapp.security.WebSecurityConfig.ADMIN_ROLE;
 import static pl.edu.agh.springapp.security.WebSecurityConfig.STUDENT_ROLE;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-@Profile("dev")
+@Profile("security")
 public class KeycloakInitializerRunner implements CommandLineRunner {
     @Value("${keycloak.auth-server-url}")
     private String keycloakServerUrl;
@@ -35,19 +32,32 @@ public class KeycloakInitializerRunner implements CommandLineRunner {
     private String appRedirectUrl;
 
     private final Keycloak keycloakAdmin;
+    private final Environment environment;
 
     @Override
     public void run(String... args) {
-        log.info("Initializing '{}' realm in Keycloak ...", keycloakRealm);
+        boolean dev = Arrays.asList(environment.getActiveProfiles()).contains("dev");
 
         Optional<RealmRepresentation> representationOptional = keycloakAdmin.realms().findAll().stream()
-                .filter(r -> r.getRealm().equals(keycloakRealm)).findAny();
+                .filter(r -> r.getRealm().equals(keycloakRealm))
+                .findAny();
+
+        if (representationOptional.isPresent() && !dev) {
+            log.info("Found already pre-configured '{}' realm", keycloakRealm);
+            return;
+        }
+
         if (representationOptional.isPresent()) {
             log.info("Removing already pre-configured '{}' realm", keycloakRealm);
             keycloakAdmin.realm(keycloakRealm).remove();
         }
 
-        // Realm
+        createRealm(dev);
+    }
+
+    private void createRealm(boolean createUsers) {
+        log.info("Initializing '{}' realm in Keycloak ...", keycloakRealm);
+
         RealmRepresentation realmRepresentation = new RealmRepresentation();
         realmRepresentation.setRealm(keycloakRealm);
         realmRepresentation.setEnabled(true);
@@ -87,62 +97,36 @@ public class KeycloakInitializerRunner implements CommandLineRunner {
         realmRepresentation.setClients(Collections.singletonList(clientRepresentation));
 
         // Users
-        List<UserRepresentation> userRepresentations = TEST_USER_INFO.stream().map(userInfo -> {
-            // Client roles
-            List<String> realmRoles = new LinkedList<>();
-            realmRoles.add(STUDENT_ROLE);
-            if (userInfo.getUsername().equals("admin")) {
-                realmRoles.add(ADMIN_ROLE);
-            }
-
-            // User Credentials
-            CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
-            credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
-            credentialRepresentation.setValue("pass");
-
-            // User
-            UserRepresentation userRepresentation = new UserRepresentation();
-            userRepresentation.setUsername(userInfo.getUsername());
-            userRepresentation.setEnabled(true);
-            userRepresentation.setFirstName(userInfo.getFirstname());
-            userRepresentation.setLastName(userInfo.getLastname());
-            userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));
-            userRepresentation.setRealmRoles(realmRoles);
-            userRepresentation.setAttributes(Map.of("index", Collections.singletonList(userInfo.getIndex())));
-
-            return userRepresentation;
-        }).collect(Collectors.toList());
-        realmRepresentation.setUsers(userRepresentations);
+        if (createUsers) {
+            List<UserRepresentation> userRepresentations = TEST_USER_INFO.stream()
+                    .map(KeycloakUserInfo::userRepresentation)
+                    .collect(Collectors.toList());
+            realmRepresentation.setUsers(userRepresentations);
+        }
 
         // Create Realm
         keycloakAdmin.realms().create(realmRepresentation);
 
         // Testing
-        var admin = TEST_USER_INFO.get(0);
-        log.info("Testing getting token for '{}' ...", admin.getUsername());
+        if (createUsers) {
+            var admin = TEST_USER_INFO.get(0);
+            log.info("Testing getting token for '{}' ...", admin.getUsername());
 
-        Keycloak keycloakEnrollMarket = KeycloakBuilder.builder().serverUrl(keycloakServerUrl)
-                .realm(keycloakRealm).username(admin.getUsername()).password("pass")
-                .clientId(keycloakResource).build();
+            Keycloak keycloakEnrollMarket = KeycloakBuilder.builder().serverUrl(keycloakServerUrl)
+                    .realm(keycloakRealm).username(admin.getUsername()).password(admin.getPassword())
+                    .clientId(keycloakResource).build();
 
-        log.info("'{}' token: {}", admin.getUsername(), keycloakEnrollMarket.tokenManager().grantToken().getToken());
-        log.info("'{}' initialization completed successfully!", keycloakRealm);
+            log.info("'{}' token: {}", admin.getUsername(), keycloakEnrollMarket.tokenManager().grantToken().getToken());
+            log.info("'{}' initialization completed successfully!", keycloakRealm);
+        }
+
     }
 
-    @Data
-    @AllArgsConstructor
-    private static class TestUserInfo {
-        private String username;
-        private String firstname;
-        private String lastname;
-        private String index;
-    }
-
-    private static final List<TestUserInfo> TEST_USER_INFO = Arrays.asList(
-            new TestUserInfo("admin", "Marta", "Słomka", "123456"),
-            new TestUserInfo("user1", "Śmieszek", "Melisa", "797955"),
-            new TestUserInfo("user2", "Kazimierz", "Siodełko", "313414"),
-            new TestUserInfo("user3", "Brandon", "Kwiatek", "222999"),
-            new TestUserInfo("user4", "Beniamin", "Wystrzał", "232595")
+    private static final List<KeycloakUserInfo> TEST_USER_INFO = Arrays.asList(
+            new KeycloakUserInfo("admin", "pass", "Marta", "Słomka", "123456", true),
+            new KeycloakUserInfo("user1", "Śmieszek", "Melisa", "797955"),
+            new KeycloakUserInfo("user2", "Kazimierz", "Siodełko", "313414"),
+            new KeycloakUserInfo("user3", "Brandon", "Kwiatek", "222999"),
+            new KeycloakUserInfo("user4", "Beniamin", "Wystrzał", "232595")
     );
 }
