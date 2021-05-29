@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,6 +35,31 @@ public class FileUploadDownloadController {
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + "student_groups.csv" + "\"").body(fileContent);
+    }
+
+    @GetMapping("/enroll/download/student/calendar/{index}")
+    public ResponseEntity<String> handleFileDownloadStudentCalendar(@PathVariable("index") String index) {
+        LocalDate now = LocalDate.now();
+        LocalDate oneDayBeforeSemesterStart;
+        oneDayBeforeSemesterStart = now.with(TemporalAdjusters.next(java.time.DayOfWeek.MONDAY)); // change name
+
+        String fileContent = fileUploadDownloadService.getCalendarForStudent(index, oneDayBeforeSemesterStart.getYear(),
+                oneDayBeforeSemesterStart.getMonthValue(), oneDayBeforeSemesterStart.getDayOfMonth());
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + "student_calendar.ics" + "\"").body(fileContent);
+    }
+
+    @GetMapping("/enroll/download/student/calendar/{index}/{year}/{month}/{day}")
+    public ResponseEntity<String> handleFileDownloadStudentCalendar(@PathVariable("index") String index,
+                                                                    @PathVariable("year") int year,
+                                                                    @PathVariable("month") int month,
+                                                                    @PathVariable("day") int day) {
+
+        String fileContent = fileUploadDownloadService.getCalendarForStudent(index, year, month, day);
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + "student_calendar.ics" + "\"").body(fileContent);
     }
 
     @GetMapping("/enroll/download/teacher/{id}")

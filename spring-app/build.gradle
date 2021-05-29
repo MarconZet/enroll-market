@@ -41,7 +41,7 @@ dependencies {
     implementation group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: keycloakVersion
 	implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: keycloakVersion
 
-
+	implementation group: 'org.mnode.ical4j', name: 'ical4j', version: '3.0.25'
 }
 
 test {
