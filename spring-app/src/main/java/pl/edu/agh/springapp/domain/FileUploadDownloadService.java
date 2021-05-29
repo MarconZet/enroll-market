@@ -2,6 +2,11 @@ package pl.edu.agh.springapp.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.fortuna.ical4j.model.*;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.VTimeZone;
+import net.fortuna.ical4j.model.property.*;
+import net.fortuna.ical4j.util.UidGenerator;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
 import pl.edu.agh.springapp.data.dto.parsingContainer.ParsingContainerDTO;
@@ -14,7 +19,11 @@ import pl.edu.agh.springapp.repository.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -90,6 +99,83 @@ public class FileUploadDownloadService {
         }
 
         return fileContent;
+    }
+
+    public String getRecurrenceIntervalAndCount(String week) {
+        String data;
+        if (week.equals("A") || week.equals("B")) {
+            data = "INTERVAL=2;COUNT=7";
+        } else {
+            data = "INTERVAL=1;COUNT=15";
+        }
+        return data;
+    }
+
+    public String getCalendarForStudent(String indexNumber, int semesterStartYear,
+                                        int semesterStartMonth, int semesterStartDay) {
+        // prepare calendar
+        Calendar calendar = new Calendar();
+        calendar.getProperties().add(new ProdId("-//Enroll " + indexNumber + "//iCal4j 1.0//PL"));
+        calendar.getProperties().add(Version.VERSION_2_0);
+        calendar.getProperties().add(CalScale.GREGORIAN);
+
+        TimeZoneRegistry registry = TimeZoneRegistryFactory.getInstance().createRegistry();
+        TimeZone timezone = registry.getTimeZone("Europe/Warsaw");
+        VTimeZone tz = timezone.getVTimeZone();
+
+        LocalDate now = LocalDate.now().withYear(semesterStartYear).withMonth(semesterStartMonth).withDayOfMonth(semesterStartDay);
+
+        Student student = studentRepository.findFirstByIndexNumber(indexNumber);
+        if (student != null) {
+            for (Course course : student.getCourses()) {
+                DayOfWeek dayOfWeek = course.getDay();
+                LocalTime startTime = course.getStartTime();
+                LocalDate firstDayInSeries = now;
+                if (now.getDayOfWeek() != java.time.DayOfWeek.of(course.getDay().ordinal()+1)) {
+                    firstDayInSeries = now.with(TemporalAdjusters.next(java.time.DayOfWeek.of(dayOfWeek.ordinal()+1)));;
+                }
+                if (course.getWeekType().toString().equals("B")) {
+                    firstDayInSeries = firstDayInSeries.plusWeeks(1);
+                }
+
+                java.util.Calendar startDate = new GregorianCalendar(firstDayInSeries.getYear(),
+                                                firstDayInSeries.getMonthValue()-1,
+                                                        firstDayInSeries.getDayOfMonth());
+                startDate.setTimeZone(timezone);
+
+                startDate.set(java.util.Calendar.HOUR_OF_DAY, startTime.getHour());
+                startDate.set(java.util.Calendar.MINUTE, startTime.getMinute());
+                startDate.set(java.util.Calendar.SECOND, startTime.getSecond());
+
+                java.util.Calendar endDate = (java.util.Calendar) startDate.clone();
+                endDate.add(java.util.Calendar.HOUR_OF_DAY, 1);
+                endDate.add(java.util.Calendar.MINUTE, 30);
+
+                String eventName = course.getSubject().getName() + " - " + course.getType().toString().toLowerCase();
+                DateTime start = new DateTime(startDate.getTime());
+                DateTime end = new DateTime(endDate.getTime());
+                VEvent meeting = new VEvent(start, end, eventName);
+
+                meeting.getProperties().add(tz.getTimeZoneId());
+
+                Uid uid = new Uid(eventName);
+                meeting.getProperties().add(uid);
+
+                try {
+                    Recur recur = new Recur("FREQ=WEEKLY;BYDAY=" + dayOfWeek.toString().substring(0, 2)
+                                                + ";" + getRecurrenceIntervalAndCount(course.getWeekType().toString()));
+                    RRule rule = new RRule(recur);
+                    meeting.getProperties().add(rule);
+                    calendar.getComponents().add(meeting);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return calendar.toString();
+        }
+
+        return "";
     }
 
     public String getFileForTeacher(Long id) {
