@@ -71,6 +71,16 @@ export const getEnrollData = () => axios.get(process.env.REACT_APP_API_PATH + '/
 
 export const getEnrollDataForTeacher = (id: number) => axios.get(process.env.REACT_APP_API_PATH + '/api/enroll/download/teacher/' + id, getFileDownloadConfig());
 
+export const createKeycloakStudents = (file: File, filename: string) => axios.post(process.env.REACT_APP_API_PATH + '/api/keycloak/students', file, getFileUploadConfig(filename));
+
+export const deleteKeycloakStudents = () => axios.delete(process.env.REACT_APP_API_PATH + '/api/keycloak/students', getConfig());
+
 ////////////////
 
 export const getStudentIcsCalendar = (id: number) => axios.get(process.env.REACT_APP_API_PATH + '/api/enroll/download/student/calendar/' + id, getFileDownloadConfig());
+
+////////////////
+
+export const changeCourse = (fromId: number, toId: number) => axios.post(process.env.REACT_APP_API_PATH + '/api/courses/' + fromId + '/enroll/' + toId, {}, getConfig());
+
+export const getCoursesWithoutColision = (id: number) => axios.get<{ ids: number[] }>(process.env.REACT_APP_API_PATH + '/api/courses/' + id + '/without-colision', getConfig());
