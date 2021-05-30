@@ -33,8 +33,8 @@ export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptC
                 <P.ClassBox isOffered>
                     <b>{offer.givenCourse.teacher.name} {offer.givenCourse.teacher.surname}</b>
                     <b>{translations[offer.givenCourse.dayOfWeek]}, tydzień {offer.givenCourse.weekType}, {offer.givenCourse.startTime}</b>
-                    {/* <span>{offeredGroup.comment}</span> */}
                     {!!offer?.student ? (<span>{offer.student.name} {offer.student.surname}</span>) : (<span>Oferta złożona przez ciebie</span>)}
+                    {!!offer?.comment && (<span><b>Komentarz wystawiającego: </b>{offer?.comment}</span>)}
                 </P.ClassBox>
             </P.SlotBox>
             <P.SVGBox>

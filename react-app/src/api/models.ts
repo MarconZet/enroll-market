@@ -73,11 +73,13 @@ export interface OneForOneOffer {
     id: number;
     student: Student;
     takenCourse: Course;
+    comment?: string;
 }
 
 export interface OneForOneOfferParams {
     givenCourseId: number;
     takenCourseId: number;
+    comment?: string;
 }
 
 export interface TimeBlock {
@@ -99,6 +101,7 @@ export interface Offer {
     student: Student;
     isOneToOne: boolean;
     offerConditions: OfferConditions;
+    comment?: string;
 }
 
 export interface OfferParams {
@@ -106,7 +109,8 @@ export interface OfferParams {
     offerConditions: {
         teacherIds: number[];
         timeBlocks: TimeBlock[];
-    }
+    };
+    comment?: string;
 }
 
 export interface PaginatedResponse<T> {

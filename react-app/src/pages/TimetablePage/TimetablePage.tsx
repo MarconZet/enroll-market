@@ -2,10 +2,25 @@ import * as P from './parts';
 import {Course, CourseType, DayOfWeek, Time} from "../../api/models";
 import TimetableTemplate from "../../components/TimetableTemplate/TimetableTemplate";
 import { useSelector } from 'react-redux';
+import FileDownload from 'js-file-download';
 import { myCoursesSelector } from '../../store/globalData/selectors';
+import { getStudentIcsCalendar } from '../../api/requests';
+import { userAuthSelector } from '../../store/userAuth/selectors';
+import notitier from '../../utils/notifications';
 
 export const TimetablePage: React.FC = () => {
     let courses = useSelector(myCoursesSelector);
+    let userData = useSelector(userAuthSelector);
+
+    const onDownloadCalendar = () => {
+        if (typeof userData?.id !== 'undefined') {
+            getStudentIcsCalendar(userData?.id).then((response) => {
+                FileDownload(response.data, 'calendar.ics');
+            }).catch((err) => {
+                notitier.alert('Pobranie pliku nie powiodło się.');
+            });
+        }
+    };
     
     const translations = {
         'PROJECT': 'P',
@@ -82,6 +97,7 @@ export const TimetablePage: React.FC = () => {
 
     return (
         <P.Wrapper>
+            <P.Download onClick={onDownloadCalendar}>Pobierz plan w fromacie .ics</P.Download>
             <div style={{position: "relative"}}>
                 <TimetableTemplate columnWidth={dims.columnWidth} hourWidth={dims.hourWidth} dayHeight={dims.dayHeight} unitHeight={dims.unitHeight} unitsNo={dims.unitsNo}/>
                 {timetable.days.map((clusters, idx1) => (

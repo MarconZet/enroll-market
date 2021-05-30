@@ -27,6 +27,8 @@ export const getOffers = (params?: OffersQueryParams) => axios.get<PaginatedResp
 
 export const createOffer = (params: OfferParams) => axios.post(process.env.REACT_APP_API_PATH + '/api/offers', params, getConfig());
 
+export const editOffer = (params: OfferParams) => axios.put(process.env.REACT_APP_API_PATH + '/api/offers', params, getConfig());
+
 export const deleteOffer = (id: number) => axios.delete(process.env.REACT_APP_API_PATH + '/api/offers/' + id, getConfig());
 
 export const canAcceptOffer = (id: number) => axios.get<boolean>(process.env.REACT_APP_API_PATH + '/api/offers/' + id + '/can-accept', getConfig());
@@ -42,6 +44,8 @@ export const getOneForOneOffer = (id: number) => axios.get<OneForOneOffer>(proce
 export const getOneForOneOffers = (params?: BasicQueryParams) => axios.get<PaginatedResponse<OneForOneOffer[]>>(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers' + (params ? queryBuilder(params) : ''), getConfig());
 
 export const createOneForOneOffer = (params: OneForOneOfferParams) => axios.post(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers', params, getConfig());
+
+export const editOneForOneOffer = (params: OneForOneOfferParams) => axios.put(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers', params, getConfig());
 
 export const deleteOneForOneOffer = (id: number) => axios.delete(process.env.REACT_APP_API_PATH + '/api/one-to-one-offers/' + id, getConfig());
 
@@ -66,3 +70,7 @@ export const uploadEnrollData = (file: File, filename: string) => axios.post(pro
 export const getEnrollData = () => axios.get(process.env.REACT_APP_API_PATH + '/api/enroll/download/all', getFileDownloadConfig());
 
 export const getEnrollDataForTeacher = (id: number) => axios.get(process.env.REACT_APP_API_PATH + '/api/enroll/download/teacher/' + id, getFileDownloadConfig());
+
+////////////////
+
+export const getStudentIcsCalendar = (id: number) => axios.get(process.env.REACT_APP_API_PATH + '/api/enroll/download/student/calendar/' + id, getFileDownloadConfig());
