@@ -1,5 +1,6 @@
 package pl.edu.agh.springapp.repository;
 
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +12,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Repository
-public interface CourseRepository extends PagingAndSortingRepository<Course, Long> {
+public interface CourseRepository extends PagingAndSortingRepository<Course, Long>, JpaSpecificationExecutor<Course> {
     List<Course> findByStartTimeAndTeacherAndDay(LocalTime startTime, Teacher teacher, DayOfWeek day);
 
     List<Course> findByStartTimeAndTeacherAndDayAndWeekType(LocalTime startTime, Teacher teacher, DayOfWeek day, WeekType weekType);

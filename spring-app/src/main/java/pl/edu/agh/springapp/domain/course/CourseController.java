@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.springapp.data.dto.IdListDto;
 import pl.edu.agh.springapp.data.dto.course.CourseDto;
 import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
 import pl.edu.agh.springapp.data.dto.subject.SubjectAllDto;
@@ -38,6 +39,16 @@ public class CourseController {
     @GetMapping("/courses/{id}")
     public ResponseEntity<CourseDto> getCourse(@PathVariable Long id) {
         return new ResponseEntity<>(service.getCourseWithId(id), new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping("/courses/{id}/without-colision")
+    public ResponseEntity<IdListDto> getCoursesToEnrollWithoutCollisionTheSameAsCourseWithId(@PathVariable Long id) {
+        return new ResponseEntity<>(service.getCoursesToEnrollWithoutCollisionTheSameAsCourseWithId(id), new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @PostMapping("/courses/{fromId}/enroll/{toId}")
+    public ResponseEntity<Boolean> newTeacher(@PathVariable Long fromId, @PathVariable Long toId) {
+        return new ResponseEntity<>(service.enrollToCourseWithoutCollision(fromId, toId), new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/courses/{id}")

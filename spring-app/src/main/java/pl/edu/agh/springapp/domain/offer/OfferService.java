@@ -233,7 +233,6 @@ public class OfferService {
                         return dayCheck && startTimeCheck && endTimeCheck;
                     }).reduce(false, (a, b) -> a || b);
                 })
-                .filter( course -> offerConditions.getTeachers().contains(course.getTeacher()))
-                .filter( course -> course.getStudents().size() < course.getMaxStudentCount() + 1 );
+                .filter( course -> offerConditions.getTeachers().contains(course.getTeacher()));
     }
 }
