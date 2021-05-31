@@ -14,6 +14,7 @@ export const AddOfferPage: React.FC = () => {
     const [type, setType] = useState<CourseType | "none">("none");
     const [offerType, setOfferType] = useState("1for1");
     const [latestBlockIndex, setLatestBlockIndex] = useState(0);
+    const [comment, setComment] = useState("");
 
     const [givenCourseId, setGivenCourseId] = useState(-1);
     const [takenCourseId, setTakenCourseId] = useState(-1);
@@ -41,14 +42,14 @@ export const AddOfferPage: React.FC = () => {
 
     const onSubmit: FormEventHandler<Element> = (event) => {
         if (offerType === '1for1') {
-            dispatch(A.createOneForOneOfferRequest(givenCourseId, takenCourseId));
+            dispatch(A.createOneForOneOfferRequest(givenCourseId, takenCourseId, comment));
         } else if (offerType === 'cond') {
             const timeBlocks = chosenTimeBlocks.map(block => ({
                 dayOfWeek: block.dayOfWeek,
                 startTime: block.wholeDay ? null : block.startTime,
                 endTime: block.wholeDay ? null : block.endTime,
             }))
-            dispatch(A.createOfferRequest(givenCourseId, chosenTeachers, timeBlocks));
+            dispatch(A.createOfferRequest(givenCourseId, chosenTeachers, timeBlocks, comment));
         }
         event.preventDefault();
     };
@@ -171,7 +172,10 @@ export const AddOfferPage: React.FC = () => {
                 </P.Select>
                 {courses.length > 0
                     ? (
-                        formGetter()
+                        <>
+                            {formGetter()}
+                            <P.Input name="comment" id="comment" onChange={(e) => setComment(e.target.value)} value={comment} placeholder="Komentarz osoby wystawiającej"/>
+                        </>
                     ) : (
                         <P.Title>Brak terminów. Ustaw inny przedmiot lub typ zajęć.</P.Title>
                     )

@@ -18,10 +18,12 @@ export type OffersManagementAction = {
     givenCourseId: number;
     teacherIds: number[];
     timeBlocks: TimeBlock[];
+    comment: string;
 } | {
     type: OffersManagementActionType.CreateOneForOneOfferRequest,
     givenCourseId: number;
     takenCourseId: number;
+    comment: string;
 } | {
     type: OffersManagementActionType.CreateOfferSuccess,
 } | {

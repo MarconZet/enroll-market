@@ -14,17 +14,19 @@ export const deleteOfferFail = (): OffersManagementAction => ({
     type: OffersManagementActionType.DeleteOfferFail,
 });
 
-export const createOfferRequest = (givenCourseId: number, teacherIds: number[], timeBlocks: TimeBlock[]): OffersManagementAction => ({
+export const createOfferRequest = (givenCourseId: number, teacherIds: number[], timeBlocks: TimeBlock[], comment: string): OffersManagementAction => ({
     type: OffersManagementActionType.CreateOfferRequest,
     givenCourseId,
     teacherIds,
     timeBlocks,
+    comment,
 });
 
-export const createOneForOneOfferRequest = (givenCourseId: number, takenCourseId: number): OffersManagementAction => ({
+export const createOneForOneOfferRequest = (givenCourseId: number, takenCourseId: number, comment: string): OffersManagementAction => ({
     type: OffersManagementActionType.CreateOneForOneOfferRequest,
     givenCourseId,
     takenCourseId,
+    comment,
 });
 
 export const createOfferSuccess = (): OffersManagementAction => ({

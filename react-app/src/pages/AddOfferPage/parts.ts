@@ -24,6 +24,12 @@ export const Select = styled.select`
     margin: 8px 0;
 `;
 
+export const Input = styled.select`
+    width: 100%;
+    font-size: 16px;
+    margin: 8px 0;
+`;
+
 export const Submit = styled.button`
     padding: 12px 36px;
     margin-top: 8px;
