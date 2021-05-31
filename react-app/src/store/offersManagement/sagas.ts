@@ -36,6 +36,7 @@ export function* createOfferWorker(action: AnyAction) {
             yield call(createOneForOneOffer, {
                 givenCourseId: action.givenCourseId,
                 takenCourseId: action.takenCourseId,
+                comment: action.comment,
             });
         } else if (action.type === C.OffersManagementActionType.CreateOfferRequest) {
             const params: OfferParams = {
@@ -43,7 +44,8 @@ export function* createOfferWorker(action: AnyAction) {
                 offerConditions: {
                     teacherIds: action.teacherIds,
                     timeBlocks: action.timeBlocks,
-                }
+                },
+                comment: action.comment,
             };
 
             yield call(createOffer, params);

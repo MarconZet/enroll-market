@@ -40,7 +40,7 @@ export const Teacher = styled.p`
 
 export const Download = styled.button`
     padding: 16px 48px;
-    margin-top: 16px;
+    margin: 16px auto;
     font-size: 24px;
     text-decoration: none;
     display: block;

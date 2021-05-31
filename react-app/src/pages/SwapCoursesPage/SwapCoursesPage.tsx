@@ -38,7 +38,7 @@ export const SwapCoursesPage: React.FC = () => {
         if (from !== -1) {
             dispatch(A.coursesWithoutColisionRequest(from, subject));
         }
-    }, [from]);
+    }, [from, subject, dispatch]);
 
     const onSubmit: FormEventHandler<Element> = (event) => {
         dispatch(A.swapCoursesRequest(from, to));

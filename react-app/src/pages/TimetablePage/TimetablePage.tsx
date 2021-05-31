@@ -96,28 +96,30 @@ export const TimetablePage: React.FC = () => {
     courses.forEach(c => timetable.addCourse(c))
 
     return (
-        <P.Wrapper>
+        <>
             <P.Download onClick={onDownloadCalendar}>Pobierz plan w fromacie .ics</P.Download>
-            <div style={{position: "relative"}}>
-                <TimetableTemplate columnWidth={dims.columnWidth} hourWidth={dims.hourWidth} dayHeight={dims.dayHeight} unitHeight={dims.unitHeight} unitsNo={dims.unitsNo}/>
-                {timetable.days.map((clusters, idx1) => (
-                    clusters.map((cluster, idx2) => (
-                        cluster.courses.map((course, idx3) => (
-                            <P.Course key={idx3} style={{
-                                transform: "translate(" + translationX(course.dayOfWeek, idx3, cluster.courses.length) + "px, " + translationY(formatTime(course.startTime)) + "px)",
-                                width: dimX(cluster.courses.length),
-                                height: dimY(18),
-                                background: courseTypeColor(course.courseType)
-                            }}>
-                                <P.Time>{timeRangeString(formatTime(course.startTime))} {course.weekType}</P.Time>
-                                <P.Subject>{course.subject.name} - {translations[course.courseType]}</P.Subject>
-                                <P.Teacher>{course.teacher.name + " " + course.teacher.surname}</P.Teacher>
-                            </P.Course>
+            <P.Wrapper>
+                <div style={{position: "relative"}}>
+                    <TimetableTemplate columnWidth={dims.columnWidth} hourWidth={dims.hourWidth} dayHeight={dims.dayHeight} unitHeight={dims.unitHeight} unitsNo={dims.unitsNo}/>
+                    {timetable.days.map((clusters, idx1) => (
+                        clusters.map((cluster, idx2) => (
+                            cluster.courses.map((course, idx3) => (
+                                <P.Course key={idx3} style={{
+                                    transform: "translate(" + translationX(course.dayOfWeek, idx3, cluster.courses.length) + "px, " + translationY(formatTime(course.startTime)) + "px)",
+                                    width: dimX(cluster.courses.length),
+                                    height: dimY(18),
+                                    background: courseTypeColor(course.courseType)
+                                }}>
+                                    <P.Time>{timeRangeString(formatTime(course.startTime))} {course.weekType}</P.Time>
+                                    <P.Subject>{course.subject.name} - {translations[course.courseType]}</P.Subject>
+                                    <P.Teacher>{course.teacher.name + " " + course.teacher.surname}</P.Teacher>
+                                </P.Course>
+                            ))
                         ))
-                    ))
-                ))}
-            </div>
-        </P.Wrapper>
+                    ))}
+                </div>
+            </P.Wrapper>
+        </>
     )
 }
 

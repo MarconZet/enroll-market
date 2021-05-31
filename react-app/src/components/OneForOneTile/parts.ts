@@ -40,7 +40,7 @@ export const ClassBox = styled.div<{ isOffered?: boolean }>`
     align-items: center;
     justify-content: center;
     padding: 8px;
-    height: 100px;
+    height: 150px;
     width: 300px;
     border-radius: 5px;  
   

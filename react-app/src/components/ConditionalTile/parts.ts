@@ -46,7 +46,7 @@ export const ClassBox = styled.div<{ isOffered?: boolean, fullHeight?: boolean }
   
     ${({ isOffered }) => isOffered ? 'background-color: #1D7991;' : 'background-color: #91163F;'}
 
-    ${({ fullHeight }) => !fullHeight ? 'height: 100px;' : ''}
+    ${({ fullHeight }) => !fullHeight ? 'height: 150px;' : ''}
 
     span, b {
         font-size: 16px;

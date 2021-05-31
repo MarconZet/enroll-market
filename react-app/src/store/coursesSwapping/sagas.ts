@@ -22,7 +22,7 @@ export function* withoutColisionWorker(action: AnyAction) {
     try {
         const { data } = yield call(getCoursesWithoutColision, action.courseId);
         const ids: number[] = data.ids;
-        const coursesForSubject: CourseWithoutSubject[] = yield select(coursesForSubjectSelector);
+        const coursesForSubject: CourseWithoutSubject[] = yield select(coursesForSubjectSelector(action.subjectId));
         const courses = coursesForSubject?.filter((c) => ids.some(id => c.id === id)) ?? [];
         yield put(A.coursesWithoutColisionSuccess(courses));
     } catch (error) {
