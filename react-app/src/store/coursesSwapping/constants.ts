@@ -20,6 +20,7 @@ export type CoursesSwappingAction = {
 } | {
     type: CoursesSwappingActionType.CoursesWithoutColisionRequest,
     courseId: number,
+    subjectId: number,
 } | {
     type: CoursesSwappingActionType.CoursesWithoutColisionSuccess,
     courses: CourseWithoutSubject[];

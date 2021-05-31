@@ -36,7 +36,7 @@ export const SwapCoursesPage: React.FC = () => {
 
     useEffect(() => {
         if (from !== -1) {
-            dispatch(A.coursesWithoutColisionRequest(from));
+            dispatch(A.coursesWithoutColisionRequest(from, subject));
         }
     }, [from]);
 

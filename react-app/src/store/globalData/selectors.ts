@@ -78,3 +78,5 @@ export const myCousesForSubjectAndTypeSelector = (subjectId: number, type: Cours
 export const myCoursesSelector = (state: ApplicationState) => state.globalData.myCourses;
 
 export const teachersSelector = (state: ApplicationState) => state.globalData.teachers;
+
+export const coursesForSubjectSelector = (subjectId: number) => (state: ApplicationState) => state.globalData.subjects.find(e => e.id === subjectId)?.courses;

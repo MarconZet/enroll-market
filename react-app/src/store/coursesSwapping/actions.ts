@@ -15,9 +15,10 @@ export const swapCoursesFail = (): CoursesSwappingAction => ({
     type: CoursesSwappingActionType.SwapCoursesFail,
 });
 
-export const coursesWithoutColisionRequest = (courseId: number): CoursesSwappingAction => ({
+export const coursesWithoutColisionRequest = (courseId: number, subjectId: number): CoursesSwappingAction => ({
     type: CoursesSwappingActionType.CoursesWithoutColisionRequest,
-    courseId
+    courseId,
+    subjectId,
 });
 
 export const coursesWithoutColisionSuccess = (courses: CourseWithoutSubject[]): CoursesSwappingAction => ({
