@@ -2,6 +2,7 @@ package pl.edu.agh.springapp;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import pl.edu.agh.springapp.data.dto.course.CoursePostDto;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
+@Profile("dev")
 @RequiredArgsConstructor
 public class DbInit implements CommandLineRunner {
     private final TeacherRepository teacherRepository;
