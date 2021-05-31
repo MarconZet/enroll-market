@@ -1,4 +1,5 @@
 import { all, fork } from 'redux-saga/effects';
+import { coursesSwappingWatcher } from './coursesSwapping/sagas';
 import { dataUploadAndDownloadWatcher } from './dataUploadAndDownload/sagas';
 import { globalDataWatcher } from './globalData/sagas';
 import { offersListingWatcher } from './offersListing/sagas';
@@ -12,6 +13,7 @@ function* rootSaga() {
         fork(dataUploadAndDownloadWatcher),
         fork(globalDataWatcher),
         fork(userDataWatcher),
+        fork(coursesSwappingWatcher),
     ]);
 }
 

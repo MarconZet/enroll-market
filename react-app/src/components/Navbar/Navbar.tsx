@@ -39,6 +39,11 @@ export const Navbar: React.FC = () => {
             path: '/offers',
             checkAuth: true,
         },
+        {
+            title: 'Wymiana bezkolizyjna',
+            path: '/swapCourses',
+            checkAuth: true,
+        },
     ];
 
     const handleLogInOut = () => {

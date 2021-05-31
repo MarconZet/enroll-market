@@ -26,7 +26,7 @@ export function* acceptOfferWorker(action: AnyAction) {
         notitier.success('Akceptacja oferty powiodła się.');
     } catch (error) {
         yield put(A.acceptOfferFail());
-        notitier.alert('A oferty nie powiodła się.');
+        notitier.alert('Akceptacja oferty nie powiodła się.');
     }
 }
 

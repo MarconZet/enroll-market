@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { getUserDataRequest } from './store/userAuth/actions';
 import TimetablePage from "./pages/TimetablePage/TimetablePage";
 import { getGlobalDataRequest } from './store/globalData/actions';
+import SwapCoursesPage from './pages/SwapCoursesPage/SwapCoursesPage';
 
 const IndexFiller: React.FC = () => (
 	<>
@@ -53,6 +54,7 @@ const App: React.FC = () => {
 					<PrivateRoute path={["/offers", "/myOffers/active", "/myOffers/realised"]} component={OffersListingPage} />
 					<PrivateRoute path={["/dataUploadAndDownload"]} component={DataUploadAndDownloadPage} isAdminRoute />
 					<PrivateRoute path={["/addOffer"]} component={AddOfferPage} />
+					<PrivateRoute path={["/swapCourses"]} component={SwapCoursesPage} />
 					<PrivateRoute path={["/timetable"]} component={TimetablePage} />
 					<Route exact path="/" component={IndexFiller} />
 					<Route exact path="/unauthorized" component={UnauthorizedFiller} />
