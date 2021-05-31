@@ -42,12 +42,11 @@ public class KeycloakInitializerRunner implements CommandLineRunner {
                 .filter(r -> r.getRealm().equals(keycloakRealm))
                 .findAny();
 
-        if (representationOptional.isPresent() && !dev) {
-            log.info("Found already pre-configured '{}' realm", keycloakRealm);
-            return;
-        }
-
         if (representationOptional.isPresent()) {
+            if (!dev) {
+                log.info("Found already pre-configured '{}' realm", keycloakRealm);
+                return;
+            }
             log.info("Removing already pre-configured '{}' realm", keycloakRealm);
             keycloakAdmin.realm(keycloakRealm).remove();
         }
