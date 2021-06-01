@@ -50,3 +50,26 @@ export const acceptOfferSuccess = (): OffersManagementAction => ({
 export const acceptOfferFail = (): OffersManagementAction => ({
     type: OffersManagementActionType.AcceptOfferFail,
 });
+
+export const editOfferRequest = (givenCourseId: number, teacherIds: number[], timeBlocks: TimeBlock[], comment: string): OffersManagementAction => ({
+    type: OffersManagementActionType.EditOfferRequest,
+    givenCourseId,
+    teacherIds,
+    timeBlocks,
+    comment,
+});
+
+export const editOneForOneOfferRequest = (givenCourseId: number, takenCourseId: number, comment: string): OffersManagementAction => ({
+    type: OffersManagementActionType.EditOneForOneOfferRequest,
+    givenCourseId,
+    takenCourseId,
+    comment,
+});
+
+export const editOfferSuccess = (): OffersManagementAction => ({
+    type: OffersManagementActionType.EditOfferSuccess,
+});
+
+export const editOfferFail = (): OffersManagementAction => ({
+    type: OffersManagementActionType.EditOfferFail,
+});

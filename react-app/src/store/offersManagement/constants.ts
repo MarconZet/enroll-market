@@ -11,6 +11,10 @@ export enum OffersManagementActionType {
     AcceptOfferRequest = 'offersManagement/ACCEPT_OFFER_REQUEST',
     AcceptOfferSuccess = 'offersManagement/ACCEPT_OFFER_SUCCESS',
     AcceptOfferFail = 'offersManagement/ACCEPT_OFFER_FAIL',
+    EditOfferRequest = 'offersManagement/EDIT_OFFER_REQUEST',
+    EditOneForOneOfferRequest = 'offersManagement/EDIT_ONE_FOR_ONE_OFFER_REQUEST',
+    EditOfferSuccess = 'offersManagement/EDIT_OFFER_SUCCESS',
+    EditOfferFail = 'offersManagement/EDIT_OFFER_FAIL',
 };
 
 export type OffersManagementAction = {
@@ -43,4 +47,19 @@ export type OffersManagementAction = {
     type: OffersManagementActionType.AcceptOfferSuccess,
 } | {
     type: OffersManagementActionType.AcceptOfferFail,
+} | {
+    type: OffersManagementActionType.EditOfferRequest,
+    givenCourseId: number;
+    teacherIds: number[];
+    timeBlocks: TimeBlock[];
+    comment: string;
+} | {
+    type: OffersManagementActionType.EditOneForOneOfferRequest,
+    givenCourseId: number;
+    takenCourseId: number;
+    comment: string;
+} | {
+    type: OffersManagementActionType.EditOfferSuccess,
+} | {
+    type: OffersManagementActionType.EditOfferFail,
 };

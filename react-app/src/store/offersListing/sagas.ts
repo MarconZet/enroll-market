@@ -76,6 +76,6 @@ export function* offersListingWatcher() {
     yield all([
         takeEvery([C.OffersListingActionType.GetPageRequest], getPageWorker),
         takeEvery([C.OffersListingActionType.ApplyFilters, C.OffersListingActionType.SetType], applyFiltersWorker),
-        takeEvery([OffersManagementActionType.DeleteOfferSuccess], refreshPageWorker),
+        takeEvery([OffersManagementActionType.DeleteOfferSuccess, OffersManagementActionType.EditOfferSuccess], refreshPageWorker),
     ]);
 };

@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import { put, takeEvery, all, call, fork } from 'redux-saga/effects';
-import { acceptOffer, createOffer, createOneForOneOffer, deleteOffer } from '../../api/requests';
+import { acceptOffer, createOffer, createOneForOneOffer, deleteOffer, editOffer, editOneForOneOffer } from '../../api/requests';
 import * as A from './actions';
 import * as C from './constants';
 import notitier from '../../utils/notifications';
@@ -59,6 +59,35 @@ export function* createOfferWorker(action: AnyAction) {
     }
 }
 
+export function* editOfferWorker(action: AnyAction) {
+    try {
+        if (action.type === C.OffersManagementActionType.EditOneForOneOfferRequest) {
+            yield call(editOneForOneOffer, {
+                givenCourseId: action.givenCourseId,
+                takenCourseId: action.takenCourseId,
+                comment: action.comment,
+            });
+        } else if (action.type === C.OffersManagementActionType.EditOfferRequest) {
+            const params: OfferParams = {
+                givenCourseId: action.givenCourseId,
+                offerConditions: {
+                    teacherIds: action.teacherIds,
+                    timeBlocks: action.timeBlocks,
+                },
+                comment: action.comment,
+            };
+
+            yield call(editOffer, params);
+        }
+        
+        yield put(A.editOfferSuccess());
+        notitier.success('Edytowanie oferty powiodło się.');
+    } catch (error) {
+        yield put(A.editOfferFail());
+        notitier.alert('Edytowanie oferty nie powiodło się.');
+    }
+}
+
 export function* acceptOfferSuccessWorker() {
     yield put(getGlobalDataRequest());
     yield fork(refreshPageWorker);
@@ -70,5 +99,6 @@ export function* offersManagementWatcher() {
         takeEvery([C.OffersManagementActionType.CreateOfferRequest, C.OffersManagementActionType.CreateOneForOneOfferRequest], createOfferWorker),
         takeEvery(C.OffersManagementActionType.AcceptOfferRequest, acceptOfferWorker),
         takeEvery(C.OffersManagementActionType.AcceptOfferSuccess, acceptOfferSuccessWorker),
+        takeEvery([C.OffersManagementActionType.EditOfferRequest, C.OffersManagementActionType.EditOneForOneOfferRequest], editOfferWorker),
     ]);
 };
