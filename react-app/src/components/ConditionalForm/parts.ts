@@ -21,3 +21,9 @@ export const AddBlockButton = styled.button`
     font-weight: bold;
     padding: 5px;
 `;
+
+export const Input = styled.input`
+    width: 100%;
+    font-size: 16px;
+    margin: 8px 0;
+`;

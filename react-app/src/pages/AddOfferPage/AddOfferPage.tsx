@@ -107,10 +107,12 @@ export const AddOfferPage: React.FC = () => {
                 <OneForOneForm
                     givenCourseId={givenCourseId}
                     takenCourseId={takenCourseId}
+                    comment={comment}
                     myCourses={myCourses}
                     courses={courses}
                     onChangeGivenCourse={(e) => setGivenCourseId(+e.target.value)}
                     onChangeTakenCourse={(e) => setTakenCourseId(+e.target.value)}
+                    onChangeComment={(e) => setComment(e.target.value)}
                 />
             );
         } else if (offerType === "cond") {
@@ -125,6 +127,8 @@ export const AddOfferPage: React.FC = () => {
                     changeBlockHandler={onChangeBlock}
                     deleteBlockHandler={onDeleteBlock}
                     addBlockHandler={onAddBlock}
+                    comment={comment}
+                    onChangeComment={(e) => setComment(e.target.value)}
                 />
             );
         }
@@ -172,10 +176,7 @@ export const AddOfferPage: React.FC = () => {
                 </P.Select>
                 {courses.length > 0
                     ? (
-                        <>
-                            {formGetter()}
-                            <P.Input name="comment" id="comment" onChange={(e) => setComment(e.target.value)} value={comment} placeholder="Komentarz osoby wystawiającej"/>
-                        </>
+                        formGetter()
                     ) : (
                         <P.Title>Brak terminów. Ustaw inny przedmiot lub typ zajęć.</P.Title>
                     )

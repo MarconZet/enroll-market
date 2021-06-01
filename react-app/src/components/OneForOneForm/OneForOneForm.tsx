@@ -23,11 +23,13 @@ export interface OneForOneFormProps {
     myCourses: CourseWithoutSubjectWithTeacher[];
     onChangeGivenCourse: React.ChangeEventHandler<HTMLSelectElement>;
     onChangeTakenCourse: React.ChangeEventHandler<HTMLSelectElement>;
+    onChangeComment: React.ChangeEventHandler<HTMLInputElement>;
     givenCourseId: number;
     takenCourseId: number;
+    comment: string;
 }
 
-const OneForOneForm: React.FC<OneForOneFormProps> = ({ courses, myCourses, onChangeGivenCourse, onChangeTakenCourse, givenCourseId, takenCourseId }) => {
+const OneForOneForm: React.FC<OneForOneFormProps> = ({ courses, myCourses, onChangeGivenCourse, onChangeTakenCourse, onChangeComment, givenCourseId, takenCourseId, comment }) => {
     return (
         <>
             <P.Select name="givenCourseId" id="givenCourseId" onChange={onChangeGivenCourse} value={givenCourseId}>
@@ -46,6 +48,7 @@ const OneForOneForm: React.FC<OneForOneFormProps> = ({ courses, myCourses, onCha
                     ))
                 }
             </P.Select>
+            <P.Input name="comment" id="comment" onChange={onChangeComment} value={comment} placeholder="Komentarz osoby wystawiającej"/>
         </>
     );
 }

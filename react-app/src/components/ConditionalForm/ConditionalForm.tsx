@@ -14,6 +14,8 @@ export interface ConditionalFormProps {
     changeBlockHandler: (index: number) => (dayOfWeek: DayOfWeek, wholeDay: boolean, startTime: string, endTime: string) => void;
     deleteBlockHandler: (index: number) => () => void;
     addBlockHandler: () => void;
+    comment: string;
+    onChangeComment: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const translations = {
@@ -26,7 +28,7 @@ const translations = {
     'SUNDAY': 'Niedziela',
 };
 
-const ConditionalForm: React.FC<ConditionalFormProps> = ({ teachers, onCheckTeacher, myCourses, onChangeGivenCourse, givenCourseId, timeBlocks, changeBlockHandler, deleteBlockHandler, addBlockHandler }) => {
+const ConditionalForm: React.FC<ConditionalFormProps> = ({ teachers, onCheckTeacher, myCourses, onChangeGivenCourse, givenCourseId, timeBlocks, changeBlockHandler, deleteBlockHandler, addBlockHandler, comment, onChangeComment }) => {
     return (
         <>
             <P.Select name="givenCourseId" id="givenCourseId" onChange={onChangeGivenCourse} value={givenCourseId}>
@@ -55,6 +57,7 @@ const ConditionalForm: React.FC<ConditionalFormProps> = ({ teachers, onCheckTeac
                 ))
             }
             <P.AddBlockButton onClick={(e) => { addBlockHandler(); e.preventDefault(); }}>Nowy termin</P.AddBlockButton>
+            <P.Input name="comment" id="comment" onChange={onChangeComment} value={comment} placeholder="Komentarz osoby wystawiającej"/>
         </>
     );
 }
