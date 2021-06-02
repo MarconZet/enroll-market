@@ -49,12 +49,14 @@ export type OffersManagementAction = {
     type: OffersManagementActionType.AcceptOfferFail,
 } | {
     type: OffersManagementActionType.EditOfferRequest,
+    id: number;
     givenCourseId: number;
     teacherIds: number[];
     timeBlocks: TimeBlock[];
     comment: string;
 } | {
     type: OffersManagementActionType.EditOneForOneOfferRequest,
+    id: number;
     givenCourseId: number;
     takenCourseId: number;
     comment: string;

@@ -62,7 +62,7 @@ export function* createOfferWorker(action: AnyAction) {
 export function* editOfferWorker(action: AnyAction) {
     try {
         if (action.type === C.OffersManagementActionType.EditOneForOneOfferRequest) {
-            yield call(editOneForOneOffer, {
+            yield call(editOneForOneOffer, action.id, {
                 givenCourseId: action.givenCourseId,
                 takenCourseId: action.takenCourseId,
                 comment: action.comment,
@@ -77,7 +77,7 @@ export function* editOfferWorker(action: AnyAction) {
                 comment: action.comment,
             };
 
-            yield call(editOffer, params);
+            yield call(editOffer, action.id, params);
         }
         
         yield put(A.editOfferSuccess());
