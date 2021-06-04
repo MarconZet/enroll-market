@@ -8,7 +8,7 @@ export const Form = styled.form`
     align-items: center;
     padding: 20px;
     width: 1200px;
-    margin-top: 8px;
+    margin: auto;
     background-color: white;
 `;
 
@@ -34,4 +34,9 @@ export const Button = styled.button`
     :hover{
       cursor: pointer;
     }
+`;
+
+export const SubjectName = styled.span`
+    font-size: 32px;
+    margin-bottom: 20px;
 `;

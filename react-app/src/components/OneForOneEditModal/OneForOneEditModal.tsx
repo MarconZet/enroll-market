@@ -13,6 +13,13 @@ export interface OneForOneEditModalProps {
     offer: ExtendedOffer | null;
 }
 
+const translations = {
+    'PROJECT': 'projekt',
+    'LABORATORY': 'laboratorium',
+    'LECTURE': 'wykład',
+    'LESSON': 'ćwiczenia',
+};
+
 export const OneForOneEditModal: React.FC<OneForOneEditModalProps> = ({ cancelHandler, isOpen, offer }) => {
     const dispatch = useDispatch();
     
@@ -49,6 +56,7 @@ export const OneForOneEditModal: React.FC<OneForOneEditModalProps> = ({ cancelHa
     return (
         <ReactModal isOpen={isOpen} style={style}>
             <P.Form onSubmit={onSubmit}>
+            <P.SubjectName>{offer?.givenCourse.subject.name} - {translations[offer?.givenCourse.courseType ?? 'LABORATORY']}</P.SubjectName>
                 <OneForOneForm
                     courses={courses}
                     myCourses={myCourses}

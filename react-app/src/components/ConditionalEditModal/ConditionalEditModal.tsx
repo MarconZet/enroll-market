@@ -15,6 +15,13 @@ export interface ConditionalEditModalProps {
     offer: ExtendedOffer | null;
 }
 
+const translations = {
+    'PROJECT': 'projekt',
+    'LABORATORY': 'laboratorium',
+    'LECTURE': 'wykład',
+    'LESSON': 'ćwiczenia',
+};
+
 export const ConditionalEditModal: React.FC<ConditionalEditModalProps> = ({ cancelHandler, isOpen, offer }) => {
     const dispatch = useDispatch();
 
@@ -118,6 +125,7 @@ export const ConditionalEditModal: React.FC<ConditionalEditModalProps> = ({ canc
     return (
         <ReactModal isOpen={isOpen} style={style}>
             <P.Form onSubmit={onSubmit}>
+                <P.SubjectName>{offer?.givenCourse.subject.name} - {translations[offer?.givenCourse.courseType ?? 'LABORATORY']}</P.SubjectName>
                 <ConditionalForm
                     teachers={teachers}
                     onCheckTeacher={onCheckTeacher}
