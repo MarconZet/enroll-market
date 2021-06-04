@@ -1,34 +1,51 @@
-import { useState } from 'react';
+import { FormEventHandler, useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { DayOfWeek } from '../../api/models';
 import { myCousesForSubjectAndTypeSelector, teachersNamesForSubjectAndTypeSelector } from '../../store/globalData/selectors';
 import { ExtendedOffer } from '../../store/offersListing/constants';
+import { editOfferRequest } from '../../store/offersManagement/actions';
 import ConditionalForm from '../ConditionalForm/ConditionalForm';
 import { ExtendedTimeBlock } from '../DayRangeInput/DayRangeInput';
 import * as P from './parts';
 
 export interface ConditionalEditModalProps {
-    editHandler: () => void;
     cancelHandler: () => void;
     isOpen: boolean;
-    offer: ExtendedOffer;
+    offer: ExtendedOffer | null;
 }
 
-export const ConditionalEditModal: React.FC<ConditionalEditModalProps> = ({ editHandler, cancelHandler, isOpen, offer }) => {
+export const ConditionalEditModal: React.FC<ConditionalEditModalProps> = ({ cancelHandler, isOpen, offer }) => {
     const dispatch = useDispatch();
 
     const [latestBlockIndex, setLatestBlockIndex] = useState(0);
     const [comment, setComment] = useState("");
 
-    const [givenCourseId, setGivenCourseId] = useState(offer.givenCourse.id);
+    const [givenCourseId, setGivenCourseId] = useState(-1);
 
     const [chosenTeachers, setChosenTeachers] = useState<number[]>([]);
     const [chosenTimeBlocks, setChosenTimeBlocks] = useState<ExtendedTimeBlock[]>([]);
 
-    let myCourses = useSelector(myCousesForSubjectAndTypeSelector(offer.givenCourse.subject.id, offer.givenCourse.courseType));
-    let teachers = useSelector(teachersNamesForSubjectAndTypeSelector(offer.givenCourse.subject.id, offer.givenCourse.courseType));
+    let myCourses = useSelector(myCousesForSubjectAndTypeSelector(!!offer ? offer.givenCourse.subject.id : -1, !!offer ? offer.givenCourse.courseType : 'none'));
+    let teachers = useSelector(teachersNamesForSubjectAndTypeSelector(!!offer ? offer.givenCourse.subject.id : -1, !!offer ? offer.givenCourse.courseType : 'none'));
 
+    useEffect(() => {
+        setGivenCourseId(!!offer ? offer.givenCourse.id : -1);
+        setChosenTeachers(!!offer ? offer.offerConditions.teachers.map(t => t.id) : []);
+        setChosenTimeBlocks(!!offer ? offer.offerConditions.timeBlocks.map((block, index) => ({
+            ...block,
+            index,
+            wholeDay: block.startTime === null && block.endTime === null,
+            startTime: block.startTime === null ? '' : block.startTime,
+            endTime: block.endTime === null ? '' : block.endTime,
+        })) : []);
+        setComment(offer?.comment ?? "");
+    }, [offer]);
+
+    useEffect(() => {
+        setLatestBlockIndex(chosenTimeBlocks.length);
+    }, [chosenTimeBlocks])
+ 
     const onCheckTeacher: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         if (event.target.checked) {
             setChosenTeachers([
@@ -79,12 +96,28 @@ export const ConditionalEditModal: React.FC<ConditionalEditModalProps> = ({ edit
     const style = {
         content: {
             padding: '40px 100px 0 100px',
+            border: 'none',
+            background: 'transparent',
         }
     }
 
+    const onSubmit: FormEventHandler<Element> = (event) => {
+        const timeBlocks = chosenTimeBlocks.map(block => ({
+            dayOfWeek: block.dayOfWeek,
+            startTime: block.wholeDay ? null : block.startTime,
+            endTime: block.wholeDay ? null : block.endTime,
+        }))
+        
+        if (offer !== null) {
+            dispatch(editOfferRequest(offer.id, givenCourseId, chosenTeachers, timeBlocks, comment));
+        }
+
+        event.preventDefault();
+    };
+
     return (
         <ReactModal isOpen={isOpen} style={style}>
-            <P.Form>
+            <P.Form onSubmit={onSubmit}>
                 <ConditionalForm
                     teachers={teachers}
                     onCheckTeacher={onCheckTeacher}
@@ -99,8 +132,8 @@ export const ConditionalEditModal: React.FC<ConditionalEditModalProps> = ({ edit
                     onChangeComment={(e) => setComment(e.target.value)}
                 />
                 <P.ButtonsBox>
-                    <P.Button>Anuluj</P.Button>
-                    <P.Button>Zapisz</P.Button>
+                    <P.Button onClick={cancelHandler}>Anuluj</P.Button>
+                    <P.Button type="submit" disabled={!chosenTimeBlocks.length || !chosenTeachers.length}>Zapisz</P.Button>
                 </P.ButtonsBox>
             </P.Form>
         </ReactModal>

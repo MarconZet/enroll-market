@@ -9,6 +9,7 @@ export const Form = styled.form`
     padding: 20px;
     width: 1200px;
     margin-top: 8px;
+    background-color: white;
 `;
 
 export const ButtonsBox = styled.div`

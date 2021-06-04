@@ -7,7 +7,7 @@ export interface MultiCheckboxProps {
     label: string;
 }
 
-const MultiCheckbox: React.FC<MultiCheckboxProps> = ({ name, choices, onElementChange, label }) => (
+const MultiCheckbox: React.FC<MultiCheckboxProps> = ({ name, choices, onElementChange, label}) => (
     <>
         <P.Header>{label}</P.Header>
         {

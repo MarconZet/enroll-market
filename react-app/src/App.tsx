@@ -12,6 +12,9 @@ import { getUserDataRequest } from './store/userAuth/actions';
 import TimetablePage from "./pages/TimetablePage/TimetablePage";
 import { getGlobalDataRequest } from './store/globalData/actions';
 import SwapCoursesPage from './pages/SwapCoursesPage/SwapCoursesPage';
+import ReactModal from 'react-modal';
+
+ReactModal.setAppElement("#root")
 
 const IndexFiller: React.FC = () => (
 	<>

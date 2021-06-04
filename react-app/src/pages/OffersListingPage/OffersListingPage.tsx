@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
 import { FiltersColumn } from '../../components/FiltersColumn/FiltersColumn';
@@ -9,7 +9,9 @@ import { offersListingIsLoadingSelector, offersListingPageSelector, offersListin
 import * as P from './parts';
 import * as A from '../../store/offersListing/actions';
 import { acceptOfferRequest, deleteOfferRequest } from '../../store/offersManagement/actions';
-import { ListingType } from '../../store/offersListing/constants';
+import { ExtendedOffer, ListingType } from '../../store/offersListing/constants';
+import ConditionalEditModal from '../../components/ConditionalEditModal/ConditionalEditModal';
+import OneForOneEditModal from '../../components/OneForOneEditModal/OneForOneEditModal';
 
 export const OffersListingPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -33,7 +35,12 @@ export const OffersListingPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(A.getPageRequest(1))
-    }, [dispatch])
+    }, [dispatch]);
+
+    const [isConditionalEditModalOpen, setIsConditionalEditModalOpen] = useState(false);
+    const [isOneForOneEditModalOpen, setIsOneForOneEditModalOpen] = useState(false);
+    const [conditionalEditModalOffer, setConditionalEditModalOffer] = useState<ExtendedOffer | null>(null);
+    const [oneForOneEditModalOffer, setOneForOneEditModalOffer] = useState<ExtendedOffer | null>(null);
 
     const filtersSubmitCallback = (filters: string) => {
         dispatch(A.applyFilters(filters));
@@ -47,16 +54,26 @@ export const OffersListingPage: React.FC = () => {
         dispatch(acceptOfferRequest(offerId, courseId));
     }
 
-    const editCallback = (id: number) => () => {
-        console.log('edit ' + id);
-    }
-
     const deleteCallback = (id: number) => () => {
         dispatch(deleteOfferRequest(id));
     }
 
     return (
         <P.Wrapper>
+            {(location.pathname === '/myOffers/active') && (!!offers.length) && (
+                <>
+                    <ConditionalEditModal
+                        offer={conditionalEditModalOffer}
+                        isOpen={isConditionalEditModalOpen}
+                        cancelHandler={() => setIsConditionalEditModalOpen(false)}
+                    />
+                    <OneForOneEditModal
+                        offer={oneForOneEditModalOffer}
+                        isOpen={isOneForOneEditModalOpen}
+                        cancelHandler={() => setIsOneForOneEditModalOpen(false)}
+                    />
+                </>
+            )}
             <P.FiltersContainer>
                 {((location.pathname === '/myOffers/active') || (location.pathname === '/myOffers/realised')) && (
                     <P.TypeContainer>
@@ -85,7 +102,10 @@ export const OffersListingPage: React.FC = () => {
                                             {...(
                                                 (location.pathname === '/myOffers/active')
                                                     ? {
-                                                        editCallback: editCallback(offer.id),
+                                                        editCallback: () => {
+                                                            setIsOneForOneEditModalOpen(true);
+                                                            setOneForOneEditModalOffer(offer);
+                                                        },
                                                         deleteCallback: deleteCallback(offer.id),
                                                     }
                                                     : {}
@@ -107,7 +127,10 @@ export const OffersListingPage: React.FC = () => {
                                             {...(
                                                 (location.pathname === '/myOffers/active')
                                                     ? {
-                                                        editCallback: editCallback(offer.id),
+                                                        editCallback: () => {
+                                                            setIsConditionalEditModalOpen(true);
+                                                            setConditionalEditModalOffer(offer);
+                                                        },
                                                         deleteCallback: deleteCallback(offer.id),
                                                     }
                                                     : {}

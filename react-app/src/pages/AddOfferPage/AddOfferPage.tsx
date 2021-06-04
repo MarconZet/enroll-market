@@ -145,7 +145,7 @@ export const AddOfferPage: React.FC = () => {
             return true;
         }
 
-        if ((offerType === "cond") && (!chosenTimeBlocks.length)) {
+        if ((offerType === "cond") && (!chosenTimeBlocks.length || !chosenTeachers.length)) {
             return true;
         }
 
