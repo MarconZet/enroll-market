@@ -83,7 +83,7 @@ export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptC
             </P.SlotBox>
         </P.OffersBox>
         {
-            !!offer.matchingCourses?.length && (
+            !!offer.matchingCourses?.length && !!offer?.student && (
                 <P.MatchingCoursesBox>
                     <P.Subheader>Pasujące terminy spośród twoich zajęć:</P.Subheader>
                     {

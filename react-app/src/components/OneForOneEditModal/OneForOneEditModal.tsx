@@ -49,6 +49,8 @@ export const OneForOneEditModal: React.FC<OneForOneEditModalProps> = ({ cancelHa
         if (offer !== null) {
             dispatch(editOneForOneOfferRequest(offer.id, givenCourseId, takenCourseId, comment));
         }
+
+        cancelHandler();
         
         event.preventDefault();
     };

@@ -1,11 +1,11 @@
 import { DayOfWeek } from "../../api/models";
 import DayRangeInput, { ExtendedTimeBlock } from "../DayRangeInput/DayRangeInput";
-import MultiCheckbox from "../MultiCheckbox/MultiCheckbox";
 import { CourseWithoutSubjectWithTeacher } from "../OneForOneForm/OneForOneForm";
 import * as P from './parts';
 
 export interface ConditionalFormProps {
     teachers: { [key: string]: string };
+    chosenTeachers: number[];
     onCheckTeacher: React.ChangeEventHandler<HTMLInputElement>;
     myCourses: CourseWithoutSubjectWithTeacher[];
     onChangeGivenCourse: React.ChangeEventHandler<HTMLSelectElement>;
@@ -28,7 +28,7 @@ const translations = {
     'SUNDAY': 'Niedziela',
 };
 
-const ConditionalForm: React.FC<ConditionalFormProps> = ({ teachers, onCheckTeacher, myCourses, onChangeGivenCourse, givenCourseId, timeBlocks, changeBlockHandler, deleteBlockHandler, addBlockHandler, comment, onChangeComment }) => {
+const ConditionalForm: React.FC<ConditionalFormProps> = ({ teachers, chosenTeachers, onCheckTeacher, myCourses, onChangeGivenCourse, givenCourseId, timeBlocks, changeBlockHandler, deleteBlockHandler, addBlockHandler, comment, onChangeComment }) => {
     return (
         <>
             <P.Select name="givenCourseId" id="givenCourseId" onChange={onChangeGivenCourse} value={givenCourseId}>
@@ -39,12 +39,14 @@ const ConditionalForm: React.FC<ConditionalFormProps> = ({ teachers, onCheckTeac
                     ))
                 }
             </P.Select>
-            <MultiCheckbox
-                name="teachers"
-                label="Wybierz nauczycieli:"
-                choices={teachers}
-                onElementChange={onCheckTeacher}
-            />
+            <P.RangesHeader>Wybierz nauczycieli:</P.RangesHeader>
+            {
+                Object.keys(teachers).map((val, index) => (
+                    <label>
+                        <input key={`teachers ${index}`} type="checkbox" name="teachers" value={val} onChange={onCheckTeacher} checked={chosenTeachers.some(id => id === +val)} /> {teachers[val]}
+                    </label>
+                ))
+            }
             <P.RangesHeader>Wybierz terminy:</P.RangesHeader>
             {
                 timeBlocks.map((block, index) => (

@@ -119,6 +119,8 @@ export const ConditionalEditModal: React.FC<ConditionalEditModalProps> = ({ canc
             dispatch(editOfferRequest(offer.id, givenCourseId, chosenTeachers, timeBlocks, comment));
         }
 
+        cancelHandler();
+
         event.preventDefault();
     };
 
@@ -128,6 +130,7 @@ export const ConditionalEditModal: React.FC<ConditionalEditModalProps> = ({ canc
                 <P.SubjectName>{offer?.givenCourse.subject.name} - {translations[offer?.givenCourse.courseType ?? 'LABORATORY']}</P.SubjectName>
                 <ConditionalForm
                     teachers={teachers}
+                    chosenTeachers={chosenTeachers}
                     onCheckTeacher={onCheckTeacher}
                     givenCourseId={givenCourseId}
                     myCourses={myCourses}

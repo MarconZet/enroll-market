@@ -119,6 +119,7 @@ export const AddOfferPage: React.FC = () => {
             return (
                 <ConditionalForm
                     teachers={teachers}
+                    chosenTeachers={chosenTeachers}
                     onCheckTeacher={onCheckTeacher}
                     givenCourseId={givenCourseId}
                     myCourses={myCourses}
