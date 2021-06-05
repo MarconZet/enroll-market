@@ -101,7 +101,7 @@ public class OneToOneOfferService {
         if (loggedStudent == null) {
             throw new WrongFieldsException("Logged student doesn't exist in database");
         }
-        if (offer.getStudent().getIndexNumber() != currentUser.getIndex()) {
+        if (!offer.getStudent().getIndexNumber().equals(currentUser.getIndex())) {
             throw new WrongPathVariableException("You cannot change offer from other student!");
         }
         Course takenCourse = courseRepository.findById(oneToOneOfferPostDto.getTakenCourseId())
