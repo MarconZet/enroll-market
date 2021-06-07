@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
     padding: 40px 100px 0 100px;
 `;
 
-export const Form = styled.form`
+export const Form = styled.div`
     box-shadow: 0 0 5px 1px #B2B3B2;
     border-radius: 5px;
     display: flex;

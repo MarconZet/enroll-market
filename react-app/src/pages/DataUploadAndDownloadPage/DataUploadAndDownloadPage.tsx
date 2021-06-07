@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FileDownload from 'js-file-download';
 import * as P from './parts';
@@ -6,28 +6,42 @@ import * as A from '../../store/dataUploadAndDownload/actions';
 import { teachersSelector } from '../../store/globalData/selectors';
 import { getEnrollData, getEnrollDataForTeacher } from '../../api/requests';
 import notitier from '../../utils/notifications';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 
 export const DataUploadAndDownloadPage: React.FC = () => {
     const dispatch = useDispatch();
+
     const input = useRef<HTMLInputElement>(null);
     const registrationInput = useRef<HTMLInputElement>(null);
+
     const [teacher, setTeacher]= useState(-1);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalText, setModalText] = useState('');
+    const [modalCallback, setModalCallback] = useState(() => () => {});
+
     let teachers = useSelector(teachersSelector);
 
     const onImport = () => {
         if (typeof input?.current?.files?.[0] !== 'undefined') {
             dispatch(A.uploadDataRequest(input.current.files[0], input.current.files[0].name));
         }
+
+        setIsModalOpen(false);
     };
 
     const onRegister = () => {
         if (typeof registrationInput?.current?.files?.[0] !== 'undefined') {
             dispatch(A.registerStudentsRequest(registrationInput.current.files[0], registrationInput.current.files[0].name));
         }
+
+        setIsModalOpen(false);
     };
 
     const onDelete = () => {
-        dispatch( A.deleteStudentsRequest());
+        dispatch(A.deleteStudentsRequest());
+
+        setIsModalOpen(false);
     }
 
     const onDownloadAll = () => {
@@ -46,19 +60,43 @@ export const DataUploadAndDownloadPage: React.FC = () => {
         });
     };
 
+    const onImportClick = () => {
+        setModalText("Czy na pewno chcesz wysłać nowe dane?");
+        setModalCallback(() => onImport);
+        setIsModalOpen(true);
+    }
+
+    const onRegisterClick = () => {
+        setModalText("Czy na pewno chcesz zarejestrować nowych studentów?");
+        setModalCallback(() => onRegister);
+        setIsModalOpen(true);
+    }
+
+    const onDeleteClick = () => {
+        setModalText("Czy na pewno chcesz usunąć wszystkich studentów?");
+        setModalCallback(() => onDelete);
+        setIsModalOpen(true);
+    }
+
     return (
         <P.Wrapper>
+            <ConfirmModal
+                confirmationText={modalText}
+                confirmHandler={modalCallback}
+                isOpen={isModalOpen}
+                cancelHandler={() => setIsModalOpen(false)}
+            />
             <P.PagePartContainer>
                 <P.ContainerTitle>Import danych</P.ContainerTitle>
                 <P.Input type="file" ref={input} />
-                <P.Button onClick={onImport}>Wyślij</P.Button>
+                <P.Button onClick={onImportClick}>Wyślij</P.Button>
 
                 <P.ContainerTitle>Rejestracja studentów</P.ContainerTitle>
                 <P.Input type="file" ref={registrationInput} />
-                <P.Button onClick={onRegister}>Zarejestruj</P.Button>
+                <P.Button onClick={onRegisterClick}>Zarejestruj</P.Button>
 
                 <P.ContainerTitle>Usuwanie studentów</P.ContainerTitle>
-                <P.Button onClick={onDelete}>Usuń studentów</P.Button>
+                <P.Button onClick={onDeleteClick}>Usuń studentów</P.Button>
             </P.PagePartContainer>
             <P.PagePartContainer>
                 <P.ContainerTitle>Eksport wyników</P.ContainerTitle>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Form = styled.form`
+export const Wrapper = styled.div`
     box-shadow: 0 0 5px 1px #B2B3B2;
     border-radius: 5px;
     display: flex;
@@ -48,7 +48,7 @@ export const Button = styled.button<{ isNegative?: boolean }>`
     }
 `;
 
-export const SubjectName = styled.span`
+export const Text = styled.span`
     font-size: 32px;
     margin-bottom: 20px;
 `;

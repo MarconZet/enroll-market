@@ -6,12 +6,14 @@ import notitier from '../../utils/notifications';
 import { changeCourse, getCoursesWithoutColision } from "../../api/requests";
 import { coursesForSubjectSelector } from "../globalData/selectors";
 import { CourseWithoutSubject } from "../../api/models";
+import { getGlobalDataRequest } from "../globalData/actions";
 
 export function* swapCoursesWorker(action: AnyAction) {
     try {
         yield call(changeCourse, action.from, action.to);
         yield put(A.swapCoursesSuccess());
         notitier.success('Przepisanie powiodło się.');
+        yield put(getGlobalDataRequest());
     } catch (error) {
         yield put(A.swapCoursesFail());
         notitier.alert('Przepisanie nie powiodło się.');
