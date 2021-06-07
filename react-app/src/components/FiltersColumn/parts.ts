@@ -9,7 +9,7 @@ export const Container = styled.form`
     padding: 20px;
 `;
 
-export const Submit = styled.button`
+export const Button = styled.button`
     padding: 12px 36px;
     margin-top: 8px;
     font-size: 16px;
@@ -36,5 +36,12 @@ export const Title = styled.div`
 export const Select = styled.select`
     width: 100%;
     font-size: 16px;
+    margin: 8px 0;
+`;
+
+export const CheckboxesHeader = styled.span`
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
     margin: 8px 0;
 `;

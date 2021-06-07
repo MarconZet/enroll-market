@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isAcceptable?: boolean }>`
     box-shadow: 0 0 5px 1px #B2B3B2;
     border-radius: 5px;
     padding: 14px;
@@ -8,6 +8,8 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     margin-bottom: 30px;
+
+    ${({ isAcceptable }) => isAcceptable ? 'background-color: white' : 'background-color: silver'}
 `;
 
 export const SubjectName = styled.span`

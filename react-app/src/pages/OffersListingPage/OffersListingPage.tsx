@@ -58,6 +58,10 @@ export const OffersListingPage: React.FC = () => {
         dispatch(deleteOfferRequest(id));
     }
 
+    const filtersClearCallback = () => {
+        dispatch(A.applyFilters(''));
+    }
+
     return (
         <P.Wrapper>
             {(location.pathname === '/myOffers/active') && (!!offers.length) && (
@@ -85,7 +89,7 @@ export const OffersListingPage: React.FC = () => {
                         </Link>
                     </P.TypeContainer>
                 )}
-                {location.pathname === '/offers' && (<FiltersColumn submitCallback={filtersSubmitCallback} />)}
+                {location.pathname === '/offers' && (<FiltersColumn submitCallback={filtersSubmitCallback} clearCallback={filtersClearCallback} />)}
             </P.FiltersContainer>
             <P.OffersContainer>
                 {

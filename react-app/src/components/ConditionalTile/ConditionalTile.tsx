@@ -25,7 +25,7 @@ const translations = {
 };
 
 export const ConditionalTile: React.FC<ConditionalTileProps> = ({ offer, acceptCallback, editCallback, deleteCallback, reverseOrder }) => (
-    <P.Container>
+    <P.Container isAcceptable={!!offer.matchingCourses?.length && !!offer?.student}>
         <P.SubjectName>{offer.givenCourse.subject.name} - {translations[offer.givenCourse.courseType]}</P.SubjectName>
         <P.OffersBox reverseOrder={reverseOrder}>
             <P.SlotBox>
