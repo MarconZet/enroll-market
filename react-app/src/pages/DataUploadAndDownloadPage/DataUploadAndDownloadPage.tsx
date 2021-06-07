@@ -10,6 +10,7 @@ import notitier from '../../utils/notifications';
 export const DataUploadAndDownloadPage: React.FC = () => {
     const dispatch = useDispatch();
     const input = useRef<HTMLInputElement>(null);
+    const registrationInput = useRef<HTMLInputElement>(null);
     const [teacher, setTeacher]= useState(-1);
     let teachers = useSelector(teachersSelector);
 
@@ -17,6 +18,16 @@ export const DataUploadAndDownloadPage: React.FC = () => {
         if (typeof input?.current?.files?.[0] !== 'undefined') {
             dispatch(A.uploadDataRequest(input.current.files[0], input.current.files[0].name));
         }
+    };
+
+    const onRegister = () => {
+        if (typeof registrationInput?.current?.files?.[0] !== 'undefined') {
+            dispatch(A.registerStudentsRequest(registrationInput.current.files[0], registrationInput.current.files[0].name));
+        }
+    };
+
+    const onDelete = () => {
+        dispatch( A.deleteStudentsRequest());
     }
 
     const onDownloadAll = () => {
@@ -40,11 +51,18 @@ export const DataUploadAndDownloadPage: React.FC = () => {
             <P.PagePartContainer>
                 <P.ContainerTitle>Import danych</P.ContainerTitle>
                 <P.Input type="file" ref={input} />
-                <P.Submit onClick={onImport}>Wyślij</P.Submit>
+                <P.Button onClick={onImport}>Wyślij</P.Button>
+
+                <P.ContainerTitle>Rejestracja studentów</P.ContainerTitle>
+                <P.Input type="file" ref={registrationInput} />
+                <P.Button onClick={onRegister}>Zarejestruj</P.Button>
+
+                <P.ContainerTitle>Usuwanie studentów</P.ContainerTitle>
+                <P.Button onClick={onDelete}>Usuń studentów</P.Button>
             </P.PagePartContainer>
             <P.PagePartContainer>
                 <P.ContainerTitle>Eksport wyników</P.ContainerTitle>
-                <P.Download onClick={onDownloadAll}>Pobierz całość</P.Download>
+                <P.Button onClick={onDownloadAll}>Pobierz całość</P.Button>
                 <P.Select name="teacher" id="teacher" onChange={(e) => setTeacher(+e.target.value)} value={teacher}>
                     <option key={-1} value={-1}>Wybierz prowadzącego</option>
                     {
@@ -53,7 +71,7 @@ export const DataUploadAndDownloadPage: React.FC = () => {
                         ))
                     }
                 </P.Select>
-                <P.Download onClick={onDownloadForTeacher} disabled={teacher === -1}>Pobierz wyniki dla prowadzącego</P.Download>
+                <P.Button onClick={onDownloadForTeacher} disabled={teacher === -1}>Pobierz wyniki dla prowadzącego</P.Button>
             </P.PagePartContainer>
         </P.Wrapper>
     );

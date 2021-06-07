@@ -69,9 +69,6 @@ export const Navbar: React.FC = () => {
 
     return (
         <P.Navbar>
-            {/* <P.SelectSemester>
-                <option>Wybór semestru zrobi się w swoim czasie</option>
-            </P.SelectSemester> */}
             <P.UserName>{!userData.id ? 'Użytkownik niezalogowany' : `Witaj, ${userData.name} ${userData.surname}`}</P.UserName>
             <div>
                 {links.map(
@@ -84,7 +81,7 @@ export const Navbar: React.FC = () => {
                     )
                 )}
                 {!!keycloak.hasRealmRole('admin') && (<Link key={-2} to={'/dataUploadAndDownload'} style={{ textDecoration: 'none' }} onClick={checkAuthenticated}>
-                    <P.Link isCurrent={location.pathname === '/dataUploadAndDownload'}>Import/export</P.Link>
+                    <P.Link isCurrent={location.pathname === '/dataUploadAndDownload'}>Zarządzanie danymi</P.Link>
                 </Link>)}
                 <Link key={-1} to={'/login'} style={{ textDecoration: 'none' }} onClick={handleLogInOut}>
                     <P.Link>{getLogInOutText()}</P.Link>

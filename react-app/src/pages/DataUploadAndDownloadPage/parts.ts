@@ -24,15 +24,13 @@ export const PagePartContainer = styled.div`
 export const ContainerTitle = styled.p`
     font-size: 32px;
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 20px 0;
 `;
 
-export const Download = styled.button`
+export const Button = styled.button`
     padding: 16px 48px;
     margin-top: 16px;
     font-size: 24px;
-    text-decoration: none;
-    display: block;
     border-radius: 5px;
     border: none;
     background: #de3770;
@@ -58,22 +56,6 @@ export const Input = styled.input`
 
     font-size: 16px;
     box-shadow: 0 0 5px 1px #B2B3B2;
-`;
-
-export const Submit = styled.button`
-    padding: 16px 48px;
-    margin-top: 16px;
-    margin-left: 8px;
-    font-size: 24px;
-    border-radius: 5px;
-    border: none;
-    background: #de3770;
-    color: white;
-    font-weight: bold;
-
-    :hover{
-      cursor: pointer;
-    }
 `;
 
 export const Select = styled.select`
