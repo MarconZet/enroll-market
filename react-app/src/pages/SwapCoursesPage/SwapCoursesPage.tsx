@@ -1,10 +1,11 @@
-import { FormEventHandler, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as P from './parts';
 import * as A from '../../store/coursesSwapping/actions';
 import { CourseType } from '../../api/models';
 import { myCousesForSubjectAndTypeSelector, isLoadingGlobalDataSelector, mySubjectsNamesAndIdsSelector } from '../../store/globalData/selectors';
 import { coursesWithoutColisionSelector, isLoadingCoursesWithoutColisionSelector } from '../../store/coursesSwapping/selectors';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 
 const translations = {
     'MONDAY': 'Poniedziałek',
@@ -23,6 +24,8 @@ export const SwapCoursesPage: React.FC = () => {
     const [from, setFrom] = useState(-1);
     const [to, setTo] = useState(-1);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     let subjects = useSelector(mySubjectsNamesAndIdsSelector);
     let myCourses = useSelector(myCousesForSubjectAndTypeSelector(subject, type));
     let courses = useSelector(coursesWithoutColisionSelector);
@@ -40,9 +43,9 @@ export const SwapCoursesPage: React.FC = () => {
         }
     }, [from, subject, dispatch]);
 
-    const onSubmit: FormEventHandler<Element> = (event) => {
+    const onSubmit = () => {
         dispatch(A.swapCoursesRequest(from, to));
-        event.preventDefault();
+        setIsModalOpen(false);
     };
 
     const disableForm = () => {
@@ -51,7 +54,13 @@ export const SwapCoursesPage: React.FC = () => {
 
     return isLoadingSubjects ? (<></>) : (
         <P.Wrapper>
-            <P.Form onSubmit={onSubmit}>
+            <ConfirmModal
+                confirmationText="Czy na pewno chcesz dokonać zamiany?"
+                confirmHandler={onSubmit}
+                isOpen={isModalOpen}
+                cancelHandler={() => setIsModalOpen(false)}
+            />
+            <P.Form>
                 <P.Title>Bezkolizyjne przepisanie</P.Title>
                 <P.Select name="subject" id="subject" onChange={(e) => setSubject(+e.target.value)} value={subject}>
                     <option key={-1} value={-1}>Wybierz przedmiot</option>
@@ -97,7 +106,7 @@ export const SwapCoursesPage: React.FC = () => {
                         <P.Title>Ustaw odpowiedni przedmiot i typ zajęć.</P.Title>
                     )
                 }
-                <P.Submit disabled={disableForm()}>Dodaj</P.Submit>
+                <P.Submit disabled={disableForm()} onClick={() => setIsModalOpen(true)}>Zmień zajęcia</P.Submit>
             </P.Form>
         </P.Wrapper>
     );

@@ -25,7 +25,7 @@ const translations = {
 };
 
 export const OneForOneTile: React.FC<OneForOneTileProps> = ({ offer, acceptCallback, editCallback, deleteCallback, reverseOrder }) => (
-    <P.Container isAcceptable={!!acceptCallback}>
+    <P.Container isAcceptable={!!acceptCallback || !offer?.student}>
         <P.SubjectName>{offer.givenCourse.subject.name} - {translations[offer.givenCourse.courseType]}</P.SubjectName>
         <P.OffersBox reverseOrder={reverseOrder}>
             <P.SlotBox>

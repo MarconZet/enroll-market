@@ -143,8 +143,8 @@ export const ConditionalEditModal: React.FC<ConditionalEditModalProps> = ({ canc
                     onChangeComment={(e) => setComment(e.target.value)}
                 />
                 <P.ButtonsBox>
-                    <P.Button onClick={cancelHandler}>Anuluj</P.Button>
                     <P.Button type="submit" disabled={!chosenTimeBlocks.length || !chosenTeachers.length}>Zapisz</P.Button>
+                    <P.Button isNegative onClick={cancelHandler}>Anuluj</P.Button>
                 </P.ButtonsBox>
             </P.Form>
         </ReactModal>

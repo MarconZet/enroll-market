@@ -19,7 +19,7 @@ const makeStore = () => {
         middleware: [...getDefaultMiddleware({
             thunk: false,
             serializableCheck: {
-                ignoredActions: [DataUploadAndDownloadActionType.UploadDataRequest],
+                ignoredActions: [DataUploadAndDownloadActionType.UploadDataRequest, DataUploadAndDownloadActionType.RegisterStudentsRequest],
             },
         }), saga],
     });

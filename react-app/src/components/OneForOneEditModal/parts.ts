@@ -21,7 +21,7 @@ export const ButtonsBox = styled.div`
     border-top: 1px solid black;
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<{ isNegative?: boolean }>`
     padding: 12px 36px;
     margin: 0 16px;
     font-size: 16px;
@@ -33,6 +33,18 @@ export const Button = styled.button`
   
     :hover{
       cursor: pointer;
+    }
+
+    ${
+        ({ isNegative }) => isNegative
+            ? `
+                border: 1px solid #de3770;
+                color: #de3770;
+                background: white
+            ` : `
+                background: #de3770;
+                color: white;
+            `
     }
 `;
 

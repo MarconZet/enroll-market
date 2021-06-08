@@ -70,8 +70,8 @@ export const OneForOneEditModal: React.FC<OneForOneEditModalProps> = ({ cancelHa
                     onChangeComment={(e) => setComment(e.target.value)}
                 />
                 <P.ButtonsBox>
-                    <P.Button onClick={cancelHandler}>Anuluj</P.Button>
                     <P.Button type="submit" disabled={(givenCourseId === -1) || (takenCourseId === -1)}>Zapisz</P.Button>
+                    <P.Button isNegative onClick={cancelHandler}>Anuluj</P.Button>
                 </P.ButtonsBox>
             </P.Form>
         </ReactModal>

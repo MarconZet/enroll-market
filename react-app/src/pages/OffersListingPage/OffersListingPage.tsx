@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
 import { FiltersColumn } from '../../components/FiltersColumn/FiltersColumn';
@@ -12,9 +12,11 @@ import { acceptOfferRequest, deleteOfferRequest } from '../../store/offersManage
 import { ExtendedOffer, ListingType } from '../../store/offersListing/constants';
 import ConditionalEditModal from '../../components/ConditionalEditModal/ConditionalEditModal';
 import OneForOneEditModal from '../../components/OneForOneEditModal/OneForOneEditModal';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 
 export const OffersListingPage: React.FC = () => {
     const dispatch = useDispatch();
+
     let currentPage = useSelector(offersListingPageSelector);
     let totalPages = useSelector(offersListingTotalPagesSelector);
     let offers = useSelector(offersListingSelector);
@@ -42,6 +44,10 @@ export const OffersListingPage: React.FC = () => {
     const [conditionalEditModalOffer, setConditionalEditModalOffer] = useState<ExtendedOffer | null>(null);
     const [oneForOneEditModalOffer, setOneForOneEditModalOffer] = useState<ExtendedOffer | null>(null);
 
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+    const [confirmModalText, setConfirmModalText] = useState('');
+    const [confirmModalCallback, setConfirmModalCallback] = useState(() => () => {});
+
     const filtersSubmitCallback = (filters: string) => {
         dispatch(A.applyFilters(filters));
     };
@@ -52,10 +58,12 @@ export const OffersListingPage: React.FC = () => {
 
     const acceptCallback = (offerId: number, courseId: number) => () => {
         dispatch(acceptOfferRequest(offerId, courseId));
+        setIsConfirmModalOpen(false);
     }
 
     const deleteCallback = (id: number) => () => {
         dispatch(deleteOfferRequest(id));
+        setIsConfirmModalOpen(false);
     }
 
     const filtersClearCallback = () => {
@@ -64,6 +72,12 @@ export const OffersListingPage: React.FC = () => {
 
     return (
         <P.Wrapper>
+            <ConfirmModal
+                confirmationText={confirmModalText}
+                confirmHandler={confirmModalCallback}
+                isOpen={isConfirmModalOpen}
+                cancelHandler={() => setIsConfirmModalOpen(false)}
+            />
             {(location.pathname === '/myOffers/active') && (!!offers.length) && (
                 <>
                     <ConditionalEditModal
@@ -110,14 +124,22 @@ export const OffersListingPage: React.FC = () => {
                                                             setIsOneForOneEditModalOpen(true);
                                                             setOneForOneEditModalOffer(offer);
                                                         },
-                                                        deleteCallback: deleteCallback(offer.id),
+                                                        deleteCallback: () => {
+                                                            setConfirmModalText("Czy na pewno chcesz usunąć tę ofertę?");
+                                                            setConfirmModalCallback(() => deleteCallback(offer.id));
+                                                            setIsConfirmModalOpen(true);
+                                                        },
                                                     }
                                                     : {}
                                             )}
                                             {...(
                                                 offer.canAccept
                                                 ? {
-                                                    acceptCallback: acceptCallback(offer.id, offer.givenCourse.id),
+                                                    acceptCallback: () => {
+                                                        setConfirmModalText("Czy na pewno chcesz zaakceptować tę ofertę?");
+                                                        setConfirmModalCallback(() => acceptCallback(offer.id, offer.givenCourse.id));
+                                                        setIsConfirmModalOpen(true);
+                                                    },
                                                 }
                                                 : {}
                                             )}
@@ -135,14 +157,22 @@ export const OffersListingPage: React.FC = () => {
                                                             setIsConditionalEditModalOpen(true);
                                                             setConditionalEditModalOffer(offer);
                                                         },
-                                                        deleteCallback: deleteCallback(offer.id),
+                                                        deleteCallback: () => {
+                                                            setConfirmModalText("Czy na pewno chcesz usunąć tę ofertę?");
+                                                            setConfirmModalCallback(() => deleteCallback(offer.id));
+                                                            setIsConfirmModalOpen(true);
+                                                        },
                                                     }
                                                     : {}
                                             )}
                                             {...(
                                                 offer.canAccept
                                                 ? {
-                                                    acceptCallback,
+                                                    acceptCallback: (offerId, givenCourseId) => () => {
+                                                        setConfirmModalText("Czy na pewno chcesz zaakceptować tę ofertę?");
+                                                        setConfirmModalCallback(() => acceptCallback(offerId, givenCourseId));
+                                                        setIsConfirmModalOpen(true);
+                                                    },
                                                 }
                                                 : {}
                                             )}
