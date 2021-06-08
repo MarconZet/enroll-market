@@ -13,6 +13,7 @@ export type GlobalDataAction = {
     subjects: Subject[];
     teachers: Teacher[];
     myCourses: Course[];
+    allCourses: Course[];
 } | {
     type: GlobalDataActionType.GetGlobalDataFail,
 };
@@ -20,7 +21,8 @@ export type GlobalDataAction = {
 export interface GlobalDataState {
     subjects: Subject[];
     teachers: Teacher[];
-    myCourses: Course[]
+    myCourses: Course[];
+    allCourses: Course[];
     isLoading: boolean;
 }
 
@@ -28,5 +30,6 @@ export const GlobalDataIinitialState: GlobalDataState = {
     subjects: [],
     teachers: [],
     myCourses: [],
+    allCourses: [],
     isLoading: false,
 };

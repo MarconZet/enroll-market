@@ -9,10 +9,11 @@ import OffersListingPage from './pages/OffersListingPage/OffersListingPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import { useDispatch } from 'react-redux';
 import { getUserDataRequest } from './store/userAuth/actions';
-import TimetablePage from "./pages/TimetablePage/TimetablePage";
+import UserTimetablePage from "./pages/UserTimetablePage/UserTimetablePage";
 import { getGlobalDataRequest } from './store/globalData/actions';
 import SwapCoursesPage from './pages/SwapCoursesPage/SwapCoursesPage';
 import ReactModal from 'react-modal';
+import GlobalTimetablePage from "./pages/GlobalTimetablePage/GlobalTimetablePage";
 
 ReactModal.setAppElement("#root")
 
@@ -58,7 +59,8 @@ const App: React.FC = () => {
 					<PrivateRoute path={["/dataUploadAndDownload"]} component={DataUploadAndDownloadPage} isAdminRoute />
 					<PrivateRoute path={["/addOffer"]} component={AddOfferPage} />
 					<PrivateRoute path={["/swapCourses"]} component={SwapCoursesPage} />
-					<PrivateRoute path={["/timetable"]} component={TimetablePage} />
+					<PrivateRoute path={["/userTimetable"]} component={UserTimetablePage} />
+					<PrivateRoute path={["/globalTimetable"]} component={GlobalTimetablePage} />
 					<Route exact path="/" component={IndexFiller} />
 					<Route exact path="/unauthorized" component={UnauthorizedFiller} />
 					<Route path="*" component={NoFoundPageFiller} />

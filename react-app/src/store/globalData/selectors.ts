@@ -80,3 +80,5 @@ export const myCoursesSelector = (state: ApplicationState) => state.globalData.m
 export const teachersSelector = (state: ApplicationState) => state.globalData.teachers;
 
 export const coursesForSubjectSelector = (subjectId: number) => (state: ApplicationState) => state.globalData.subjects.find(e => e.id === subjectId)?.courses;
+
+export const allCoursesSelector = (state: ApplicationState) => state.globalData.allCourses;

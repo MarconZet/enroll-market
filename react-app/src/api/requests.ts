@@ -84,3 +84,5 @@ export const getStudentIcsCalendar = (id: number) => axios.get(process.env.REACT
 export const changeCourse = (fromId: number, toId: number) => axios.post(process.env.REACT_APP_API_PATH + '/api/courses/' + fromId + '/enroll/' + toId, {}, getConfig());
 
 export const getCoursesWithoutColision = (id: number) => axios.get<{ ids: number[] }>(process.env.REACT_APP_API_PATH + '/api/courses/' + id + '/without-colision', getConfig());
+
+export const getAllCourses = () => axios.get<Course[]>(process.env.REACT_APP_API_PATH + '/api/students/me/courses', getConfig());

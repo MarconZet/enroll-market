@@ -10,7 +10,6 @@ export const Navbar: React.FC = () => {
     let userData = useSelector(userAuthSelector);
 
     const { keycloak } = useKeycloak();
-
     const links = [
         {
             title: 'Strona główna',
@@ -18,7 +17,12 @@ export const Navbar: React.FC = () => {
         },
         {
             title: 'Mój plan',
-            path: '/timetable',
+            path: '/userTimetable',
+            checkAuth: true,
+        },
+        {
+            title: 'Plan globalny',
+            path: '/globalTimetable',
             checkAuth: true,
         },
         {

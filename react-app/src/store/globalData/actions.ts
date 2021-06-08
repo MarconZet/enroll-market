@@ -5,11 +5,12 @@ export const getGlobalDataRequest = (): GlobalDataAction => ({
     type: GlobalDataActionType.GetGlobalDataRequest,
 });
 
-export const getGlobalDataSuccess = (subjects: Subject[], teachers: Teacher[], myCourses: Course[]): GlobalDataAction => ({
+export const getGlobalDataSuccess = (subjects: Subject[], teachers: Teacher[], myCourses: Course[], allCourses: Course[]): GlobalDataAction => ({
     type: GlobalDataActionType.GetGlobalDataSuccess,
     subjects,
     teachers,
     myCourses,
+    allCourses,
 });
 
 export const getGlobalDataFail = (): GlobalDataAction => ({
