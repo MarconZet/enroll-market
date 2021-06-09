@@ -61,6 +61,7 @@ const App: React.FC = () => {
 					<PrivateRoute path={["/userTimetable"]} component={UserTimetablePage} />
 					<PrivateRoute path={["/globalTimetable"]} component={GlobalTimetablePage} />
 					<Route exact path="/" component={IndexFiller} />
+					<Route exact path="/login" component={LoadingFiller} />
 					<Route exact path="/unauthorized" component={UnauthorizedFiller} />
 					<Route path="*" component={NoFoundPageFiller} />
 				</Switch>

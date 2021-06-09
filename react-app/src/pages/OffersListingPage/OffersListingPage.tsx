@@ -137,7 +137,7 @@ export const OffersListingPage: React.FC = () => {
                                                 ? {
                                                     acceptCallback: () => {
                                                         setConfirmModalText("Czy na pewno chcesz zaakceptować tę ofertę?");
-                                                        setConfirmModalCallback(() => acceptCallback(offer.id, offer.givenCourse.id));
+                                                        setConfirmModalCallback(() => acceptCallback(offer.id, (typeof offer?.takenCourse !== 'undefined') ? offer?.takenCourse.id : 0));
                                                         setIsConfirmModalOpen(true);
                                                     },
                                                 }
@@ -168,9 +168,9 @@ export const OffersListingPage: React.FC = () => {
                                             {...(
                                                 offer.canAccept
                                                 ? {
-                                                    acceptCallback: (offerId, givenCourseId) => () => {
+                                                    acceptCallback: (offerId, courseId) => () => {
                                                         setConfirmModalText("Czy na pewno chcesz zaakceptować tę ofertę?");
-                                                        setConfirmModalCallback(() => acceptCallback(offerId, givenCourseId));
+                                                        setConfirmModalCallback(() => acceptCallback(offerId, courseId));
                                                         setIsConfirmModalOpen(true);
                                                     },
                                                 }
