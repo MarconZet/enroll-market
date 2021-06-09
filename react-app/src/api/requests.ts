@@ -77,7 +77,7 @@ export const deleteKeycloakStudents = () => axios.delete(process.env.REACT_APP_A
 
 ////////////////
 
-export const getStudentIcsCalendar = (id: number) => axios.get(process.env.REACT_APP_API_PATH + '/api/enroll/download/student/calendar/' + id, getFileDownloadConfig());
+export const getStudentIcsCalendar = (indexNumber: string) => axios.get(process.env.REACT_APP_API_PATH + '/api/enroll/download/student/calendar/' + indexNumber, getFileDownloadConfig());
 
 ////////////////
 
