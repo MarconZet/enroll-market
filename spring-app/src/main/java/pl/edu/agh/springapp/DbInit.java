@@ -64,8 +64,8 @@ public class DbInit implements CommandLineRunner {
                 new TeacherPostDto("Mariusz", "Kostkowski", "kostkowski@agh.edu.pl"),
                 new TeacherPostDto("Marian", "Kozik", "kozik@agh.edu.pl"),
                 new TeacherPostDto("Aleksander", "Pohl", "pohl@agh.edu.pl"),
-                new TeacherPostDto("Krzysztof", "Zieliński", "zielinski@agh.edu.pl"),
-                new TeacherPostDto("Łukasz", "Czekierda", "czekierda@agh.edu.pl"),
+                new TeacherPostDto("Krzysztof", "Zieliński", "kzielins@agh.edu.pl"),
+                new TeacherPostDto("Łukasz", "Czekierda", "luke@agh.edu.pl"),
                 new TeacherPostDto("Jarosław", "Kożlak", "kozlak@agh.edu.pl")
         );
         List<Teacher> teachers = teacherMapper.teacherPostDtosToTeachers(teacherPostDtos);
