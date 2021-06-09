@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as C from '../../utils/colors'
 
 export const Wrapper = styled.div`
     display: flex;
@@ -48,5 +49,5 @@ export const TypeButton = styled.div<{ isCurrent?: boolean }>`
     font-weight: bold;
     text-align: center;
 
-    ${({ isCurrent }) => isCurrent && 'color: #de3770'}
+    ${({ isCurrent }) => isCurrent && `color: ${C.blue}`}
 `;

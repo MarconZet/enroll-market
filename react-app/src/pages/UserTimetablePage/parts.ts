@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as C from '../../utils/colors'
 
 export const Download = styled.button`
     padding: 16px 48px;
@@ -8,7 +9,7 @@ export const Download = styled.button`
     display: block;
     border-radius: 5px;
     border: none;
-    background: #de3770;
+    background: ${C.blue};
     color: white;
     font-weight: bold;
 

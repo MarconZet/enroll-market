@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as C from '../../utils/colors'
 
 export const Table = styled.table`
     font-size: 1em;
@@ -10,7 +11,7 @@ export const Table = styled.table`
 export const Th = styled.th`
     border: 1px solid black;
     text-align: center;
-    background: #1D7991;
+    background: ${C.blue};
     color: white;
     padding: 0;
     margin: 0;
@@ -20,7 +21,7 @@ export const Td_hour = styled.td`
     border: 1px solid black;
     text-align: center;
     vertical-align: top;
-    background: #1D7991;
+    background: ${C.blue};
     color: white;
     padding: 0;
     margin: 0;
