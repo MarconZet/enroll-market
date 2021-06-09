@@ -87,7 +87,7 @@ export const SwapCoursesPage: React.FC = () => {
                                     ))
                                 }
                             </P.Select>
-                            {courses.length > 0
+                            {(courses.length > 0) && (from !== -1)
                                 ? (
                                     <P.Select name="to" id="to" onChange={(e) => setTo(+e.target.value)} value={to}>
                                         <option key={-1} value={-1}>Wybierz zajęcia, na które chcesz się wymienić</option>
@@ -98,7 +98,10 @@ export const SwapCoursesPage: React.FC = () => {
                                         }
                                     </P.Select>
                                 ) : (
-                                    !isLoadingCoursesWithoutColision && (<P.Title>Brak terminów z możliwością przepisania się. Ustaw inny przedmiot lub typ zajęć.</P.Title>)
+                                    <>
+                                        {(from === -1) && (<P.Title>Ustaw termin, który chcesz wymienić.</P.Title>)}
+                                        {(from !== -1) && !isLoadingCoursesWithoutColision && (<P.Title>Brak terminów z możliwością przepisania się. Ustaw inny termin do wymiany.</P.Title>)}
+                                    </>
                                 )
                             }
                         </>
