@@ -36,6 +36,7 @@ const UnauthorizedFiller: React.FC = () => (<h1>Próbowaleś wejść na stronę 
 const LoadingFiller: React.FC = () => (<h1>Poczekaj...</h1>);
 
 const App: React.FC = () => {
+	console.log(process.env);
 	const dispatch = useDispatch();
 
 	const initOptions = { pkceMethod: 'S256' };
