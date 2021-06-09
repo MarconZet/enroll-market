@@ -21,7 +21,7 @@ const getFileDownloadConfig = (): AxiosRequestConfig => ({
     responseType: 'blob'
 });
 
-const api_path = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_API_PATH : (window as any).API_PATH;
+const api_path = process.env.REACT_APP_API_PATH;
 
 ///////////////
 
