@@ -105,6 +105,7 @@ public class KeycloakInitializerRunner implements CommandLineRunner {
 
         // Create Realm
         keycloakAdmin.realms().create(realmRepresentation);
+        log.info("Created realm");
 
         // Testing
         if (createUsers) {

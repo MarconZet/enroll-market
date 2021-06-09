@@ -1,6 +1,27 @@
 version: "3.8"
 
 services:
+ 
+  keycloak-em:
+    image: jboss/keycloak:12.0.4
+    container_name: keycloak-em
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=mysql
+      - DB_ADDR=mysql-em
+      - DB_USER=keycloak
+      - DB_PASSWORD=password
+      - JDBC_PARAMS=useSSL=false
+      - PROXY_ADDRESS_FORWARDING=true
+    ports:
+      - "9000:8080"
+    depends_on:
+      - mysql-em
+    healthcheck:
+      test: "curl -f http://localhost:8080/auth || exit 1"
+      start_period: 20s
+
   mysql-em:
     image: mysql:5.7.34
     container_name: mysql-em
@@ -14,22 +35,3 @@ services:
     healthcheck:
       test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
       start_period: 10s
-
-  keycloak-em:
-    image: jboss/keycloak:12.0.4
-    container_name: keycloak-em
-    environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
-      - DB_VENDOR=mysql
-      - DB_ADDR=mysql-em
-      - DB_USER=keycloak
-      - DB_PASSWORD=password
-      - JDBC_PARAMS=useSSL=false
-    ports:
-      - "9000:8080"
-    depends_on:
-      - mysql-em
-    healthcheck:
-      test: "curl -f http://localhost:8080/auth || exit 1"
-      start_period: 20s

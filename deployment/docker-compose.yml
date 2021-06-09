@@ -1,81 +1,80 @@
 version: "3"
 
 services:
-    react-em:
-        build: ../react-app/.
-        container_name: react-em
-        environment:
-            - REACT_APP_API_PATH=${MAIN_URL}:${SPRING_PORT}
-            - REACT_APP_KEYCLOAK_PATH=${MAIN_URL}:${KEYCLOAK_PORT}
-            - CHOKIDAR_USEPOLLING=true
-            - PORT=3000
-            - CI=true
-        ports:
-            - ${REACT_PORT}:3000
-        depends_on:
-            - spring-em
-        stdin_open: true
+  react-em:
+    build: ../react-app/.
+    container_name: react-em
+    environment:
+      - REACT_APP_API_PATH=${MAIN_URL}:443
+      - REACT_APP_KEYCLOAK_PATH=${KEYCLOAK_URL}:443
+      - CHOKIDAR_USEPOLLING=true
+      - PORT=3000
+      - CI=true
+    ports:
+      - ${REACT_PORT}:3000
+    depends_on:
+      - spring-em
+    stdin_open: true
 
-    spring-em:
-        build: ../spring-app/.
-        container_name: spring-em         
-        environment: 
-            - SPRING_APP_PROFILES=prod,security
-            - SPRING_APP_REDIRECT_URL=${MAIN_URL}:${REACT_PORT}/*
-            - SPRING_APP_PORT=8080
-            - SPRING_APP_KEYCLOAK_SERVER_URL=${MAIN_URL}:${KEYCLOAK_PORT}/auth
-            - SPRING_APP_DATASOURCE_URL=jdbc:postgresql://postgress-em:5432/enroll-market
-            - SPRING_APP_DATABASE_USERNAME=${DB_USER}
-            - SPRING_APP_DATABASE_PASSWORD=${DB_PASS}
-            - SPRING_APP_DDL_AUTO=create
-        depends_on: 
-            - keycloak-em
-            - postgres-em
-        ports:
-            - "${SPRING_PORT}:8080"
-    
+  spring-em:
+    build: ../spring-app/.
+    container_name: spring-em     
+    environment: 
+      - SPRING_APP_PROFILES=security,prod
+      - SPRING_APP_REDIRECT_URL=${MAIN_URL}:443/*
+      - SPRING_APP_PORT=8080
+      - SPRING_APP_KEYCLOAK_SERVER_URL=${KEYCLOAK_URL}:443/auth
+      - SPRING_APP_DATASOURCE_URL=jdbc:postgresql://postgres-em:5432/enroll-market
+      - SPRING_APP_DATABASE_USERNAME=${DB_USER}
+      - SPRING_APP_DATABASE_PASSWORD=${DB_PASS}
+      - SPRING_APP_DDL_AUTO=create
+    depends_on: 
+      - keycloak-em
+      - postgres-em
+    ports:
+      - "${SPRING_PORT}:8080"
+  
+  postgres-em:
+    image: postgres:13.3
+    container_name: postgres-em
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=enroll-market
+    restart: unless-stopped
+    ports:
+      - "${POSTGRES_PORT}:5432"
 
+  keycloak-em:
+    image: jboss/keycloak:12.0.4
+    container_name: keycloak-em
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=mysql
+      - DB_ADDR=mysql-em
+      - DB_USER=keycloak
+      - DB_PASSWORD=password
+      - JDBC_PARAMS=useSSL=false
+      - PROXY_ADDRESS_FORWARDING=true
+    ports:
+      - "${KEYCLOAK_PORT}:8080"
+    depends_on:
+      - mysql-em
+    healthcheck:
+      test: "curl -f http://localhost:9000/auth || exit 1"
+      start_period: 20s
 
-    keycloak-em:
-        image: jboss/keycloak:12.0.4
-        container_name: keycloak-em
-        environment:
-            - KEYCLOAK_USER=admin
-            - KEYCLOAK_PASSWORD=admin
-            - DB_VENDOR=mysql
-            - DB_ADDR=mysql-em
-            - DB_USER=keycloak
-            - DB_PASSWORD=password
-            - JDBC_PARAMS=useSSL=false
-        ports:
-            - "${KEYCLOAK_PORT}:8080"
-        depends_on:
-            - mysql-em
-        healthcheck:
-            test: "curl -f http://localhost:9000/auth || exit 1"
-            start_period: 20s
-
-    postgres-em:
-        image: postgres:13.3
-        container_name: postgres-em
-            environment:
-                - POSTGRES_USERR=${DB_USER}
-                - POSTGRES_PASSWORD=${DB_PASS}
-                - POSTGRES_DB=enroll-market
-            restart: unless-stopped
-        ports:
-            -"${POSTGRES_PORT}:5432"
-
-    mysql-em:
-        image: mysql:5.7.34
-        container_name: mysql-em
-        environment:
-            - MYSQL_DATABASE=keycloak
-            - MYSQL_USER=keycloak
-            - MYSQL_PASSWORD=password
-            - MYSQL_ROOT_PASSWORD=root_password
-        healthcheck:
-            test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
-            start_period: 10s
-        ports:
-            -"${MYSQL_PORT}:3306"
+  mysql-em:
+    image: mysql:5.7.34
+    container_name: mysql-em
+    environment:
+      - MYSQL_DATABASE=keycloak
+      - MYSQL_USER=keycloak
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root_password
+    healthcheck:
+      test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
+      start_period: 10s
+    ports:
+      - "${MYSQL_PORT}:3306"
