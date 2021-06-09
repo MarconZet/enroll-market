@@ -14,8 +14,8 @@ export const UserTimetablePage: React.FC = () => {
     let userData = useSelector(userAuthSelector);
 
     const onDownloadCalendar = () => {
-        if (typeof userData?.id !== 'undefined') {
-            getStudentIcsCalendar(userData?.id).then((response) => {
+        if (typeof userData?.indexNumber !== 'undefined') {
+            getStudentIcsCalendar(userData?.indexNumber).then((response) => {
                 FileDownload(response.data, 'calendar.ics');
             }).catch((err) => {
                 notitier.alert('Pobranie pliku nie powiodło się.');

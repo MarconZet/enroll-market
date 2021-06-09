@@ -17,6 +17,7 @@ export type UserAuthAction = {
 
 export interface UserAuthState {
     isLoading: boolean;
+    indexNumber?: string;
     id?: number;
     name?: string;
     surname?: string;
