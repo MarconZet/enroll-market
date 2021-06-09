@@ -69,15 +69,13 @@ export const Navbar: React.FC = () => {
         return keycloak.authenticated ? "Wyloguj" : "Zaloguj"
     };
 
-    console.log(keycloak.token);
-
     return (
         <P.Navbar>
             <P.UserName>{!userData.id ? 'Użytkownik niezalogowany' : `Witaj, ${userData.name} ${userData.surname}`}</P.UserName>
             <div>
                 {links.map(
                     (link, index) => (
-                        <Link key={index} to={link.path} style={{ textDecoration: 'none' }} onClick={link?.checkAuth ? checkAuthenticated : () => console.log("nope")}>
+                        <Link key={index} to={link.path} style={{ textDecoration: 'none' }} onClick={link?.checkAuth ? checkAuthenticated : () => console.log("Not authenticated")}>
                             <P.Link
                                 isCurrent={(link.path === location.pathname) || link.otherPathsToHighlight?.includes(location.pathname)}
                             >{link.title}</P.Link>

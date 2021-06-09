@@ -8,7 +8,6 @@ import { AnyAction } from '@reduxjs/toolkit';
 export function* getUserDataWorker(action: AnyAction) {
     try {
         const { data } = yield call(getMe);
-        console.log(data)
         yield put(A.getUserDataSuccess(data));
     } catch (error) {
         yield put(A.getUserDataFail());

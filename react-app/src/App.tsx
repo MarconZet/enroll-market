@@ -38,7 +38,6 @@ const App: React.FC = () => {
 	const handleOnEvent = async (event: any, error: any) => {
 		if (event === 'onAuthSuccess') {
 			if (keycloak.authenticated && typeof keycloak?.token !== 'undefined') {
-				console.log('Auth!');
 				dispatch(getGlobalDataRequest());
 				dispatch(getUserDataRequest());
 			}

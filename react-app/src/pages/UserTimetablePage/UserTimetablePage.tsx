@@ -1,7 +1,7 @@
 import * as P from './parts';
 import { useSelector } from 'react-redux';
 import FileDownload from 'js-file-download';
-import { myCoursesSelector } from '../../store/globalData/selectors';
+import {myCoursesSelector, mySubjectsNamesAndIdsSelector, myTeachersSelector} from '../../store/globalData/selectors';
 import { getStudentIcsCalendar } from '../../api/requests';
 import { userAuthSelector } from '../../store/userAuth/selectors';
 import notitier from '../../utils/notifications';
@@ -9,6 +9,8 @@ import Timetable from "../../components/Timetable/Timetable";
 
 export const UserTimetablePage: React.FC = () => {
     let courses = useSelector(myCoursesSelector);
+    let teachers = useSelector(myTeachersSelector)
+    let subjects = useSelector(mySubjectsNamesAndIdsSelector)
     let userData = useSelector(userAuthSelector);
 
     const onDownloadCalendar = () => {
@@ -24,7 +26,7 @@ export const UserTimetablePage: React.FC = () => {
     return (
         <>
             <P.Download onClick={onDownloadCalendar}>Pobierz plan w fromacie .ics</P.Download>
-            <Timetable courses={courses}/>
+            <Timetable courses={courses} teachers={teachers} subjects={subjects}/>
         </>
     )
 }

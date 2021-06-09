@@ -1,4 +1,4 @@
-import { CourseType } from "../../api/models";
+import {CourseType, Teacher} from "../../api/models";
 import { ApplicationState } from "../applicationState";
 
 export const subjectsNamesAndIdsSelector = (state: ApplicationState) => state.globalData.subjects.map((e) => ({
@@ -82,3 +82,12 @@ export const teachersSelector = (state: ApplicationState) => state.globalData.te
 export const coursesForSubjectSelector = (subjectId: number) => (state: ApplicationState) => state.globalData.subjects.find(e => e.id === subjectId)?.courses;
 
 export const allCoursesSelector = (state: ApplicationState) => state.globalData.allCourses;
+
+export const myTeachersSelector = (state: ApplicationState) => {
+    const teachers: Teacher[] = []
+    state.globalData.myCourses.forEach(c => {
+        if(!teachers.find(t => t.id === c.teacher.id))
+            teachers.push(c.teacher)
+    })
+    return teachers
+}

@@ -62,7 +62,7 @@ export const Course = styled.div<{ noCourses: number }>`
   ${Teacher} {
     ${({ noCourses }) => noCourses > 3 && 'visibility: hidden'}
   }
-  
+
   :hover{
     cursor: pointer;
     font-size: 1.2em;
@@ -82,4 +82,10 @@ export const Course = styled.div<{ noCourses: number }>`
     box-shadow: 0 0 25px 10px darkslategrey;
     border-radius: 5px;
   }
+`;
+
+export const FiltersWrapper = styled.div`
+  margin: 0;
+  padding: 0;
+  justify-content: center;
 `;

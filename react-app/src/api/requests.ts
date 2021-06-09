@@ -85,4 +85,4 @@ export const changeCourse = (fromId: number, toId: number) => axios.post(process
 
 export const getCoursesWithoutColision = (id: number) => axios.get<{ ids: number[] }>(process.env.REACT_APP_API_PATH + '/api/courses/' + id + '/without-colision', getConfig());
 
-export const getAllCourses = () => axios.get<Course[]>(process.env.REACT_APP_API_PATH + '/api/students/me/courses', getConfig());
+export const getAllCourses = (params?: BasicQueryParams) => axios.get<PaginatedResponse<Course[]>>(process.env.REACT_APP_API_PATH + '/api/courses' + (params ? queryBuilder(params) : ''), getConfig());
