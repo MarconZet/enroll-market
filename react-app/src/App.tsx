@@ -14,6 +14,7 @@ import { getGlobalDataRequest } from './store/globalData/actions';
 import SwapCoursesPage from './pages/SwapCoursesPage/SwapCoursesPage';
 import ReactModal from 'react-modal';
 import GlobalTimetablePage from "./pages/GlobalTimetablePage/GlobalTimetablePage";
+import 'awesome-notifications/dist/style.css';
 
 ReactModal.setAppElement("#root")
 
@@ -36,7 +37,11 @@ const UnauthorizedFiller: React.FC = () => (<h1>Próbowaleś wejść na stronę 
 const LoadingFiller: React.FC = () => (<h1>Poczekaj...</h1>);
 
 const App: React.FC = () => {
+	console.log("Build time:");
 	console.log(process.env);
+	console.log("Runtime:");
+	console.log(`keycloak: ${(window as any).KEYCLOAK_PATH}\napi: ${(window as any).API_PATH}`);
+
 	const dispatch = useDispatch();
 
 	const initOptions = { pkceMethod: 'S256' };
