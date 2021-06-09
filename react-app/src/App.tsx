@@ -24,7 +24,12 @@ const IndexFiller: React.FC = () => (
 	</>
 );
 
-const NoFoundPageFiller: React.FC = () => (<h1>Tej strony jeszcze nie ma i możliwe, że nie będzie. Amen.</h1>);
+const NoFoundPageFiller: React.FC = () => (
+	<>
+		<h1>404 - Page not found</h1>
+		<p>Ups... wygląda na to, że strona, której szukasz nie istnieje</p>
+	</>
+);
 
 const UnauthorizedFiller: React.FC = () => (<h1>Próbowaleś wejść na stronę bez potrzebnych uprawnień.</h1>);
 

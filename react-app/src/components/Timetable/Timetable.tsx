@@ -27,6 +27,7 @@ export const Timetable: React.FC<TimetableProps> = ({courses, teachers, subjects
     const [selectedTeacher, setSelectedTeacher] = useState(-1)
     const [selectedSubject, setSelectedSubject] = useState(-1)
     const [selectedTypes, setSelectedTypes] = useState<string[]>([])
+    const [displayFilters, setDisplayFilters] = useState(false)
 
     const onSelectType: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         if (event.target.checked) {
@@ -65,32 +66,35 @@ export const Timetable: React.FC<TimetableProps> = ({courses, teachers, subjects
 
     return (
         <>
+            <div style={{display: "grid"}}>
+                <P.FiltersButton onClick={() => setDisplayFilters(!displayFilters)}>
+                    Filtruj
+                </P.FiltersButton>
             <P.FiltersWrapper>
-                <div>
-                    Filters
-                </div>
-                <form onSubmit={onSubmit}>
+                <P.FiltersForm onSubmit={onSubmit} style={displayFilters ? {display: "flex"} : {display: "none"}}>
+                    <P.TypesPrompt>Typ zajęć:</P.TypesPrompt>
                     {Object.keys(CourseType).map((val, idx) => (
-                        <label key={`CourseType ${idx}`}>
-                            <input type="checkbox" value={val} onChange={onSelectType} checked={selectedTypes.some(t => t === val)}/>{val}
-                        </label>
+                        <P.TypeLabel key={`CourseType ${idx}`}>
+                            <input type="checkbox" value={val} onChange={onSelectType} checked={selectedTypes.some(t => t === val)}/>{Ttypes[val]}
+                        </P.TypeLabel>
                     ))}
-                    <select onChange={onSelectTeacher} value={selectedTeacher}>
+                    <P.SelectTeacher onChange={onSelectTeacher} value={selectedTeacher}>
                         <option key={-1} value={-1}>Wybierz prowadzącego</option>
                         {teachers.map((val, idx) => (
                             <option key={idx} value={val.id}>{val.name} {val.surname}</option>
                         ))}
-                    </select>
-                    <select onChange={onSelectSubject} value={selectedSubject}>
+                    </P.SelectTeacher>
+                    <P.SelectSubject onChange={onSelectSubject} value={selectedSubject}>
                         <option key={-1} value={-1}>Wybierz przedmiot</option>
                         {subjects.map((val, idx) => (
                             <option key={idx} value={val.id}>{val.name}</option>
                         ))}
-                    </select>
-                    <input type="submit" value="Zastosuj"/>
-                </form>
-                <button onClick={onClear}>Wyczyść filtry</button>
+                    </P.SelectSubject>
+                    <P.ApplyFilters type="submit" value="Zastosuj"/>
+                    <P.ClearFilters onClick={onClear}>Wyczyść filtry</P.ClearFilters>
+                </P.FiltersForm>
             </P.FiltersWrapper>
+            </div>
             <P.Wrapper>
                 <div style={{position: "relative"}}>
                     <TimetableTemplate columnWidth={T.dims.columnWidth} hourWidth={T.dims.hourWidth} dayHeight={T.dims.dayHeight} unitHeight={T.dims.unitHeight} unitsNo={T.dims.unitsNo}/>
@@ -118,3 +122,10 @@ export const Timetable: React.FC<TimetableProps> = ({courses, teachers, subjects
 }
 
 export default Timetable
+
+const Ttypes: {[key: string] : string} = {
+    'LECTURE': 'Wykład',
+    'PROJECT': 'Projekt',
+    'LESSON': 'Ćwiczenia',
+    'LABORATORY': 'Laboratoria',
+};

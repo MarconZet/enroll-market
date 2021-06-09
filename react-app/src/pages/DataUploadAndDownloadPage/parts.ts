@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as C from '../../utils/colors'
 
 export const Wrapper = styled.div`
     display: flex;
@@ -33,7 +34,7 @@ export const Button = styled.button`
     font-size: 24px;
     border-radius: 5px;
     border: none;
-    background: #de3770;
+    background: ${C.blue};
     color: white;
     font-weight: bold;
 

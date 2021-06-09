@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as C from '../../utils/colors'
 
 export const Select = styled.select`
     width: 100%;
@@ -16,7 +17,7 @@ export const RangesHeader = styled.span`
 export const AddBlockButton = styled.button`
     border-radius: 5px;
     border: none;
-    background: #de3770;
+    background: ${C.blue};
     color: white;
     font-weight: bold;
     padding: 5px;

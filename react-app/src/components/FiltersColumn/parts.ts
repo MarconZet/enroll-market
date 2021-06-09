@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as C from '../../utils/colors'
 
 export const Container = styled.form`
     box-shadow: 0 0 5px 1px #B2B3B2;
@@ -15,7 +16,7 @@ export const Button = styled.button`
     font-size: 16px;
     border-radius: 5px;
     border: none;
-    background: #de3770;
+    background: ${C.blue};
     color: white;
     font-weight: bold;
 

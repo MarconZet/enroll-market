@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as C from '../../utils/colors';
 
 export const Wrapper = styled.div`
     font-size: 0.8em;
@@ -46,6 +47,7 @@ export const Course = styled.div<{ noCourses: number }>`
   overflow-wrap: break-word;
   hyphens: manual;
   overflow: hidden;
+  transition: 0.2s ease;
 
   ${TimePlaceholder} {
     ${({ noCourses }) => noCourses <= 5 && 'display: none'}
@@ -66,8 +68,8 @@ export const Course = styled.div<{ noCourses: number }>`
   :hover{
     cursor: pointer;
     font-size: 1.2em;
-    min-width: 211px;
-    min-height: 211px;
+    min-width: 250px;
+    min-height: 200px;
     opacity: 1;
     z-index: 100;
 
@@ -85,7 +87,88 @@ export const Course = styled.div<{ noCourses: number }>`
 `;
 
 export const FiltersWrapper = styled.div`
-  margin: 0;
+  margin: 20px 0 0 0;
   padding: 0;
-  justify-content: center;
+  width: 80%;
+  box-shadow: 0 0 2px darkslategrey;
+  border-radius: 4px;
+  justify-self: center;
+  align-self: center;
 `;
+
+export const FiltersButton = styled.button`
+  justify-self: center;
+  align-self: center;
+  margin: 20px 0 0 0;
+  padding: 0;
+  width: 200px;
+  height: 30px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  background: ${C.blue};
+  border-radius: 4px;
+
+  :hover{
+    cursor: pointer;
+  }
+`
+
+export const FiltersForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const TypeLabel = styled.label`
+  margin: 1px;
+  padding: 0;
+`
+
+export const TypesPrompt = styled.h4`
+  margin: 0 0 5px 0;
+  padding: 0;
+`
+export const SelectTeacher = styled.select`
+  margin: 10px 0 0 0;
+  padding: 0;
+  width: 200px;
+`
+
+export const SelectSubject = styled.select`
+  margin: 10px 0 0 0;
+  padding: 0;
+  width: 200px;
+`
+
+export const ApplyFilters = styled.input`
+  margin: 10px 0 0 0;
+  padding: 0;
+  width: 200px;
+  height: 30px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  background: ${C.blue};
+  border-radius: 4px;
+  
+  :hover{
+    cursor: pointer;
+  }
+`
+
+export const ClearFilters = styled.button`
+  margin: 10px 0;
+  padding: 0;
+  width: 200px;
+  height: 30px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  background: darkred;
+  border-radius: 4px;
+
+  :hover {
+    cursor: pointer;
+  }
+`

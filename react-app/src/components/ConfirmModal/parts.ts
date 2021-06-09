@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as C from '../../utils/colors'
 
 export const Wrapper = styled.div`
     box-shadow: 0 0 5px 1px #B2B3B2;
@@ -27,7 +28,7 @@ export const Button = styled.button<{ isNegative?: boolean }>`
     font-size: 16px;
     border-radius: 5px;
     border: none;
-    background: #de3770;
+    background: ${C.blue};
     color: white;
     font-weight: bold;
   
@@ -38,11 +39,11 @@ export const Button = styled.button<{ isNegative?: boolean }>`
     ${
         ({ isNegative }) => isNegative
             ? `
-                border: 1px solid #de3770;
-                color: #de3770;
+                border: 1px solid ${C.blue};
+                color: ${C.blue};
                 background: white
             ` : `
-                background: #de3770;
+                background: ${C.blue};
                 color: white;
             `
     }
