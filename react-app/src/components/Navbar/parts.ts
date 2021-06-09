@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as C from '../../utils/colors'
 
 export const Navbar = styled.nav`
     display: flex;
@@ -26,7 +27,7 @@ export const Link = styled.span<{ isCurrent?: boolean }>`
     color: black;
     font-weight: bold;
 
-    ${({ isCurrent }) => isCurrent && 'color: #de3770'}
+    ${({ isCurrent }) => isCurrent && `color: ${C.blue}`}
 `;
 
 export const UserName = styled.span`
