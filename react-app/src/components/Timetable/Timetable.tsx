@@ -11,7 +11,7 @@ interface TimetableProps{
 }
 
 export const Timetable: React.FC<TimetableProps> = ({courses, teachers, subjects}) => {
-    teachers = teachers.sort((t1, t2) => {
+    teachers = [...teachers].sort((t1, t2) => {
         if(t1.surname > t2.surname || (t1.surname === t2.surname && t1.name > t2.name))
             return 1
         return -1
