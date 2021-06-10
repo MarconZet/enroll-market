@@ -7,8 +7,8 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm install
 
-ENV REACT_APP_API_PATH=http://localhost:8080
-ENV REACT_APP_KEYCLOAK_PATH=http://localhost:9000
+ENV REACT_APP_API_PATH=https://em.marconzet.pl
+ENV REACT_APP_KEYCLOAK_PATH=https://keycloak.marconzet.pl
 EXPOSE 3000
 
 COPY . .

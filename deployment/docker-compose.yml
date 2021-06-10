@@ -5,8 +5,6 @@ services:
     build: ../react-app/.
     container_name: react-em
     environment:
-      - REACT_APP_API_PATH=${MAIN_URL}:443
-      - REACT_APP_KEYCLOAK_PATH=${KEYCLOAK_URL}:443
       - CHOKIDAR_USEPOLLING=true
       - PORT=3000
       - CI=true
@@ -20,10 +18,10 @@ services:
     build: ../spring-app/.
     container_name: spring-em     
     environment: 
-      - SPRING_APP_PROFILES=security,prod
-      - SPRING_APP_REDIRECT_URL=${MAIN_URL}:443/*
+      - SPRING_APP_PROFILES=security,dev
+      - SPRING_APP_REDIRECT_URL=${MAIN_URL}/*
       - SPRING_APP_PORT=8080
-      - SPRING_APP_KEYCLOAK_SERVER_URL=${KEYCLOAK_URL}:443/auth
+      - SPRING_APP_KEYCLOAK_SERVER_URL=${KEYCLOAK_URL}/auth
       - SPRING_APP_DATASOURCE_URL=jdbc:postgresql://postgres-em:5432/enroll-market
       - SPRING_APP_DATABASE_USERNAME=${DB_USER}
       - SPRING_APP_DATABASE_PASSWORD=${DB_PASS}
