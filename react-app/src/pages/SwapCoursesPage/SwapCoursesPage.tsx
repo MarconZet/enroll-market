@@ -46,6 +46,8 @@ export const SwapCoursesPage: React.FC = () => {
     const onSubmit = () => {
         dispatch(A.swapCoursesRequest(from, to));
         setIsModalOpen(false);
+        setFrom(-1);
+        setTo(-1);
     };
 
     const disableForm = () => {
