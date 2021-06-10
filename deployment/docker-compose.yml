@@ -18,7 +18,7 @@ services:
     build: ../spring-app/.
     container_name: spring-em     
     environment: 
-      - SPRING_APP_PROFILES=security,dev
+      - SPRING_APP_PROFILES=security,dev,prod
       - SPRING_APP_REDIRECT_URL=${MAIN_URL}/*
       - SPRING_APP_PORT=8080
       - SPRING_APP_KEYCLOAK_SERVER_URL=${KEYCLOAK_URL}/auth
